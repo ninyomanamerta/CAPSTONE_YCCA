@@ -6,7 +6,14 @@
         <li class="nav-item" style="padding-top: 10px">
             <a class="nav-link collapsed " href="#">
                 <i class="bi bi-house-door"></i>
-                <span>Home</span>
+                <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed " href="#">
+                <i class="bi bi-tags"></i>
+                <span>Klasifikasi</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
