@@ -3,18 +3,19 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Klasifikai Buku</h1>
+      <h1>Rak Buku</h1>
 
-      <nav>
+      {{-- <nav>
         <ol class="breadcrumb text-bold mt-1">
-            <li class="breadcrumb-item active"><a href="" style="color: #1c1b1a; font-weight: bold; font-size:15px;"><b>Jenis</b></a></li>
-            <li class="breadcrumb-item active"><a href="">Mapel</a></li>
-            <li class="breadcrumb-item active"><a href="">Sub Mapel</a></li>
-            <li class="breadcrumb-item active"><a href="">Sub Kelas</a></li>
+            <li class="breadcrumb-item active"><a href="" style="color: #1c1b1a; font-weight: bold; font-size:15px;"><b>Semua Siswa</b></a></li>
+            <li class="breadcrumb-item active"><a href="">Kelas 7</a></li>
+            <li class="breadcrumb-item active"><a href="">Kelas 8</a></li>
+            <li class="breadcrumb-item active"><a href="">Kelas 9</a></li>
         </ol>
-      </nav>
+      </nav> --}}
+
       <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-      <a href="" class="btn btn-primary">Tambah Mapel Buku</a>
+      <a href="" class="btn btn-primary">Tambah Rak</a>
       </div>
       {{-- </div>
         @if(Session::has('success'))
@@ -31,15 +32,14 @@
           <div class="card recent-sales overflow-auto">
 
             <div class="card-body">
-              <h1 class="card-title px-2" style="font-size: 16px">Daftar Jenis Buku</h1>
+              <h1 class="card-title px-2" style="font-size: 16px">Daftar Rak Penyimpanan</h1>
 
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Jenis Buku</th>
-                    <th scope="col">Nomor Induk</th>
-                    <th scope="col">Tgl Ditambahkan</th>
+                    <th scope="col">Lokasi Rak</th>
+                    <th scope="col">Keterangan</th>
                     <th scope="col" style="display: flex; justify-content: flex-end;">Aksi</th>
                   </tr>
                 </thead>
@@ -47,9 +47,8 @@
                 {{-- looping row --}}
                   <tr>
                     <th scope="row" class="col-1">1</th>
-                    <td class="col-2">Paket</td>
-                    <td class="col-1">3</td>
-                    <td class="col-1">12-10-2024</td>
+                    <td class="col-2">1A</td>
+                    <td class="col-1">Rak pertama setelah pintu masuk sebelah timur</td>
                     <td class="col-0" style="display: flex; justify-content: flex-end;">
                         <a href=""><span class="badge bg-success">View</span></a>
                         <a href=""><span class="badge bg-warning">Update</span></a>
@@ -58,9 +57,8 @@
                   </tr>
                   <tr>
                     <th scope="row" class="col-1">2</th>
-                    <td class="col-1">Matematika</td>
-                    <td class="col-1">2</td>
-                    <td class="col-1">12-10-2024</td>
+                    <td class="col-2">1B</td>
+                    <td class="col-1">Rak kedua setelah pintu masuk sebelah timur</td>
                     <td class="col-0" style="display: flex; justify-content: flex-end;">
                         <a href=""><span class="badge bg-success">View</span></a>
                         <a href=""><span class="badge bg-warning">Update</span></a>

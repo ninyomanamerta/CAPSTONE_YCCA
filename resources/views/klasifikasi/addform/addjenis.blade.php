@@ -15,13 +15,13 @@
             <div class="row mb-3">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Jenis Buku</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="jenis" placeholder="Masukan jenis buku" >
+                <input type="text" class="form-control" id="jenis" name="jenis" placeholder="Masukan jenis buku" >
               </div>
             </div>
             <div class="row mb-3">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Induk</label>
               <div class="col-sm-10">
-                <input type="number" class="form-control" id="noinduk" placeholder="Masukan nomor induk">
+                <input type="text" class="form-control" id="noinduk" name="noinduk" placeholder="Masukan nomor induk">
               </div>
             </div>
 

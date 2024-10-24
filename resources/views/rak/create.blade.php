@@ -3,27 +3,27 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1 class="mb-4">Tambah Sub Mapel</h1>
+      <h1 class="mb-4">Tambah Data Rak</h1>
 
 
       <div class="card">
         <div class="card-body">
-            <h4 class="card-title ml-4 mb-6">Formulir Tambah Sub Mapel</h4>
+            <h4 class="card-title ml-4 mb-6">Formulir Tambah Data Rak</h4>
 
           <!-- Horizontal Form -->
           <form class="px-3">
             <div class="row mb-3">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Sub Mapel</label>
+              <label class="col-sm-2 col-form-label">Lokasi rak</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="submapel" name="submapel" placeholder="Masukan sub mapel" >
+                <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Masukan lokasi rak" >
               </div>
             </div>
             <div class="row mb-3">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Induk</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="noinduk" name="noinduk" placeholder="Masukan nomor induk">
+                <label class="col-sm-2 col-form-label">Keterangan</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Jelaskan lokasi rak" rows="3"></textarea>
+                </div>
               </div>
-            </div>
 
             <div class="text-center">
               <button type="submit" class="btn btn-primary">Simpan</button>

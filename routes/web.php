@@ -6,7 +6,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-#Test front end
+// Using Controller
+
+
+
+// end
+
+//Test front end
 Route::get('/klasifikasi/jenis', function () {
 return view('klasifikasi.jenis');
 });
@@ -37,4 +43,20 @@ Route::get('/klasifikasi/submapel/add', function () {
 
 Route::get('/klasifikasi/subkelas/add', function () {
     return view('klasifikasi.addform.addsubkelas');
+    });
+
+Route::get('/siswa', function () {
+    return view('siswa.index');
+    });
+
+Route::get('/siswa/add', function () {
+    return view('siswa.create');
+    });
+
+Route::get('/rak', function () {
+    return view('rak.index');
+    });
+
+Route::get('/rak/add', function () {
+    return view('rak.create');
     });

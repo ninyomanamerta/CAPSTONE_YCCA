@@ -12,6 +12,13 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed " href="#">
+                <i class="bi bi-person"></i>
+                <span>Siswa</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed " href="#">
                 <i class="bi bi-tags"></i>
                 <span>Klasifikasi</span>
             </a>
@@ -21,6 +28,13 @@
             <a class="nav-link collapsed" href="#">
                 <i class="bi bi-search"></i>
                 <span>Cari</span>
+            </a>
+        </li><!-- End Register Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#">
+                <i class="bi bi-archive"></i>
+                <span>Rak</span>
             </a>
         </li><!-- End Register Page Nav -->
 
