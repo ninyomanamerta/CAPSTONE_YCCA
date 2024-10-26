@@ -12,7 +12,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::all();
+        return view('siswa.index', compact('students'));
     }
 
     /**
@@ -20,7 +21,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view('siswa.create');
     }
 
     /**
@@ -28,38 +29,69 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nis' => 'required|string|max:20|unique:students,nis',
+            'namasiswa' => 'required|string|max:300',
+            'kelas' => 'required|string|max:10',
+        ]);
+
+        Student::create([
+            'nis' => $request->nis,
+            'nama_siswa' => $request->namasiswa,
+            'kelas' => $request->kelas,
+        ]);
+
+        return redirect()->route('student.index')->with('success', 'Data siswa berhasil ditambahkan!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show($id)
     {
-        //
+        $student = Student::findOrFail($id);
+        return response()->json($student);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit($id)
     {
-        //
+        $student = Student::findOrFail($id);
+        return view('siswa.edit', compact('student'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
-        //
+        $student = Student::findOrFail($id);
+
+        $request->validate([
+            'nis' => 'required|string|max:20|unique:students,nis,' . $student->id,
+            'namasiswa' => 'required|string|max:300',
+            'kelas' => 'required|string|max:10',
+        ]);
+
+        $student->update([
+            'nis' => $request->nis,
+            'nama_siswa' => $request->namasiswa,
+            'kelas' => $request->kelas,
+        ]);
+
+        return redirect()->route('student.index')->with('success', 'Data siswa berhasil diperbarui!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy($id)
     {
-        //
+        $student = Student::findOrFail($id);
+        $student->delete();
+
+        return redirect()->route('student.index')->with('success', 'Data siswa berhasil dihapus!');
     }
 }

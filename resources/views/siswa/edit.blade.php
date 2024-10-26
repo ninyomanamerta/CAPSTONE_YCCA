@@ -17,27 +17,28 @@
 
       <div class="card">
         <div class="card-body">
-            <h4 class="card-title ml-4 mb-6">Formulir Tambah Data Siswa</h4>
+            <h4 class="card-title ml-4 mb-6">Formulir Edit Data Siswa</h4>
 
           <!-- Horizontal Form -->
-          <form action="{{ route('student.store') }}" method="POST" class="px-3">
+          <form action="{{ route('student.update', $student->id) }}" method="POST" class="px-3">
             @csrf
+            @method('PUT')
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label">NIS Siswa</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="nis" name="nis" placeholder="Masukan NIS siswa" required value="{{ old('nis') }}">
+                <input type="text" class="form-control" id="nis" name="nis" placeholder="Masukan NIS siswa" required value="{{ old('nis', $student->nis) }}">
               </div>
             </div>
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label">Nama Siswa</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="namasiswa" name="namasiswa" placeholder="Masukan nama siswa" required value="{{ old('namasiswa') }}">
+                <input type="text" class="form-control" id="namasiswa" name="namasiswa" placeholder="Masukan nama siswa" required value="{{ old('namasiswa', $student->nama_siswa) }}">
               </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Kelas</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="kelas" name="kelas" placeholder="Masukan kelas saat ini" required value="{{ old('kelas') }}">
+                  <input type="text" class="form-control" id="kelas" name="kelas" placeholder="Masukan kelas saat ini" required value="{{ old('kelas', $student->kelas) }}">
                 </div>
             </div>
 

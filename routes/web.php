@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StudentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -8,6 +9,14 @@ Route::get('/', function () {
 
 // Using Controller
 
+// Student
+    Route::get('/siswa', [StudentController::class, 'index'])->name('student.index');
+    Route::get('/siswa/add', [StudentController::class, 'create'])->name('student.create');
+    Route::post('/siswa/store', [StudentController::class, 'store'])->name('student.store');
+    Route::get('/siswa/{id}', [StudentController::class, 'show']);
+    Route::get('/siswa/{id}/edit', [StudentController::class, 'edit'])->name('student.edit');
+    Route::put('/siswa/{id}', [StudentController::class, 'update'])->name('student.update');
+    Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
 
 
 // end
@@ -45,13 +54,6 @@ Route::get('/klasifikasi/subkelas/add', function () {
     return view('klasifikasi.addform.addsubkelas');
     });
 
-Route::get('/siswa', function () {
-    return view('siswa.index');
-    });
-
-Route::get('/siswa/add', function () {
-    return view('siswa.create');
-    });
 
 Route::get('/rak', function () {
     return view('rak.index');
