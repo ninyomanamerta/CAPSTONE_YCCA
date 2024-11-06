@@ -10,7 +10,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="assets/Photo/suklib.png" rel="icon">
+    <link href="assets/Photo/edulib.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -20,7 +20,7 @@
         rel="stylesheet">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/Photo/suklib.png') }}" rel="icon">
+    <link href="{{ asset('assets/Photo/edulib.png') }}" rel="icon">
     <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
     <!-- Vendor CSS Files -->
