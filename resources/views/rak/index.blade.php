@@ -5,24 +5,15 @@
     <div class="pagetitle">
       <h1>Rak Buku</h1>
 
-      {{-- <nav>
-        <ol class="breadcrumb text-bold mt-1">
-            <li class="breadcrumb-item active"><a href="" style="color: #1c1b1a; font-weight: bold; font-size:15px;"><b>Semua Siswa</b></a></li>
-            <li class="breadcrumb-item active"><a href="">Kelas 7</a></li>
-            <li class="breadcrumb-item active"><a href="">Kelas 8</a></li>
-            <li class="breadcrumb-item active"><a href="">Kelas 9</a></li>
-        </ol>
-      </nav> --}}
-
       <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-      <a href="" class="btn btn-primary">Tambah Rak</a>
+      <a href="{{ route('rak.create') }}" class="btn btn-primary">Tambah Rak</a>
       </div>
-      {{-- </div>
-        @if(Session::has('success'))
-        <div class="alert alert-success" role="alert" style="padding-top:10px">
-            {{ Session::get('success') }}
-        </div>
-        @endif --}}
+
+      @if(Session::has('success'))
+      <div class="alert alert-success" role="alert" style="padding-top:10px">
+          {{ Session::get('success') }}
+      </div>
+      @endif
 
     </div><!-- End Page Title -->
     <section class="section dashboard mt-4">
@@ -40,31 +31,25 @@
                     <th scope="col">No</th>
                     <th scope="col">Lokasi Rak</th>
                     <th scope="col">Keterangan</th>
+                    <th scope="col">Tgl Ditambahkan</th>
                     <th scope="col" style="display: flex; justify-content: flex-end;">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
                 {{-- looping row --}}
+                @foreach ($rak as $index => $rak)
                   <tr>
-                    <th scope="row" class="col-1">1</th>
-                    <td class="col-2">1A</td>
-                    <td class="col-1">Rak pertama setelah pintu masuk sebelah timur</td>
+                    <th scope="row" class="col-1">{{ $index + 1 }}</th>
+                    <td class="col-2">{{ $rak->lokasi }}</td>
+                    <td class="col-1">{{ $rak->keterangan }}</td>
+                    <td class="col-1">{{ \Carbon\Carbon::parse($rak->created_at)->format('F d, Y') }}</td>
                     <td class="col-0" style="display: flex; justify-content: flex-end;">
-                        <a href=""><span class="badge bg-success">View</span></a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#rakModal" data-id="{{ $rak->id }}" class="view-rak"><span class="badge bg-success">View</span></a>
                         <a href=""><span class="badge bg-warning">Update</span></a>
                         <a href=""><span class="badge bg-danger">Delete</span></a>
                     </td>
                   </tr>
-                  <tr>
-                    <th scope="row" class="col-1">2</th>
-                    <td class="col-2">1B</td>
-                    <td class="col-1">Rak kedua setelah pintu masuk sebelah timur</td>
-                    <td class="col-0" style="display: flex; justify-content: flex-end;">
-                        <a href=""><span class="badge bg-success">View</span></a>
-                        <a href=""><span class="badge bg-warning">Update</span></a>
-                        <a href=""><span class="badge bg-danger">Delete</span></a>
-                    </td>
-                  </tr>
+                @endforeach
 
                 </tbody>
               </table>
@@ -73,6 +58,56 @@
 
           </div>
         </div><!-- End Recent Sales -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="rakModal" tabindex="-1" aria-labelledby="rakModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="rakModalLabel">Detail Rak</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Lokasi Rak:</strong> <span id="modal-lokasi"></span></p>
+                        <p><strong>Keterangan:</strong> <span id="modal-keterangan"></span></p>
+                        <p><strong>Tanggal Dibuat:</strong> <span id="modal-tanggal"></span></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.view-rak').on('click', function() {
+                    var rakId = $(this).data('id');
+
+                    $.ajax({
+                        url: '/rak/' + rakId,
+                        method: 'GET',
+                        success: function(data) {
+                            console.log(data);
+                            $('#modal-lokasi').text(data.lokasi);
+                            $('#modal-keterangan').text(data.keterangan);
+
+                            // Format tanggal
+                            const date = new Date(data.created_at);
+                            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                            $('#modal-tanggal').text(date.toLocaleDateString(undefined, options));
+                        },
+                        error: function(xhr) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                });
+            });
+
+
+        </script>
 
 
       </div>

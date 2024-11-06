@@ -12,7 +12,8 @@ class BookCaseController extends Controller
      */
     public function index()
     {
-        //
+        $rak = BookCase::all();
+        return view('rak.index', compact('rak'));
     }
 
     /**
@@ -20,7 +21,7 @@ class BookCaseController extends Controller
      */
     public function create()
     {
-        //
+        return view('rak.create');
     }
 
     /**
@@ -28,15 +29,26 @@ class BookCaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'lokasi' => 'required|string|max:20|unique:bookcases,lokasi',
+            'keterangan' => 'required|string|max:65',
+        ]);
+
+        BookCase::create([
+            'lokasi' => $request->lokasi,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return redirect()->route('rak.index')->with('success', 'Data rak berhasil ditambahkan!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(BookCase $bookCase)
+    public function show($id)
     {
-        //
+        $id = BookCase::findOrFail($id);
+        return response()->json($id);
     }
 
     /**

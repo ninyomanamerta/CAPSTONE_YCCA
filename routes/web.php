@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\BookCaseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +19,12 @@ Route::get('/', function () {
     Route::put('/siswa/{id}', [StudentController::class, 'update'])->name('student.update');
     Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
 
+
+// BookCase
+    Route::get('/rak', [BookCaseController::class, 'index'])->name('rak.index');
+    Route::get('/rak/add', [BookCaseController::class, 'create'])->name('rak.create');
+    Route::post('/rak/store', [BookCaseController::class, 'store'])->name('rak.store');
+    Route::get('/rak/{id}', [BookCaseController::class, 'show']);
 
 // end
 
@@ -54,11 +61,7 @@ Route::get('/klasifikasi/subkelas/add', function () {
     return view('klasifikasi.addform.addsubkelas');
     });
 
-
-Route::get('/rak', function () {
-    return view('rak.index');
+Route::get('/book/edit', function () {
+    return view('rak.edit');
     });
 
-Route::get('/rak/add', function () {
-    return view('rak.create');
-    });

@@ -32,7 +32,7 @@
         </li><!-- End Register Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
+            <a class="nav-link collapsed" href="{{ route('rak.index') }}">
                 <i class="bi bi-archive"></i>
                 <span>Rak</span>
             </a>
