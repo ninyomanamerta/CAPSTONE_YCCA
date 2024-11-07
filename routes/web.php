@@ -65,3 +65,7 @@ Route::get('/book/edit', function () {
     return view('rak.edit');
     });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
