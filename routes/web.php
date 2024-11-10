@@ -6,6 +6,7 @@ use App\Http\Controllers\BookCaseController;
 use App\Http\Controllers\BookTypeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SubCourseController;
+use App\Http\Controllers\SubClassController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -56,6 +57,17 @@ Route::get('/', function () {
     Route::put('/klasifikasi/submapel/{id}', [SubCourseController::class, 'update'])->name('subCourse.update');
     Route::delete('/klasifikasi/submapel/{id}', [SubCourseController::class, 'destroy'])->name('subCourse.destroy');
 
+// SubClass
+    Route::get('/klasifikasi/subkelas', [SubClassController::class, 'index'])->name('class.index');
+    Route::get('/klasifikasi/subkelas/add', [SubClassController::class, 'create'])->name('class.create');
+    Route::post('/klasifikasi/subkelas/store', [SubClassController::class, 'store'])->name('class.store');
+    Route::get('/klasifikasi/subkelas/{id}', [SubClassController::class, 'show']);
+    Route::get('/klasifikasi/subkelas/{id}/edit', [SubClassController::class, 'edit'])->name('class.edit');
+    Route::put('/klasifikasi/subkelas/{id}', [SubClassController::class, 'update'])->name('class.update');
+    Route::delete('/klasifikasi/subkelas/{id}', [SubClassController::class, 'destroy'])->name('class.destroy');
+
+
+
 
 
 // end
@@ -63,18 +75,11 @@ Route::get('/', function () {
 //Test front end
 
 
-Route::get('/klasifikasi/subkelas', function () {
-    return view('klasifikasi.subkelas');
-    });
-
 // Route::get('/klasifikasi/jenis/add', function () {
 //     return view('klasifikasi.addform.addjenis');
 //     });
 
 
-Route::get('/klasifikasi/subkelas/add', function () {
-    return view('klasifikasi.addform.addsubkelas');
-    });
 
 
 
