@@ -25,6 +25,9 @@ Route::get('/', function () {
     Route::get('/rak/add', [BookCaseController::class, 'create'])->name('rak.create');
     Route::post('/rak/store', [BookCaseController::class, 'store'])->name('rak.store');
     Route::get('/rak/{id}', [BookCaseController::class, 'show']);
+    Route::get('/rak/{id}/edit', [BookCaseController::class, 'edit'])->name('rak.edit');
+    Route::put('/rak/{id}', [BookCaseController::class, 'update'])->name('rak.update');
+    Route::delete('/rak/{id}', [BookCaseController::class, 'destroy'])->name('rak.destroy');
 
 // end
 
@@ -61,7 +64,5 @@ Route::get('/klasifikasi/subkelas/add', function () {
     return view('klasifikasi.addform.addsubkelas');
     });
 
-Route::get('/book/edit', function () {
-    return view('rak.edit');
-    });
+
 

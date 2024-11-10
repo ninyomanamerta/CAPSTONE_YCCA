@@ -54,24 +54,42 @@ class BookCaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(BookCase $bookCase)
+    public function edit($id)
     {
-        //
+        $rak = BookCase::findOrFail($id);
+        return view('rak.edit', compact('rak'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, BookCase $bookCase)
+    public function update(Request $request, $id)
     {
-        //
+        $rak = BookCase::findOrFail($id);
+
+        $request->validate([
+            'lokasi' => 'required|string|max:20|unique:bookcases,lokasi,' . $rak->id,
+            'keterangan' => 'required|string|max:65',
+        ]);
+
+        $rak->update([
+            'lokasi' => $request->lokasi,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return redirect()->route('rak.index')->with('success', 'Data rak berhasil di edit!');
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(BookCase $bookCase)
+    public function destroy($id)
     {
-        //
+        $rak = BookCase::findOrFail($id);
+        $rak->delete();
+
+        return redirect()->route('rak.index')->with('success', 'Data rak berhasil dihapus!');
     }
 }
