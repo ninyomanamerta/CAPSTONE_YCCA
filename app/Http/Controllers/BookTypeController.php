@@ -12,7 +12,8 @@ class BookTypeController extends Controller
      */
     public function index()
     {
-        //
+        $bookType = BookType::all();
+        return view('klasifikasi.jenis', compact('bookType'));
     }
 
     /**
@@ -20,7 +21,7 @@ class BookTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('klasifikasi.addform.addjenis');
     }
 
     /**
@@ -28,7 +29,17 @@ class BookTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'jenis' => 'required|string|unique:type_books,jenis',
+            'noinduk' => 'required|string|unique:type_books,noinduk',
+        ]);
+
+        BookType::create([
+            'jenis' => $request->jenis,
+            'noinduk' => $request->noinduk,
+        ]);
+
+        return redirect()->route('rak.index')->with('success', 'Data rak berhasil ditambahkan!');
     }
 
     /**
