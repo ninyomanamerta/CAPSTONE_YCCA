@@ -5,6 +5,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\BookCaseController;
 use App\Http\Controllers\BookTypeController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\SubCourseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,15 +47,21 @@ Route::get('/', function () {
     Route::put('/klasifikasi/mapel/{id}', [CourseController::class, 'update'])->name('course.update');
     Route::delete('/klasifikasi/mapel/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
 
+// SubCourse
+    Route::get('/klasifikasi/submapel', [SubCourseController::class, 'index'])->name('subCourse.index');
+    Route::get('/klasifikasi/submapel/add', [SubCourseController::class, 'create'])->name('subCourse.create');
+    Route::post('/klasifikasi/submapel/store', [SubCourseController::class, 'store'])->name('subCourse.store');
+    Route::get('/klasifikasi/submapel/{id}', [SubCourseController::class, 'show']);
+    Route::get('/klasifikasi/submapel/{id}/edit', [SubCourseController::class, 'edit'])->name('subCourse.edit');
+    Route::put('/klasifikasi/submapel/{id}', [SubCourseController::class, 'update'])->name('subCourse.update');
+    Route::delete('/klasifikasi/submapel/{id}', [SubCourseController::class, 'destroy'])->name('subCourse.destroy');
+
 
 
 // end
 
 //Test front end
 
-Route::get('/klasifikasi/submapel', function () {
-    return view('klasifikasi.submapel');
-    });
 
 Route::get('/klasifikasi/subkelas', function () {
     return view('klasifikasi.subkelas');
@@ -64,13 +71,6 @@ Route::get('/klasifikasi/subkelas', function () {
 //     return view('klasifikasi.addform.addjenis');
 //     });
 
-// Route::get('/klasifikasi/mapel/add', function () {
-//     return view('klasifikasi.addform.addmapel');
-//     });
-
-Route::get('/klasifikasi/submapel/add', function () {
-    return view('klasifikasi.addform.addsubmapel');
-    });
 
 Route::get('/klasifikasi/subkelas/add', function () {
     return view('klasifikasi.addform.addsubkelas');

@@ -11,5 +11,5 @@ class SubCourse extends Model
     protected $table = 'sub_courses';
     protected $fillable = [
                         'sub_mapel',
-                        'nomor_induk_mapel'];
+                        'nomor_induk_submapel'];
 }

@@ -41,7 +41,7 @@ class CourseController extends Controller
         ]);
 
         return redirect()->route('course.index')->with('success', 'Mapel berhasil ditambahkan!');
-        }
+    }
 
     /**
      * Display the specified resource.
