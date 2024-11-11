@@ -3,7 +3,7 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1 class="mb-4">Tambah Data Siswa</h1>
+      <h1 class="mb-4">Merubah Data Siswa</h1>
       @if ($errors->any())
         <div class="alert alert-danger">
             <ul>

@@ -12,7 +12,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $course = Course::all();
+        return view('klasifikasi.mapel', compact('course'));
     }
 
     /**
@@ -20,7 +21,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('klasifikasi.addform.addmapel');
     }
 
     /**
@@ -28,38 +29,69 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'mapel' => 'required|string|unique:courses,mapel',
+            'noinduk' => 'required|string|unique:courses,nomor_induk_mapel',
+        ]);
+
+        Course::create([
+            'mapel' => $request->mapel,
+            'nomor_induk_mapel' => $request->noinduk,
+        ]);
+
+        return redirect()->route('course.index')->with('success', 'Mapel berhasil ditambahkan!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
+    public function show($id)
     {
-        //
+        $id = Course::findOrFail($id);
+        return response()->json($id);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Course $course)
+    public function edit($id)
     {
-        //
+        $course = Course::findOrFail($id);
+        return view('klasifikasi.updateform.editmapel', compact('course'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, $id)
     {
-        //
+        $course = Course::findOrFail($id);
+
+        $request->validate([
+            'mapel' => 'required|string|unique:courses,mapel,' . $course->id,
+            'noinduk' => 'required|string|unique:courses,nomor_induk_mapel,' . $course->id,
+        ]);
+
+        $course->update([
+            'mapel' => $request->mapel,
+            'nomor_induk_mapel' => $request->noinduk,
+        ]);
+
+        return redirect()->route('course.index')->with('success', 'Data mapel berhasil di update!');
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Course $course)
+    public function destroy($id)
     {
-        //
+        $course = Course::findOrFail($id);
+        $course->delete();
+
+        return redirect()->route('course.index')->with('success', 'Data mapel berhasil dihapus!');
     }
 }

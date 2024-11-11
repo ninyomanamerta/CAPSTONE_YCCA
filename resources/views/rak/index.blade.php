@@ -45,8 +45,15 @@
                     <td class="col-1">{{ \Carbon\Carbon::parse($rak->created_at)->format('F d, Y') }}</td>
                     <td class="col-0" style="display: flex; justify-content: flex-end;">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#rakModal" data-id="{{ $rak->id }}" class="view-rak"><span class="badge bg-success">View</span></a>
-                        <a href=""><span class="badge bg-warning">Update</span></a>
-                        <a href=""><span class="badge bg-danger">Delete</span></a>
+
+                        <a href="{{ route('rak.edit', $rak->id) }}"><span class="badge bg-warning">Update</span></a>
+
+                        <form action="{{ route('rak.destroy', $rak->id) }}" method="POST" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Delete</button>
+                        </form>
+
                     </td>
                   </tr>
                 @endforeach
