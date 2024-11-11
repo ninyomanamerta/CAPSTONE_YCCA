@@ -74,7 +74,7 @@
             </a>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="">
+            <a class="nav-link collapsed" href="{{ route('enrichmentBooks.index') }}">
                 <i class="bi bi-archive"></i>
                 <span>Buku Pengayaan</span>
             </a>

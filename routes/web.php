@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookTypeController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrichmentbookController;
 use App\Http\Controllers\SubClassController;
 use App\Http\Controllers\SubCourseController;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +81,14 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::get('/jenis/{id}/edit', [BookTypeController::class, 'edit'])->name('jenis.edit');
 
 
+// Pengayaan
+Route::get('/pengayaan', [EnrichmentbookController::class, 'index'])->name('enrichmentBooks.index');
+Route::get('/pengayaan/add', [EnrichmentbookController::class, 'create'])->name('enrichmentBooks.create');
+Route::post('/pengayaan/store', [EnrichmentbookController::class, 'store'])->name('enrichmentBooks.store');
+Route::get('/pengayaan/{id}', [EnrichmentbookController::class, 'show']);
+Route::delete('/pengayaan/{id}', [EnrichmentbookController::class, 'destroy'])->name('enrichmentBooks.destroy');
+Route::put('/pengayaan/{id}', [EnrichmentbookController::class, 'update'])->name('enrichmentBooks.update');
+Route::get('/pengayaan/{id}/edit', [EnrichmentbookController::class, 'edit'])->name('enrichmentBooks.edit');
 
 //Test front end
 Route::get('/nonfiksi/add', function () {
