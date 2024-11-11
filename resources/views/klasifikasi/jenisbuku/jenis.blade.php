@@ -51,10 +51,10 @@
                       <th scope="row" class="col-1">{{ $key + 1 }}</th>
                       <td class="col-2">{{ $item->jenis_buku }}</td>
                       <td class="col-1">{{ $item->nomor_induk_jenis }}</td>
-                      <td class="col-1">{{ $item->created_at->format('d-m-Y') }}</td>
+                      <td class="col-1">{{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y') }}</td>
                       <td class="col-0" style="display: flex; justify-content: flex-end;">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#jenisModal" data-id="{{ $item->id }}" class="view-jenis"><span class="badge bg-success">View</span></a>
-                          <a href="{{ route('jenis.edit', $item->id) }}"><span class="badge bg-warning">Update</span></a>                   
+                          <a href="{{ route('jenis.edit', $item->id) }}"><span class="badge bg-warning">Update</span></a>
                           <form action="{{ route('jenis.destroy', $item->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')

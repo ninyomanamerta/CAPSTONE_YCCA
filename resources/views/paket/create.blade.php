@@ -19,7 +19,7 @@
             <h4 class="card-title ml-4 mb-6">Formulir Tambah Buku Paket</h4>
 
           <!-- Horizontal Form -->
-          <form action="" method="POST" class="px-3">
+          <form action="{{ route('paket.store') }}" method="POST" class="px-3">
             @csrf
             <div class="row mb-3">
                 <label for="judul" class="col-sm-2 col-form-label">Judul</label>
@@ -33,8 +33,9 @@
                 <div class="col-sm-10">
                     <select class="form-control" id="klasifikasi_jenis" name="klasifikasi_jenis" required>
                         <option value="">Pilih Jenis</option>
-                        <option value="buku_paket">Buku Paket</option>
-                        <option value="nonfiksi">Nonfiksi</option>
+                        @foreach($types as $type)
+                            <option value="{{ $type->id }}">{{ $type->jenis_buku }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -44,10 +45,9 @@
                 <div class="col-sm-10">
                     <select class="form-control" id="klasifikasi_mapel" name="klasifikasi_mapel" required>
                         <option value="">Pilih Mata Pelajaran</option>
-                        <option value="matematika">Matematika</option>
-                        <option value="bahasa_inggris">Bahasa Inggris</option>
-                        <option value="bahasa_indonesia">Bahasa Indonesia</option>
-                        <!-- Add more subjects as needed -->
+                        @foreach($courses as $course)
+                            <option value="{{ $course->id }}">{{ $course->mapel }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -55,9 +55,11 @@
             <div class="row mb-3">
                 <label for="klasifikasi_submapel" class="col-sm-2 col-form-label">Klasifikasi Sub Mapel</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="klasifikasi_submapel" name="klasifikasi_submapel" required>
+                    <select class="form-control" id="klasifikasi_submapel" name="klasifikasi_submapel">
                         <option value="">Pilih Sub Mapel</option>
-                        <!-- Sub Mapel will be dynamically populated based on selected Mapel -->
+                        @foreach($subCourses as $subCourse)
+                            <option value="{{ $subCourse->id }}">{{ $subCourse->sub_mapel }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -67,7 +69,9 @@
                 <div class="col-sm-10">
                     <select class="form-control" id="klasifikasi_subkelas" name="klasifikasi_subkelas" required>
                         <option value="">Pilih Sub Kelas</option>
-                        <!-- Sub Kelas will be dynamically populated based on selected Mapel -->
+                        @foreach($subClasses as $subClass)
+                            <option value="{{ $subClass->id }}">{{ $subClass->sub_kelas }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
