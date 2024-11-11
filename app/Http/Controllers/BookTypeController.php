@@ -29,10 +29,11 @@ class BookTypeController extends Controller
      */
     public function store(Request $request)
     {
+
         // Validate the request
         $request->validate([
             'jenis_buku' => 'required|string|max:100',
-            'nomor_induk_jenis' => 'required|string|max:20',
+            'nomor_induk_jenis' => 'required|string|max:20unique:type_books,nomor_induk_jenis',
         ]);
 
         // Create a new BookType record
