@@ -91,6 +91,21 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 
 
 
+Route::get('/nonfiksi/add', function () {
+   return view('nonfiksi.create');
+   });
+        
+Route::get('/nonfiksi', function () {
+   return view('nonfiksi.index');
+   });          
+
+Route::get('/paket/add', function () {
+    return view('paket.create');
+    });  
+Route::get('/book/edit', function () {
+    return view('rak.edit');
+    });
+
 
 
 
