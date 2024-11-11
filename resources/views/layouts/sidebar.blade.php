@@ -73,18 +73,31 @@
                 <span>Rak</span>
             </a>
 
+
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('enrichmentBooks.index') }}">
-                <i class="bi bi-archive"></i>
-                <span>Buku Pengayaan</span>
+            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#buku" role="button" aria-expanded="false" aria-controls="buku">
+                <i class="bi bi-book"></i>
+                <span>Manajemen Buku</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
             </a>
-        
+            <ul id="buku" class="collapse sidebar-submenu">
+                <li><a class="nav-link" href="{{ route('paket.index') }}">Buku Paket</a></li>
+                <li><a class="nav-link" href="{{ route('enrichmentBooks.index') }}"> Buku Pengayaan</a></li>
+            </ul>
+        </li>
+
         <li class="nav-item">
-            <a class="nav-link collapsed" href="">
-                <i class="bi bi-archive"></i>
-                <span>Buku Paket</span>
-            </a>    
-        </li><!-- End Register Page Nav -->
+            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#peminjaman" role="button" aria-expanded="false" aria-controls="peminjaman">
+                <i class="bi bi-calendar-check"></i>
+                <span>Peminjaman Buku</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="peminjaman" class="collapse sidebar-submenu">
+                <li><a class="nav-link" href="">Paket</a></li>
+                <li><a class="nav-link" href="">Pengayaan</a></li>
+            </ul>
+        </li>
+        <!-- End Register Page Nav -->
 
 
 

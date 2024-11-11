@@ -17,7 +17,8 @@ class PackageBookController extends Controller
      */
     public function index()
     {
-        //
+        $packageBook = PackageBook::all();
+        return view("paket.index", compact("packageBook"));
     }
 
     /**
