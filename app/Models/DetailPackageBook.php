@@ -13,7 +13,6 @@ class DetailPackageBook extends Model
 
     protected $fillable = [
         'id_package_books',
-        'judul',
         'nomor_induk',
         'status_peminjaman',
     ];

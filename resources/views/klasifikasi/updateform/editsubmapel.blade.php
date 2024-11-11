@@ -31,7 +31,7 @@
             <div class="row mb-3">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Induk</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="noinduk" name="noinduk" placeholder="Masukan nomor induk" required value="{{ old('noinduk', $subCourse->nomor_induk_submapel) }}">
+                <input type="text" class="form-control" id="noinduk" name="noinduk" placeholder="Masukan nomor induk" value="{{ old('noinduk', $subCourse->nomor_induk_submapel) }}">
               </div>
             </div>
 

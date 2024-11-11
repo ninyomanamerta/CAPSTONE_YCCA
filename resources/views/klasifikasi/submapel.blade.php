@@ -49,7 +49,7 @@
                   <tr>
                     <th scope="row" class="col-1">{{ $index + 1 }}</th>
                     <td class="col-1">{{ $subCourse->sub_mapel }}</td>
-                    <td class="col-1">{{ $subCourse->nomor_induk_submapel }}</td>
+                    <td class="col-1">{{ $subCourse->nomor_induk_submapel ?? 'NULL' }}</td>
                     <td class="col-1">{{ \Carbon\Carbon::parse($subCourse->created_at)->format('F d, Y') }}</td>
                     <td class="col-0" style="display: flex; justify-content: flex-end;">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#subCourseModal" data-id="{{ $subCourse->id }}" class="view-subCourse"><span class="badge bg-success">View</span></a>

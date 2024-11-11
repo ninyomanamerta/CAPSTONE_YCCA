@@ -7,6 +7,7 @@ use App\Http\Controllers\SubCourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\BookCaseController;
+use App\Http\Controllers\PackageBookController;
 
 
 
@@ -79,6 +80,10 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::put('/jenis/{id}', [BookTypeController::class, 'update'])->name('jenis.update');
     Route::get('/jenis/{id}/edit', [BookTypeController::class, 'edit'])->name('jenis.edit');
 
+// Package Book
+    Route::get('/bukupaket/add', [PackageBookController::class, 'create'])->name('paket.create');
+    Route::post('/bukupaket/store', [PackageBookController::class, 'store'])->name('paket.store');
+
 
 
 //Test front end
@@ -94,14 +99,14 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 Route::get('/nonfiksi/add', function () {
    return view('nonfiksi.create');
    });
-        
+
 Route::get('/nonfiksi', function () {
    return view('nonfiksi.index');
-   });          
+   });
 
-Route::get('/paket/add', function () {
-    return view('paket.create');
-    });  
+// Route::get('/paket/add', function () {
+//     return view('paket.create');
+//     });
 Route::get('/book/edit', function () {
     return view('rak.edit');
     });
