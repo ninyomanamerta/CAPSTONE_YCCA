@@ -82,40 +82,40 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::get('/jenis/{id}/edit', [BookTypeController::class, 'edit'])->name('jenis.edit');
 
 // Package Book
-    Route::get('/bukupaket/add', [PackageBookController::class, 'create'])->name('paket.create');
-    Route::post('/bukupaket/store', [PackageBookController::class, 'store'])->name('paket.store');
+
+    Route::get('/paket', [PackageBookController::class, 'index'])->name('paket.index');
+    Route::get('/paket/add', [PackageBookController::class, 'create'])->name('paket.create');
+    Route::post('/paket/store', [PackageBookController::class, 'store'])->name('paket.store');
+    Route::get('/paket/{id}', [PackageBookController::class, 'show']);
+    Route::delete('/paket/{id}', [PackageBookController::class, 'destroy'])->name('paket.destroy');
+    Route::put('/paket/{id}', [PackageBookController::class, 'update'])->name('paket.update');
+    Route::get('/paket/{id}/edit', [PackageBookController::class, 'edit'])->name('paket.edit');
 
 
 // Pengayaan
-Route::get('/pengayaan', [EnrichmentbookController::class, 'index'])->name('enrichmentBooks.index');
-Route::get('/pengayaan/add', [EnrichmentbookController::class, 'create'])->name('enrichmentBooks.create');
-Route::post('/pengayaan/store', [EnrichmentbookController::class, 'store'])->name('enrichmentBooks.store');
-Route::get('/pengayaan/{id}', [EnrichmentbookController::class, 'show']);
-Route::delete('/pengayaan/{id}', [EnrichmentbookController::class, 'destroy'])->name('enrichmentBooks.destroy');
-Route::put('/pengayaan/{id}', [EnrichmentbookController::class, 'update'])->name('enrichmentBooks.update');
-Route::get('/pengayaan/{id}/edit', [EnrichmentbookController::class, 'edit'])->name('enrichmentBooks.edit');
+    Route::get('/pengayaan', [EnrichmentbookController::class, 'index'])->name('enrichmentBooks.index');
+    Route::get('/pengayaan/add', [EnrichmentbookController::class, 'create'])->name('enrichmentBooks.create');
+    Route::post('/pengayaan/store', [EnrichmentbookController::class, 'store'])->name('enrichmentBooks.store');
+    Route::get('/pengayaan/{id}', [EnrichmentbookController::class, 'show']);
+    Route::delete('/pengayaan/{id}', [EnrichmentbookController::class, 'destroy'])->name('enrichmentBooks.destroy');
+    Route::put('/pengayaan/{id}', [EnrichmentbookController::class, 'update'])->name('enrichmentBooks.update');
+    Route::get('/pengayaan/{id}/edit', [EnrichmentbookController::class, 'edit'])->name('enrichmentBooks.edit');
 
 //Test front end
-Route::get('/nonfiksi/add', function () {
-   return view('nonfiksi.create');
-   });
-
-Route::get('/nonfiksi', function () {
-   return view('nonfiksi.index');
-   });
 
 
-Route::get('/paket', function () {
-    return view('paket.index');
-    });  
 
-Route::get('/paket/detail', function () {
-    return view('paket.detail');
-    });  
+// Route::get('/paket', function () {
+//     return view('paket.index');
+//     });  
+
+// Route::get('/paket/detail', function () {
+//     return view('paket.detail');
+//     });  
     
-Route::get('/book/edit', function () {
-    return view('rak.edit');
-    });
+// Route::get('/book/edit', function () {
+//     return view('rak.edit');
+//     });
 
 
 
