@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\BookCaseController;
+use App\Http\Controllers\BookTypeController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\SubCourseController;
+use App\Http\Controllers\SubClassController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,43 +29,57 @@ Route::get('/', function () {
     Route::get('/rak/add', [BookCaseController::class, 'create'])->name('rak.create');
     Route::post('/rak/store', [BookCaseController::class, 'store'])->name('rak.store');
     Route::get('/rak/{id}', [BookCaseController::class, 'show']);
+    Route::get('/rak/{id}/edit', [BookCaseController::class, 'edit'])->name('rak.edit');
+    Route::put('/rak/{id}', [BookCaseController::class, 'update'])->name('rak.update');
+    Route::delete('/rak/{id}', [BookCaseController::class, 'destroy'])->name('rak.destroy');
+
+
+// BookType
+    Route::get('/klasifikasi/jenis', [BookTypeController::class, 'index'])->name('bookType.index');
+    Route::get('/klasifikasi/jenis/add', [BookTypeController::class, 'create'])->name('bookType.create');
+
+
+// Course
+    Route::get('/klasifikasi/mapel', [CourseController::class, 'index'])->name('course.index');
+    Route::get('/klasifikasi/mapel/add', [CourseController::class, 'create'])->name('course.create');
+    Route::post('/klasifikasi/mapel/store', [CourseController::class, 'store'])->name('course.store');
+    Route::get('/klasifikasi/mapel/{id}', [CourseController::class, 'show']);
+    Route::get('/klasifikasi/mapel/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
+    Route::put('/klasifikasi/mapel/{id}', [CourseController::class, 'update'])->name('course.update');
+    Route::delete('/klasifikasi/mapel/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
+
+// SubCourse
+    Route::get('/klasifikasi/submapel', [SubCourseController::class, 'index'])->name('subCourse.index');
+    Route::get('/klasifikasi/submapel/add', [SubCourseController::class, 'create'])->name('subCourse.create');
+    Route::post('/klasifikasi/submapel/store', [SubCourseController::class, 'store'])->name('subCourse.store');
+    Route::get('/klasifikasi/submapel/{id}', [SubCourseController::class, 'show']);
+    Route::get('/klasifikasi/submapel/{id}/edit', [SubCourseController::class, 'edit'])->name('subCourse.edit');
+    Route::put('/klasifikasi/submapel/{id}', [SubCourseController::class, 'update'])->name('subCourse.update');
+    Route::delete('/klasifikasi/submapel/{id}', [SubCourseController::class, 'destroy'])->name('subCourse.destroy');
+
+// SubClass
+    Route::get('/klasifikasi/subkelas', [SubClassController::class, 'index'])->name('class.index');
+    Route::get('/klasifikasi/subkelas/add', [SubClassController::class, 'create'])->name('class.create');
+    Route::post('/klasifikasi/subkelas/store', [SubClassController::class, 'store'])->name('class.store');
+    Route::get('/klasifikasi/subkelas/{id}', [SubClassController::class, 'show']);
+    Route::get('/klasifikasi/subkelas/{id}/edit', [SubClassController::class, 'edit'])->name('class.edit');
+    Route::put('/klasifikasi/subkelas/{id}', [SubClassController::class, 'update'])->name('class.update');
+    Route::delete('/klasifikasi/subkelas/{id}', [SubClassController::class, 'destroy'])->name('class.destroy');
+
+
+
+
 
 // end
 
 //Test front end
-Route::get('/klasifikasi/jenis', function () {
-return view('klasifikasi.jenis');
-});
 
-Route::get('/klasifikasi/mapel', function () {
-    return view('klasifikasi.mapel');
-    });
 
-Route::get('/klasifikasi/submapel', function () {
-    return view('klasifikasi.submapel');
-    });
+// Route::get('/klasifikasi/jenis/add', function () {
+//     return view('klasifikasi.addform.addjenis');
+//     });
 
-Route::get('/klasifikasi/subkelas', function () {
-    return view('klasifikasi.subkelas');
-    });
 
-Route::get('/klasifikasi/jenis/add', function () {
-    return view('klasifikasi.addform.addjenis');
-    });
 
-Route::get('/klasifikasi/mapel/add', function () {
-    return view('klasifikasi.addform.addmapel');
-    });
 
-Route::get('/klasifikasi/submapel/add', function () {
-    return view('klasifikasi.addform.addsubmapel');
-    });
-
-Route::get('/klasifikasi/subkelas/add', function () {
-    return view('klasifikasi.addform.addsubkelas');
-    });
-
-Route::get('/book/edit', function () {
-    return view('rak.edit');
-    });
 

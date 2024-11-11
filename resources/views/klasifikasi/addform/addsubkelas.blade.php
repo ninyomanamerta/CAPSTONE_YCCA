@@ -4,6 +4,15 @@
 <main id="main" class="main">
     <div class="pagetitle">
       <h1 class="mb-4">Tambah Sub Kelas</h1>
+      @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+      @endif
 
 
       <div class="card">
@@ -11,17 +20,18 @@
             <h4 class="card-title ml-4 mb-6">Formulir Tambah Sub Kelas</h4>
 
           <!-- Horizontal Form -->
-          <form class="px-3">
+          <form action="{{ route('class.store') }}" method="POST" class="px-3">
+            @csrf
             <div class="row mb-3">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Sub Kelas</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="subkelas" name="subkelas" placeholder="Masukan sub kelas" >
+                <input type="text" class="form-control" id="subkelas" name="subkelas" placeholder="Masukan sub kelas" required value="{{ old('subkelas') }}">
               </div>
             </div>
             <div class="row mb-3">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Induk</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="noinduk" name="noinduk" placeholder="Masukan nomor induk">
+                <input type="text" class="form-control" id="noinduk" name="noinduk" placeholder="Masukan nomor induk" required value="{{ old('noinduk') }}">
               </div>
             </div>
 

@@ -3,83 +3,69 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Rak Buku</h1>
-
-      {{-- <nav>
-        <ol class="breadcrumb text-bold mt-1">
-            <li class="breadcrumb-item active"><a href="" style="color: #1c1b1a; font-weight: bold; font-size:15px;"><b>Semua Siswa</b></a></li>
-            <li class="breadcrumb-item active"><a href="">Kelas 7</a></li>
-            <li class="breadcrumb-item active"><a href="">Kelas 8</a></li>
-            <li class="breadcrumb-item active"><a href="">Kelas 9</a></li>
-        </ol>
-      </nav> --}}
-
-      <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-      <a href="" class="btn btn-primary">Tambah Rak</a>
-      </div>
-      {{-- </div>
-        @if(Session::has('success'))
-        <div class="alert alert-success" role="alert" style="padding-top:10px">
-            {{ Session::get('success') }}
+      <h1 class="mb-4">Edit Data Rak</h1>
+      @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-        @endif --}}
+      @endif
 
-    </div><!-- End Page Title -->
-    <section class="section dashboard mt-4">
-      <div class="row">
 
-        <div class="col-12 px-3">
-          <div class="card recent-sales overflow-auto">
+      <div class="card">
+        <div class="card-body">
+            <h4 class="card-title ml-4 mb-6">Formulir Edit Data Rak</h4>
 
-            <div class="card-body">
-              <h1 class="card-title px-2" style="font-size: 16px">Daftar Rak Penyimpanan</h1>
-
-              <table class="table table-borderless datatable">
-                <thead>
-                  <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Lokasi Rak</th>
-                    <th scope="col">Keterangan</th>
-                    <th scope="col">Tgl Ditambahkan</th>
-                    <th scope="col" style="display: flex; justify-content: flex-end;">Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {{-- looping row --}}
-                  <tr>
-                    <th scope="row" class="col">1</th>
-                    <td class="col">1A</td>
-                    <td class="col">Rak pertama</td>
-                    <td class="col-1">12-10-2024</td>
-                    <td class="col" style="display: flex; justify-content: flex-end;">
-                        <a href=""><span class="badge bg-success">View</span></a>
-                        <a href=""><span class="badge bg-warning">Update</span></a>
-                        <a href=""><span class="badge bg-danger">Delete</span></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="col-1">2</th>
-                    <td class="col-2">1B</td>
-                    <td class="col-1">Rak kedua </td>
-                    <td class="col-1">12-10-2024</td>
-                    <td class="col-0" style="display: flex; justify-content: flex-end;">
-                        <a href=""><span class="badge bg-success">View</span></a>
-                        <a href=""><span class="badge bg-warning">Update</span></a>
-                        <a href=""><span class="badge bg-danger">Delete</span></a>
-                    </td>
-                  </tr>
-
-                </tbody>
-              </table>
-
+          <!-- Horizontal Form -->
+          <form action="{{ route('rak.update', $rak->id) }}" method="POST" class="px-3">
+            @csrf
+            @method('PUT')
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">Lokasi rak</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Masukan lokasi rak" required value="{{ old('lokasi', $rak->lokasi) }}" >
+              </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Keterangan</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Jelaskan lokasi rak" rows="3" required maxlength="65" oninput="updateCharacterCount()" maxlength="65">{{ old('keterangan', $rak->keterangan) }}</textarea>
+                    <div id="characterCount" class="mt-1" style="display: flex; justify-content: flex-end; font-size: 14px; color: gray;">0 / 65</div>
+                </div>
             </div>
 
-          </div>
-        </div><!-- End Recent Sales -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Simpan</button>
+              <a href="{{ route('rak.index') }}" class="mt-2 btn btn-warning mb-2">Batal</a>
+            </div>
+          </form><!-- End Horizontal Form -->
 
-
+        </div>
       </div>
-    </section>
+
+      <script>
+        function updateCharacterCount() {
+            const textarea = document.getElementById('keterangan');
+            const characterCount = document.getElementById('characterCount');
+            const currentLength = textarea.value.length;
+
+            characterCount.textContent = `${currentLength} / 65 `;
+
+            if (currentLength >= 65) {
+                textarea.value = textarea.value.substring(0, 65);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCharacterCount();
+        });
+    </script>
+
+    </div>
+</section>
 </main>
 
 @endsection

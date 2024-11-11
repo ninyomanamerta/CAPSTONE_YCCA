@@ -14,7 +14,7 @@
         </ol>
       </nav>
       <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-      <a href="" class="btn btn-primary">Tambah Mapel Buku</a>
+      <a href="{{ route('bookType.create') }}" class="btn btn-primary">Tambah Mapel Buku</a>
       </div>
       {{-- </div>
         @if(Session::has('success'))
@@ -45,7 +45,23 @@
                 </thead>
                 <tbody>
                 {{-- looping row --}}
-                  <tr>
+                @foreach ($bookType as $index => $bookType)
+
+                <tr>
+                    <th scope="row" class="col-1">{{ $index + 1 }}</th>
+                    <td class="col-2">{{ $bookType->jenis_buku }}</td>
+                    <td class="col-1">{{ $bookType->nomor_induk_jenis }}</td>
+                    <td class="col-1">{{ \Carbon\Carbon::parse($bookType->created_at)->format('F d, Y') }}</td>
+                    <td class="col-0" style="display: flex; justify-content: flex-end;">
+                        <a href=""><span class="badge bg-success">View</span></a>
+                        <a href=""><span class="badge bg-warning">Update</span></a>
+                        <a href=""><span class="badge bg-danger">Delete</span></a>
+                    </td>
+                  </tr>
+
+                @endforeach
+
+                  {{-- <tr>
                     <th scope="row" class="col-1">1</th>
                     <td class="col-2">Paket</td>
                     <td class="col-1">3</td>
@@ -66,7 +82,7 @@
                         <a href=""><span class="badge bg-warning">Update</span></a>
                         <a href=""><span class="badge bg-danger">Delete</span></a>
                     </td>
-                  </tr>
+                  </tr> --}}
 
                 </tbody>
               </table>
