@@ -8,6 +8,7 @@ use App\Http\Controllers\SubCourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\BookCaseController;
+use App\Http\Controllers\PackageBookController;
 
 
 
@@ -80,6 +81,10 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::put('/jenis/{id}', [BookTypeController::class, 'update'])->name('jenis.update');
     Route::get('/jenis/{id}/edit', [BookTypeController::class, 'edit'])->name('jenis.edit');
 
+// Package Book
+    Route::get('/bukupaket/add', [PackageBookController::class, 'create'])->name('paket.create');
+    Route::post('/bukupaket/store', [PackageBookController::class, 'store'])->name('paket.store');
+
 
 // Pengayaan
 Route::get('/pengayaan', [EnrichmentbookController::class, 'index'])->name('enrichmentBooks.index');
@@ -91,23 +96,23 @@ Route::put('/pengayaan/{id}', [EnrichmentbookController::class, 'update'])->name
 Route::get('/pengayaan/{id}/edit', [EnrichmentbookController::class, 'edit'])->name('enrichmentBooks.edit');
 
 //Test front end
-
-
-
-
-
-
-
-
-
 Route::get('/nonfiksi/add', function () {
    return view('nonfiksi.create');
    });
-        
+
 Route::get('/nonfiksi', function () {
    return view('nonfiksi.index');
-   });          
+   });
 
+
+Route::get('/paket', function () {
+    return view('paket.index');
+    });  
+
+Route::get('/paket/detail', function () {
+    return view('paket.detail');
+    });  
+    
 Route::get('/book/edit', function () {
     return view('rak.edit');
     });

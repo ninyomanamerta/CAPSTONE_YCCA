@@ -32,7 +32,7 @@ class SubCourseController extends Controller
     {
         $request->validate([
             'submapel' => 'required|string|unique:sub_courses,sub_mapel',
-            'noinduk' => 'required|string|unique:sub_courses,nomor_induk_submapel',
+            'noinduk' => 'nullable|string',
         ]);
 
         SubCourse::create([
@@ -70,7 +70,7 @@ class SubCourseController extends Controller
 
         $request->validate([
             'submapel' => 'required|string|unique:sub_courses,sub_mapel,' . $subCourse->id,
-            'noinduk' => 'required|string|unique:sub_courses,nomor_induk_submapel,' . $subCourse->id,
+            'noinduk' => 'nullable|string,' . $subCourse->id,
         ]);
 
         $subCourse->update([
