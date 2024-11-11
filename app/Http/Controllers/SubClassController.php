@@ -12,7 +12,8 @@ class SubClassController extends Controller
      */
     public function index()
     {
-        //
+        $subkelas = SubClass::all();  
+        return view("klasifikasi.subkelas", compact("subkelas"));
     }
 
     /**

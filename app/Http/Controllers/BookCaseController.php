@@ -70,8 +70,11 @@ class BookCaseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(BookCase $bookCase)
+    public function destroy($id)
     {
-        //
+        $bookCase = Bookcase::findOrFail($id);
+        $bookCase->delete();
+   
+        return redirect()->route('rak.index')->with('success','Data rak berhasil dihapus');
     }
 }

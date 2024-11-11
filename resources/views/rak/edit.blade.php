@@ -3,7 +3,16 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Rak Buku</h1>
+      <h1 class="mb-4">Merubah Data Rak</h1>
+      @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+      @endif
 
       {{-- <nav>
         <ol class="breadcrumb text-bold mt-1">

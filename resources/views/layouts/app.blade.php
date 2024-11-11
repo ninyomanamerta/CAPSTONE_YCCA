@@ -15,6 +15,18 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <style>
+    .navbar-nav .nav-item .nav-link {
+        font-size: 18px; /* Make login/register links larger */
+    }
+
+    /* Targeting the EduLib logo text */
+    .edulib {
+        font-size: 20px; 
+        font-weight: bold; 
+        color: 
+    }
+    </style>
 </head >
 <body>
     <div id="app">
@@ -24,14 +36,12 @@
                     <!-- Left Side Of Navbar -->
                     <div class="mr-4">
                         <a href="{{ url('/') }}" >
-                            <img  src="{{ asset('assets/Photo/edulib.png') }}" alt="EduLib" style="width: 40px; height: 40px;">
+                            <img  src="{{ asset('assets/Photo/edulib.png') }}" alt="EduLib" style="width: 60px; height: 60px;">
                         </a>
                     </div>
                 
-                    <div class="d-flex align-items-center justify-content-between">
-                        <a href="" class="logo d-flex align-items-center" >
-                            <span class="d-none d-lg-block" style="margin-left: 10px;">EduLib</span>
-                        </a>
+                    <div class="edulib">
+                            <a style="margin-left: 10px;" >EduLib</a>
                     </div>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">

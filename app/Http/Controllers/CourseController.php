@@ -12,7 +12,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $mapel = Course::all();
+        return view("klasifikasi.mapel", compact("mapel"));
     }
 
     /**
