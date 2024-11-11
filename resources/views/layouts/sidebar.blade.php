@@ -78,7 +78,21 @@
                 <i class="bi bi-archive"></i>
                 <span>Buku Pengayaan</span>
             </a>    
-        </li><!-- End Register Page Nav -->
+        </li>
+    
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#peminjaman" role="button" aria-expanded="false" aria-controls="peminjaman">
+                <i class="bi bi-calendar-check-fill"></i>
+                <span>Peminjaman Buku</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="peminjaman" class="collapse sidebar-submenu">
+                <li><a class="nav-link" href="">Paket</a></li>
+                <li><a class="nav-link" href="">Pengayaan</a></li>
+            </ul>
+        </li>
+        <!-- End Register Page Nav -->
 
 
 
