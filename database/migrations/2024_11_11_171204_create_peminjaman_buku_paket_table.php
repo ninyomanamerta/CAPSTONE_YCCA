@@ -11,19 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_package_books', function (Blueprint $table) {
+        Schema::create('peminjaman_buku_paket', function (Blueprint $table) {
             $table->id();
-
-            $table->unsignedBigInteger('id_package_books');
-            $table->integer('nomor_induk');
-
-            $table->foreign('id_package_books')->references('id')->on('package_books')->onDelete('cascade');
-            $table->string('status_peminjaman');
-
+            $table->unsignedBigInteger('id_siswa');
+            $table->string('penanggung_jawab');
             $table->timestamps();
+
+            $table->foreign('id_siswa')->references('id')->on('students')->onDelete('cascade');
         });
-
-
     }
 
     /**
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_detail_package_books');
+        Schema::dropIfExists('peminjaman_buku_paket');
     }
 };

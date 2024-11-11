@@ -13,4 +13,10 @@ class Student extends Model
                         'nis',
                         'nama_siswa',
                         'kelas'];
+                        
+
+    public function peminjamanBukuPaket()
+        {
+            return $this->hasMany(PeminjamanBukuPaket::class, 'id_siswa');
+        }
 }

@@ -15,6 +15,7 @@ class DetailPackageBook extends Model
         'id_package_books',
         'judul',
         'nomor_induk',
+        'status_peminjaman',
     ];
 
     // Relasi dengan tabel package_books (satu detail_package_book memiliki satu package_book)
