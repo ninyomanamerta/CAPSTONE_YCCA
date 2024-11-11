@@ -53,6 +53,7 @@
                             @method('DELETE')
                             <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Delete</button>
                         </form>
+
                     </td>
                   </tr>
                 @endforeach

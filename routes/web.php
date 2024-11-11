@@ -1,30 +1,37 @@
 <?php
 
+use App\Http\Controllers\BookTypeController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\SubClassController;
+use App\Http\Controllers\SubCourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\BookCaseController;
-use App\Http\Controllers\BookTypeController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\SubCourseController;
-use App\Http\Controllers\SubClassController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Using Controller
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 // Student
-    Route::get('/siswa', [StudentController::class, 'index'])->name('student.index');
-    Route::get('/siswa/add', [StudentController::class, 'create'])->name('student.create');
-    Route::post('/siswa/store', [StudentController::class, 'store'])->name('student.store');
-    Route::get('/siswa/{id}', [StudentController::class, 'show']);
-    Route::get('/siswa/{id}/edit', [StudentController::class, 'edit'])->name('student.edit');
-    Route::put('/siswa/{id}', [StudentController::class, 'update'])->name('student.update');
-    Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
+Route::get('/siswa', [StudentController::class, 'index'])->name('student.index');
+Route::get('/siswa/add', [StudentController::class, 'create'])->name('student.create');
+Route::post('/siswa/store', [StudentController::class, 'store'])->name('student.store');
+Route::get('/siswa/{id}', [StudentController::class, 'show']);
+Route::get('/siswa/{id}/edit', [StudentController::class, 'edit'])->name('student.edit');
+Route::put('/siswa/{id}', [StudentController::class, 'update'])->name('student.update');
+Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
 
 
 // BookCase
+
     Route::get('/rak', [BookCaseController::class, 'index'])->name('rak.index');
     Route::get('/rak/add', [BookCaseController::class, 'create'])->name('rak.create');
     Route::post('/rak/store', [BookCaseController::class, 'store'])->name('rak.store');
@@ -33,10 +40,6 @@ Route::get('/', function () {
     Route::put('/rak/{id}', [BookCaseController::class, 'update'])->name('rak.update');
     Route::delete('/rak/{id}', [BookCaseController::class, 'destroy'])->name('rak.destroy');
 
-
-// BookType
-    Route::get('/klasifikasi/jenis', [BookTypeController::class, 'index'])->name('bookType.index');
-    Route::get('/klasifikasi/jenis/add', [BookTypeController::class, 'create'])->name('bookType.create');
 
 
 // Course
@@ -67,17 +70,24 @@ Route::get('/', function () {
     Route::delete('/klasifikasi/subkelas/{id}', [SubClassController::class, 'destroy'])->name('class.destroy');
 
 
+// Klasifikasi Jenis
+    Route::get('/jenis', [BookTypeController::class, 'index'])->name('jenis.index');
+    Route::get('/jenis/add', [BookTypeController::class, 'create'])->name('jenis.create');
+    Route::post('/jenis/store', [BookTypeController::class, 'store'])->name('jenis.store');
+    Route::get('/jenis/{id}', [BookTypeController::class, 'show']);
+    Route::delete('/jenis/{id}', [BookTypeController::class, 'destroy'])->name('jenis.destroy');
+    Route::put('/jenis/{id}', [BookTypeController::class, 'update'])->name('jenis.update');
+    Route::get('/jenis/{id}/edit', [BookTypeController::class, 'edit'])->name('jenis.edit');
 
 
-
-// end
 
 //Test front end
 
 
-// Route::get('/klasifikasi/jenis/add', function () {
-//     return view('klasifikasi.addform.addjenis');
-//     });
+
+
+
+
 
 
 

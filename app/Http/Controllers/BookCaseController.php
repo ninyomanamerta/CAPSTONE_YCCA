@@ -87,9 +87,9 @@ class BookCaseController extends Controller
      */
     public function destroy($id)
     {
-        $rak = BookCase::findOrFail($id);
-        $rak->delete();
+        $bookCase = Bookcase::findOrFail($id);
+        $bookCase->delete();
 
-        return redirect()->route('rak.index')->with('success', 'Data rak berhasil dihapus!');
+        return redirect()->route('rak.index')->with('success','Data rak berhasil dihapus');
     }
 }

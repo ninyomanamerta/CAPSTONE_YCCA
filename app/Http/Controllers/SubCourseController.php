@@ -12,6 +12,7 @@ class SubCourseController extends Controller
      */
     public function index()
     {
+
         $subCourse = SubCourse::all();
         return view('klasifikasi.submapel', compact('subCourse'));
     }

@@ -3,7 +3,8 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1 class="mb-4">Edit Data Rak</h1>
+
+      <h1 class="mb-4">Merubah Data Rak</h1>
       @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -14,6 +15,9 @@
         </div>
       @endif
 
+      <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
+      <a href="" class="btn btn-primary">Tambah Rak</a>
+      </div>
 
       <div class="card">
         <div class="card-body">
