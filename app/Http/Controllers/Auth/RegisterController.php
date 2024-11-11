@@ -52,8 +52,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'nip' => ['required|numeric|unique:users'], // Pastikan validasi sesuai
-            'jabatan' => ['required|string|max:255'],
+            'nip' => ['required', 'numeric', 'unique:users'], // Pastikan validasi sesuai
+            'jabatan' => ['required', 'string', 'max:255'],
         ]);
     }
 

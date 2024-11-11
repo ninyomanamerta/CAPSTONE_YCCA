@@ -10,9 +10,9 @@ use App\Http\Controllers\BookCaseController;
 
 
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Using Controller
 
@@ -93,3 +93,7 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

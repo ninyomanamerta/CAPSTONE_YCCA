@@ -53,9 +53,9 @@
           </a>
           <ul id="klasifikasiSubmenu" class="collapse sidebar-submenu">
               <li><a class="nav-link" href="{{ route('jenis.index') }}">Jenis</a></li>
-              <li><a class="nav-link" href="{{ route('mapel.index') }}">Mata Pelajaran</a></li>
-              <li><a class="nav-link" href="{{ route('submapel.index') }}">Sub Mata Pelajaran</a></li>
-              <li><a class="nav-link" href="{{ route('subkelas.index') }}">Sub Kelas</a></li>
+              <li><a class="nav-link" href="{{ route('course.index') }}">Mata Pelajaran</a></li>
+              <li><a class="nav-link" href="{{ route('subCourse.index') }}">Sub Mata Pelajaran</a></li>
+              <li><a class="nav-link" href="{{ route('class.index') }}">Sub Kelas</a></li>
               <!-- Tambahkan klasifikasi lain jika diperlukan -->
           </ul>
       </li><!-- End Dashboard Nav -->
