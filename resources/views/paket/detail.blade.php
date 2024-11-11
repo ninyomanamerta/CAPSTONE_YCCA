@@ -27,31 +27,20 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Tanggal Masuk</th>
                     <th>Judul</th>
-                    <th>Tahun Terbit</th>
-                    <th>Penerbit</th>
-                    <th>Eksemplar</th>
-                    <th>Sumber</th>
-                    <th style="display: flex; justify-content: flex-end;">Aksi</th>
+                    <th>Nomer Induk</th>
+                    <th style="display: flex; justify-content: flex-end;">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                     <tr>
                       <td>1</td>
-                      <td>07 Desember 2023</td>
                       <td>Matematika</td>
-                      <td>2020</td>
-                      <td>Reza Publisher</td>
-                      <td>6</td>
-                      <td>Pemerintah</td>
+                      <td>131</td>
                       <td>
-                        <a href="" class="badge bg-success">Detail</a>
-                        <a href="" class="badge bg-warning">Update</a>
+                        <a href="" class="badge bg-success">Available</a>
+                        <a href="" class="badge bg-warning">No Available</a>
                         <form action="" method="POST" style="display:inline;">
-                          @csrf
-                          @method('DELETE')
-                          <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Yakin ingin menghapus buku ini?');">Delete</button>
                         </form>
                       </td>
                     </tr>
