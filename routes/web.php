@@ -61,6 +61,14 @@ Route::get('/klasifikasi/subkelas/add', function () {
     return view('klasifikasi.addform.addsubkelas');
     });
 
+Route::get('/nonfiksi/add', function () {
+   return view('nonfiksi.create');
+   });
+        
+Route::get('/nonfiksi', function () {
+   return view('nonfiksi.index');
+   });          
+
 Route::get('/book/edit', function () {
     return view('rak.edit');
     });
