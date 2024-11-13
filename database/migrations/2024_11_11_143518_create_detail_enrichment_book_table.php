@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('detail_enrichment_book', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_pengayaan');
-            $table->string('judul');
+            $table->string('status_peminjaman');
             $table->integer('no_induk');
             $table->timestamps();
 

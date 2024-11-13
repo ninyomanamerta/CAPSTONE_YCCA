@@ -44,23 +44,23 @@ class EnrichmentbookController extends Controller
         ]);
 
         $lastNomorInduk = detailenrichmentbook::max('no_induk');
-        
+
         $nomorInduk = $lastNomorInduk ? $lastNomorInduk + 1 : 1;
 
-        $enrichmentBooks= EnrichmentBook::create([
+        $enrichmentBooks = EnrichmentBook::create([
             'tgl_masuk' => $validated['tgl_masuk'],
-            'judul'=> $validated['judul'],
-            'tahun'=> $validated['tahun'],
-            'pengarang'=> $validated['pengarang'],
-            'eksemplar'=> $validated['eksemplar'],
-            'penerbit'=> $validated['penerbit'],
-            'id_rak'=> $validated['id_rak']
+            'judul' => $validated['judul'],
+            'tahun' => $validated['tahun'],
+            'pengarang' => $validated['pengarang'],
+            'eksemplar' => $validated['eksemplar'],
+            'penerbit' => $validated['penerbit'],
+            'id_rak' => $validated['id_rak']
         ]);
 
         for ($i = 0; $i < $validated['eksemplar']; $i++) {
             detailenrichmentbook::create([
                 'id_pengayaan' => $enrichmentBooks->id,
-                'judul' => $enrichmentBooks->judul,
+                'status_peminjaman' => 'available',
                 'no_induk' => $nomorInduk + $i,
             ]);
         }
@@ -126,13 +126,13 @@ class EnrichmentbookController extends Controller
      */
     public function destroy($id)
     {
-         // Hapus data yang terkait di tabel detail_enrichment_book
-    detailenrichmentbook::where('id_pengayaan', $id)->delete();
-    
-    // Hapus data di tabel enrichment_book
-    $enrichmentBooks = EnrichmentBook::findOrFail($id);
-    $enrichmentBooks->delete();
+        // Hapus data yang terkait di tabel detail_enrichment_book
+        detailenrichmentbook::where('id_pengayaan', $id)->delete();
 
-    return redirect()->route('enrichmentBooks.index')->with('success', 'Buku Pengayaan Telah Terhapus');
+        // Hapus data di tabel enrichment_book
+        $enrichmentBooks = EnrichmentBook::findOrFail($id);
+        $enrichmentBooks->delete();
+
+        return redirect()->route('enrichmentBooks.index')->with('success', 'Buku Pengayaan Telah Terhapus');
     }
 }
