@@ -111,10 +111,22 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 //     return view('paket.index');
 //     });
 
-// Route::get('/paket/detail', function () {
-//     return view('paket.detail');
-//     });
+Route::get('/peminjaman_paket/detail', function () {
+    return view('peminjaman_paket.detail');
+    });
 
+    Route::get('/peminjaman_paket/index', function () {
+        return view('peminjaman_paket.index');
+        });
+    
+Route::get('/peminjaman_pengayaan/detail', function () {
+    return view('peminjaman_pengayaan.detail');
+    });
+
+    Route::get('/peminjaman_pengayaan/index', function () {
+        return view('peminjaman_pengayaan.index');
+        });
+        
 // Route::get('/book/edit', function () {
 //     return view('rak.edit');
 //     });
