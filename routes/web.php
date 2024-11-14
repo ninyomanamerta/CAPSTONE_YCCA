@@ -84,10 +84,11 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 // Package Book
 
     Route::get('/paket', [PackageBookController::class, 'index'])->name('paket.index');
+    Route::get('/paket/detail/{id}', [PackageBookController::class, 'detail'])->name('paket.detail');
     Route::get('/paket/add', [PackageBookController::class, 'create'])->name('paket.create');
     Route::post('/paket/store', [PackageBookController::class, 'store'])->name('paket.store');
     Route::get('/paket/{id}', [PackageBookController::class, 'show']);
-    Route::delete('/paket/{id}', [PackageBookController::class, 'destroy'])->name('paket.destroy');
+    Route::delete('/paket/detail/{id}', [PackageBookController::class, 'destroy'])->name('paket.destroy');
     Route::put('/paket/{id}', [PackageBookController::class, 'update'])->name('paket.update');
     Route::get('/paket/{id}/edit', [PackageBookController::class, 'edit'])->name('paket.edit');
 
@@ -107,12 +108,12 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 
 // Route::get('/paket', function () {
 //     return view('paket.index');
-//     });  
+//     });
 
 // Route::get('/paket/detail', function () {
 //     return view('paket.detail');
-//     });  
-    
+//     });
+
 // Route::get('/book/edit', function () {
 //     return view('rak.edit');
 //     });

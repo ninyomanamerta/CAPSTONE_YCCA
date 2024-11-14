@@ -27,9 +27,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Tanggal Masuk</th>
+                                    <th>Tgl Masuk</th>
                                     <th>Judul</th>
-                                    <th>Tahun Terbit</th>
+                                    <th>Thn Terbit</th>
                                     <th>Penerbit</th>
                                     <th>Eksemplar</th>
                                     <th>Sumber</th>
@@ -44,16 +44,12 @@
                                         <td>{{ $packageBook->judul }}</td>
                                         <td>{{ $packageBook->tahun_terbit }}</td>
                                         <td>{{ $packageBook->penerbit }}</td>
-                                        <td>{{ $packageBook->eksemplar }}</td>
+                                        <td>{{ $packageBook->detail_package_books_count }}</td>
                                         <td>{{ $packageBook->sumber }}</td>
                                         <td>
-                                            {{-- <a href="{{ route('paket.show', $packageBook->id) }}" class="badge bg-success">Detail</a> --}}
-                                            {{-- <a href="{{ route('paket.edit', $packageBook->id) }}" class="badge bg-warning">Update</a> --}}
-                                            <form action="{{ route('paket.destroy', $packageBook->id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Yakin ingin menghapus buku ini?');">Delete</button>
-                                            </form>
+                                            <a href="{{ route('paket.detail', $packageBook->id) }}" class="badge bg-success">Detail</a>
+                                            <a href="{{ route('paket.edit', $packageBook->id) }}" class="badge bg-warning">Update</a>
+                                           
                                         </td>
                                     </tr>
                                 @endforeach

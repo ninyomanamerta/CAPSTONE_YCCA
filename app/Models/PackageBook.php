@@ -9,6 +9,8 @@ class PackageBook extends Model
 {
     use HasFactory;
 
+    protected $table = 'package_books';
+
     protected $fillable = [
         'tgl_masuk',
         'judul',
@@ -25,7 +27,7 @@ class PackageBook extends Model
     // Relasi dengan tabel type_books
     public function jenis()
     {
-        return $this->belongsTo(TypeBook::class, 'id_jenis');
+        return $this->belongsTo(BookType::class, 'id_jenis');
     }
 
     // Relasi dengan tabel courses

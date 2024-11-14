@@ -17,8 +17,16 @@ class PackageBookController extends Controller
      */
     public function index()
     {
-        $packageBook = PackageBook::all();
+        $packageBook = PackageBook::withCount('detailPackageBooks')->get();
         return view("paket.index", compact("packageBook"));
+    }
+
+    public function detail($id)
+    {
+        $packageBook = PackageBook::with('detailPackageBooks')
+        ->findOrFail($id);
+
+        return view('paket.detail', compact('packageBook'));
     }
 
     /**
@@ -77,7 +85,7 @@ class PackageBookController extends Controller
             ]);
         }
 
-        return redirect()->route('paket.create')->with('success', 'Buku Paket berhasil ditambahkan');
+        return redirect()->route('paket.index')->with('success', 'Buku Paket berhasil ditambahkan');
     }
 
     /**
@@ -91,24 +99,63 @@ class PackageBookController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PackageBook $packageBook)
+    public function edit($id)
     {
-        //
+        $packageBook = PackageBook::with('detailPackageBooks')->findOrFail($id);
+        $types = BookType::all();
+        $courses = Course::all();
+        $subCourses = SubCourse::all();
+        $subClasses = SubClass::all();
+
+
+        return view('paket.edit', compact('types', 'courses', 'subCourses', 'subClasses', 'packageBook'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PackageBook $packageBook)
+    public function update(Request $request, $id)
     {
-        //
+        $packageBook = PackageBook::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'judul' => 'required|string|max:255',
+            'klasifikasi_jenis' => 'required|exists:type_books,id',
+            'klasifikasi_mapel' => 'required|exists:courses,id',
+            'klasifikasi_submapel' => 'nullable|exists:sub_courses,id',
+            'klasifikasi_subkelas' => 'required|exists:sub_class,id',
+            'tgl_masuk' => 'required|date',
+            'tahun_terbit' => 'required|numeric',
+            'penerbit' => 'required|string|max:255',
+            'sumber' => 'required|string|max:255',
+            'jumlah' => 'required|numeric|min:1',
+        ]);
+
+        $packageBook->update([
+            'judul' => $validatedData['judul'],
+            'id_jenis' => $validatedData['klasifikasi_jenis'],
+            'id_mapel' => $validatedData['klasifikasi_mapel'],
+            'id_submapel' => $validatedData['klasifikasi_submapel'],
+            'id_subkelas' => $validatedData['klasifikasi_subkelas'],
+            'tgl_masuk' => $validatedData['tgl_masuk'],
+            'tahun_terbit' => $validatedData['tahun_terbit'],
+            'penerbit' => $validatedData['penerbit'],
+            'sumber' => $validatedData['sumber'],
+            'eksemplar' => $validatedData['jumlah'],
+        ]);
+
+        return redirect()->route('paket.index')->with('success', 'Buku Paket berhasil diperbarui!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PackageBook $packageBook)
+    public function destroy($id)
     {
-        //
+        $detailPackageBook = DetailPackageBook::findOrFail($id); 
+        $detailPackageBook->delete();
+
+        return redirect()->route('paket.detail', $detailPackageBook->id_package_books)
+        ->with('success', 'Data buku berhasil dihapus');
     }
 }

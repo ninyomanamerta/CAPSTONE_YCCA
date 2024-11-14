@@ -22,9 +22,9 @@
 
     /* Targeting the EduLib logo text */
     .edulib {
-        font-size: 20px; 
-        font-weight: bold; 
-        color: 
+        font-size: 20px;
+        font-weight: bold;
+        color:
     }
     </style>
 </head >
@@ -39,7 +39,7 @@
                             <img  src="{{ asset('assets/Photo/edulib.png') }}" alt="EduLib" style="width: 60px; height: 60px;">
                         </a>
                     </div>
-                
+
                     <div class="edulib">
                             <a style="margin-left: 10px;" >EduLib</a>
                     </div>
