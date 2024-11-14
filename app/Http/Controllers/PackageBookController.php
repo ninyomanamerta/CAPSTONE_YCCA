@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\SubCourse;
 use App\Models\SubClass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PackageBookController extends Controller
 {
@@ -152,10 +153,28 @@ class PackageBookController extends Controller
      */
     public function destroy($id)
     {
-        $detailPackageBook = DetailPackageBook::findOrFail($id); 
+        $detailPackageBook = DetailPackageBook::findOrFail($id);
         $detailPackageBook->delete();
 
         return redirect()->route('paket.detail', $detailPackageBook->id_package_books)
         ->with('success', 'Data buku berhasil dihapus');
+    }
+
+    public function destroyAll($id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $packageBook = PackageBook::findOrFail($id);
+
+            $packageBook->detailPackageBooks()->delete();
+            $packageBook->delete();
+            DB::commit();
+
+            return redirect()->route('paket.index')->with('success', 'Buku paket berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('paket.index')->with('error', 'Gagal menghapus semua buku paket: ' . $e->getMessage());
+        }
     }
 }

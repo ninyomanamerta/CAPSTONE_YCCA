@@ -87,10 +87,11 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::get('/paket/detail/{id}', [PackageBookController::class, 'detail'])->name('paket.detail');
     Route::get('/paket/add', [PackageBookController::class, 'create'])->name('paket.create');
     Route::post('/paket/store', [PackageBookController::class, 'store'])->name('paket.store');
-    Route::get('/paket/{id}', [PackageBookController::class, 'show']);
     Route::delete('/paket/detail/{id}', [PackageBookController::class, 'destroy'])->name('paket.destroy');
     Route::put('/paket/{id}', [PackageBookController::class, 'update'])->name('paket.update');
     Route::get('/paket/{id}/edit', [PackageBookController::class, 'edit'])->name('paket.edit');
+    Route::delete('/paket/destroyAll/{id}', [PackageBookController::class, 'destroyAll'])->name('paket.destroyAll');
+
 
 
 // Pengayaan
