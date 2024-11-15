@@ -14,7 +14,7 @@ class EnrichmentbookController extends Controller
      */
     public function index()
     {
-        $enrichmentBooks = EnrichmentBook::all();
+        $enrichmentBooks = EnrichmentBook::withCount('detailEnrichmentBooks')->get();
         return view('pengayaan.index', compact('enrichmentBooks'));
     }
 
@@ -77,6 +77,20 @@ class EnrichmentbookController extends Controller
         return response()->json($enrichmentBooks);
     }
 
+    public function detail($id)
+    {
+        $enrichmentBooks = EnrichmentBook::with('detailEnrichmentBooks')
+            ->findOrFail($id);
+
+        $enrichmentBooksCount = EnrichmentBook::withCount('detailEnrichmentBooks')->findOrFail($id);
+
+        // Hitung jumlah eksemplar yang dipinjam
+        $jumlahDipinjam = $enrichmentBooks->detailEnrichmentBooks
+            ->where('status_peminjaman', '!=', 'available')
+            ->count();
+
+        return view('pengayaan.detail', compact('enrichmentBooks', 'jumlahDipinjam', 'enrichmentBooksCount'));
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -135,4 +149,17 @@ class EnrichmentbookController extends Controller
 
         return redirect()->route('enrichmentBooks.index')->with('success', 'Buku Pengayaan Telah Terhapus');
     }
+
+    public function destroyDetail($id)
+    {
+
+        $detailEnrichmentBook = detailenrichmentbook::findOrFail($id);
+        $enrichmentBookId = $detailEnrichmentBook->id_pengayaan;
+
+        $detailEnrichmentBook->delete();
+
+        return redirect()->route('enrichmentBooks.detail', $enrichmentBookId)
+            ->with('success', 'Detail buku berhasil dihapus');
+    }
+
 }

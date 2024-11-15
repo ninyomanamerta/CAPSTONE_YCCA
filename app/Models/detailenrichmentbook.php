@@ -22,6 +22,13 @@ class detailenrichmentbook extends Model
      */
     public function enrichmentBook()
     {
-        return $this->belongsTo(EnrichmentBook::class, 'id_pengayaan');
+        return $this->belongsTo(detailenrichmentbook::class, 'id_pengayaan');
     }
+
+    public function bookcase()
+    {
+        return $this->belongsTo(Bookcase::class, 'id_rak');
+    }
+
+
 }

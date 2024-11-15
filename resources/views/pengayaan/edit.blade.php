@@ -61,10 +61,10 @@
                     <div class="row mb-3">
                         <label for="jumlah" class="col-sm-2 col-form-label">Eksemplar</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="eksemplar" name="eksemplar" required value="{{ old('eksemplar', $enrichmentBooks->eksemplar) }}" disabled>
+                            <input type="number" class="form-control" id="eksemplar" name="eksemplar" required value="{{ old('eksemplar', $enrichmentBooks->eksemplar) }}" readonly style="background-color: #adb5bd;">
                         </div>
                     </div>
-                    
+
 
                     <!-- Dropdown untuk memilih Rak -->
                     <div class="row mb-3">
@@ -74,7 +74,7 @@
                                 <option value="">Pilih Rak</option>
                                 @foreach($bookcases as $bookcase)
                                     <option value="{{ $bookcase->id }}" {{ old('id_rak', $enrichmentBooks->id_rak) == $bookcase->id ? 'selected' : '' }}>
-                                        Rak {{ $bookcase->id }} - {{ $bookcase->lokasi ?? 'Nama Rak Tidak Tersedia' }}
+                                        Rak {{ $bookcase->lokasi ?? 'Nama Rak Tidak Tersedia' }}
                                     </option>
                                 @endforeach
                             </select>

@@ -72,7 +72,7 @@
                                 <option value="">Pilih Rak</option>
                                 @foreach($bookcases as $bookcase)
                                     <option value="{{ $bookcase->id }}" {{ old('id_rak') == $bookcase->id ? 'selected' : '' }}>
-                                        Rak {{ $bookcase->id }} - {{ $bookcase->lokasi ?? 'Nama Rak Tidak Tersedia' }}
+                                        Rak {{ $bookcase->lokasi ?? 'Nama Rak Tidak Tersedia' }}
                                     </option>
                                 @endforeach
                             </select>
