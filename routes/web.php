@@ -113,6 +113,11 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 //     return view('paket.index');
 //     });
 
+
+Route::get('/detailpengayaan/test', function () {
+    return view('pengayaan.test');
+    });
+
 Route::get('/peminjaman_paket/detail', function () {
     return view('peminjaman_paket.detail');
     });
