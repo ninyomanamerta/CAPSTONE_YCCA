@@ -102,6 +102,8 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::delete('/pengayaan/{id}', [EnrichmentbookController::class, 'destroy'])->name('enrichmentBooks.destroy');
     Route::put('/pengayaan/{id}', [EnrichmentbookController::class, 'update'])->name('enrichmentBooks.update');
     Route::get('/pengayaan/{id}/edit', [EnrichmentbookController::class, 'edit'])->name('enrichmentBooks.edit');
+    Route::get('/pengayaan/detail/{id}', [EnrichmentbookController::class, 'detail'])->name('enrichmentBooks.detail');
+    Route::delete('/pengayaan/detail/{id}', [EnrichmentbookController::class, 'destroyDetail'])->name('enrichmentBooks.destroyDetail');
 
 //Test front end
 
@@ -115,9 +117,9 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 //     return view('paket.detail');
 //     });
 
-// Route::get('/book/edit', function () {
-//     return view('rak.edit');
-//     });
+Route::get('/detailpengayaan/test', function () {
+    return view('pengayaan.test');
+    });
 
 
 

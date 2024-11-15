@@ -28,4 +28,9 @@ class enrichmentbook extends Model
     {
         return $this->belongsTo(Bookcase::class, 'id_rak');
     }
+
+    public function detailEnrichmentBooks()
+    {
+        return $this->hasMany(detailenrichmentbook::class, 'id_pengayaan');
+    }
 }
