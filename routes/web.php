@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\BookCaseController;
 use App\Http\Controllers\PackageBookController;
+use App\Http\Controllers\PeminjamanBukuPaketController;
 
 
 
@@ -92,6 +93,11 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::get('/paket/{id}/edit', [PackageBookController::class, 'edit'])->name('paket.edit');
     Route::delete('/paket/destroyAll/{id}', [PackageBookController::class, 'destroyAll'])->name('paket.destroyAll');
 
+// Peminjaman Buku Paket
+    Route::get('/paket/peminjaman/add', [PeminjamanBukuPaketController::class, 'create'])->name('pinjamPaket.create');
+    Route::post('/paket/peminjaman/store', [PeminjamanBukuPaketController::class, 'store'])->name('pinjamPaket.store');
+
+
 
 
 // Pengayaan
@@ -114,18 +120,14 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 //     });
 
 
-Route::get('/detailpengayaan/test', function () {
-    return view('pengayaan.test');
-    });
+// Route::get('/detailpengayaan/test', function () {
+//     return view('pengayaan.test');
+//     });
 
 Route::get('/peminjaman_paket/detail', function () {
     return view('peminjaman_paket.detail');
     });
 
-
-Route::get('/detailpengayaan/test', function () {
-    return view('pengayaan.test');
-    });
 
     Route::get('/peminjaman_paket/index', function () {
         return view('peminjaman_paket.index');
@@ -139,8 +141,8 @@ Route::get('/peminjaman_pengayaan/detail', function () {
         return view('peminjaman_pengayaan.index');
         });
 
-// Route::get('/book/edit', function () {
-//     return view('rak.edit');
+// Route::get('/paket/peminjaman', function () {
+//     return view('peminjaman_paket.create');
 //     });
 
 

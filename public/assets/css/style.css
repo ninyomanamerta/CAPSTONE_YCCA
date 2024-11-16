@@ -1799,8 +1799,71 @@ h6 {
     font-family: "Poppins", sans-serif;
 }
 
+.sub-title-2 {
+    font-size: 12px;
+    padding: 0 0 0 0;
+    font-weight: 500;
+    color: #899bbd;
+    font-family: "Poppins", sans-serif;
+}
+
 .span {
     color: #899bbd;
     font-size: 14px;
     font-weight: 400;
 }
+
+
+
+.select2-selection {
+    border: 1px solid #dee2e6 !important;
+    height: 40px !important;
+    border-radius: 4px !important;
+}
+
+.select2-dropdown {
+    border: 1px solid #dee2e6 !important;
+}
+
+.select2-results__options {
+    max-height: 200px;
+    overflow-y: auto;
+    color: #dee2e6;
+}
+
+
+.select2-results__option {
+    color: #495057;
+    padding: 5px 10px;
+}
+
+
+.select2-results__option:hover {
+    background-color: #f1f1f1;
+    color: #007bff;
+    cursor: pointer;
+}
+
+
+.select2-results__option[aria-selected="true"] {
+    background-color: #007bff !important;
+    color: white !important;
+}
+
+
+.select2-selection__placeholder {
+    padding-top: 2px;
+    color: #495057;
+}
+
+.select2-selection__rendered {
+    padding-top: 6px;
+    color: #495057;
+}
+
+
+
+
+
+
+

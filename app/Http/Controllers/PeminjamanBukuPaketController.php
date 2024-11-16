@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\PeminjamanBukuPaket;
+use App\Models\DetailPeminjamanBukuPaket;
+use App\Models\PackageBook;
+use App\Models\DetailPackageBook;
+use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PeminjamanBukuPaketController extends Controller
 {
@@ -20,7 +25,13 @@ class PeminjamanBukuPaketController extends Controller
      */
     public function create()
     {
-        //
+        $students = Student::all();
+        $books = PackageBook::whereHas('detailPackageBooks', function ($query) {
+            $query->where('status_peminjaman', 'available');
+        })->get();
+
+
+        return view('peminjaman_paket.create', compact('students', 'books'));
     }
 
     /**
@@ -28,7 +39,42 @@ class PeminjamanBukuPaketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'student' => 'required|exists:students,id',
+            'pic' => 'required|string|max:255',
+            'books' => 'required|array',
+            'books.*' => 'exists:detail_package_books,id',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $peminjaman = PeminjamanBukuPaket::create([
+                'id_siswa' => $validated['student'],
+                'penanggung_jawab' => $validated['pic'],
+            ]);
+
+            foreach ($validated['books'] as $bookId) {
+                DetailPeminjamanBukuPaket::create([
+                    'id_pinjam' => $peminjaman->id,
+                    'id_buku_paket' => $bookId,
+                    'status_peminjaman' => 'borrowed',
+                ]);
+
+                $detailBook = DetailPackageBook::findOrFail($bookId);
+                $detailBook->update([
+                    'status_peminjaman' => 'nonavailable',
+                ]);
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Peminjaman buku berhasil!');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses peminjaman.');
+        }
     }
 
     /**
