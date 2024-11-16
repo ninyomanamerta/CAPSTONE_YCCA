@@ -94,7 +94,7 @@
             </a>
             <ul id="peminjaman" class="collapse sidebar-submenu">
                 <li><a class="nav-link" href="">Paket</a></li>
-                <li><a class="nav-link" href="">Pengayaan</a></li>
+                <li><a class="nav-link" href="{{ route('peminjamanbukupengayaan.index') }}">Pengayaan</a></li>
             </ul>
         </li>
         <!-- End Register Page Nav -->
