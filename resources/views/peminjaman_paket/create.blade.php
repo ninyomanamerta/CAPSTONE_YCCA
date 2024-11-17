@@ -51,11 +51,11 @@
                         <div class="col-10 mt-1 mb-2" id="select-container">
                             <select class="form-control select2Books" name="books[]" style="width: 110%; margin-left: 14px;" id="books_1">
                                 <option value="">Pilih opsi</option>
-                                @foreach($books as $book)
-                                    @foreach($book->detailPackageBooks as $detail)
+                                @foreach ($books as $book)
+                                    @foreach ($book->detailPackageBooks as $detail)
                                         @if($detail->status_peminjaman === 'available')
                                             <option value="{{ $detail->id }}">
-                                                {{ $book->judul }} | {{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
+                                                {{ $book->judul }} | {{ $book->jenis->nomor_induk_jenis }}{{ $book->mapel->nomor_induk_mapel }}{{ $book->submapel->nomor_induk_submapel }}{{ $book->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
                                             </option>
                                         @endif
                                     @endforeach
@@ -128,11 +128,11 @@
         selectContainer.innerHTML = `
            <select class="form-control select2Books" name="books[]" id="books_${rowCounter}" style="width: 110%;">
             <option value="">Pilih opsi</option>
-            @foreach($books as $book)
-                @foreach($book->detailPackageBooks as $detail)
+            @foreach ($books as $book)
+                @foreach ($book->detailPackageBooks as $detail)
                     @if($detail->status_peminjaman === 'available')
                         <option value="{{ $detail->id }}">
-                            {{ $book->judul }} | {{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
+                            {{ $book->judul }} | {{ $book->jenis->nomor_induk_jenis }}{{ $book->mapel->nomor_induk_mapel }}{{ $book->submapel->nomor_induk_submapel }}{{ $book->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
                         </option>
                     @endif
                 @endforeach

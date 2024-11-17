@@ -6,6 +6,10 @@ use App\Models\PeminjamanBukuPaket;
 use App\Models\DetailPeminjamanBukuPaket;
 use App\Models\PackageBook;
 use App\Models\DetailPackageBook;
+use App\Models\BookType;
+use App\Models\Course;
+use App\Models\SubCourse;
+use App\Models\SubClass;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,10 +29,12 @@ class PeminjamanBukuPaketController extends Controller
      */
     public function create()
     {
+
         $students = Student::all();
-        $books = PackageBook::whereHas('detailPackageBooks', function ($query) {
+        $books = PackageBook::with(['detailPackageBooks' => function ($query) {
             $query->where('status_peminjaman', 'available');
-        })->get();
+        }, 'jenis', 'mapel', 'submapel', 'subkelas'])
+        ->get();
 
 
         return view('peminjaman_paket.create', compact('students', 'books'));
@@ -49,9 +55,24 @@ class PeminjamanBukuPaketController extends Controller
         DB::beginTransaction();
 
         try {
+
+            $student = Student::findOrFail($validated['student']);
+
+            $currentClassLevel = intval(substr($student->kelas, 0, 1));
+
+        // Periksa apakah sudah ada peminjaman di tingkat kelas ini
+            $existingLoan = PeminjamanBukuPaket::where('id_siswa', $student->id)
+            ->whereRaw('CAST(LEFT(kelas, 1) AS UNSIGNED) = ?', [$currentClassLevel])
+            ->exists();
+
+            if ($existingLoan) {
+                return redirect()->back()->withErrors(['student' => 'Siswa ini sudah melakukan peminjaman di tingkat kelas ' . $currentClassLevel]);
+            }
+
             $peminjaman = PeminjamanBukuPaket::create([
-                'id_siswa' => $validated['student'],
+                'id_siswa' => $student->id,
                 'penanggung_jawab' => $validated['pic'],
+                'kelas' => $student->kelas,
             ]);
 
             foreach ($validated['books'] as $bookId) {

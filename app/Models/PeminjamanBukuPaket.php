@@ -14,6 +14,7 @@ class PeminjamanBukuPaket extends Model
     protected $fillable = [
         'id_siswa',
         'penanggung_jawab',
+        'kelas',
     ];
 
 
