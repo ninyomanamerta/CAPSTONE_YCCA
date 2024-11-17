@@ -101,6 +101,70 @@ class PeminjamanBukuPaketController extends Controller
     /**
      * Display the specified resource.
      */
+
+    public function showPeminjamanByClassLevels($id)
+    {
+        // Ambil data siswa berdasarkan ID
+        $student = Student::findOrFail($id);
+
+        // Ambil data peminjaman untuk setiap tingkat kelas
+        // $peminjamanByClassLevels = [
+        //     '7' => PeminjamanBukuPaket::with(['detailPeminjamanBukuPaket.bukuPaket.packageBook'])
+        //         ->where('id_siswa', $id)
+        //         ->where('kelas', 'like', '7%')
+        //         ->get(),
+
+        //     '8' => PeminjamanBukuPaket::with(['detailPeminjamanBukuPaket.bukuPaket.packageBook'])
+        //         ->where('id_siswa', $id)
+        //         ->where('kelas', 'like', '8%')
+        //         ->get(),
+
+        //     '9' => PeminjamanBukuPaket::with(['detailPeminjamanBukuPaket.bukuPaket.packageBook'])
+        //         ->where('id_siswa', $id)
+        //         ->where('kelas', 'like', '9%')
+        //         ->get(),
+        // ];
+
+        $peminjamanByClassLevels = [
+            '7' => PeminjamanBukuPaket::with([
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.jenis',
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.mapel',
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.submapel',
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.subkelas'
+            ])
+            ->where('id_siswa', $id)
+            ->where('kelas', 'like', '7%')
+            ->get(),
+
+            '8' => PeminjamanBukuPaket::with([
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.jenis',
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.mapel',
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.submapel',
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.subkelas'
+            ])
+            ->where('id_siswa', $id)
+            ->where('kelas', 'like', '8%')
+            ->get(),
+
+            '9' => PeminjamanBukuPaket::with([
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.jenis',
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.mapel',
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.submapel',
+                'detailPeminjamanBukuPaket.bukuPaket.packageBook.subkelas'
+            ])
+            ->where('id_siswa', $id)
+            ->where('kelas', 'like', '9%')
+            ->get(),
+        ];
+
+
+        // dd($peminjamanByClassLevels);
+
+        return view('peminjaman_paket.detail', compact('student', 'peminjamanByClassLevels'));
+    }
+
+
+
     public function show(PeminjamanBukuPaket $peminjamanBukuPaket)
     {
         //

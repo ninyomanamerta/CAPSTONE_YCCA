@@ -32,7 +32,7 @@ class StudentController extends Controller
         $request->validate([
             'nis' => 'required|string|max:20|unique:students,nis',
             'namasiswa' => 'required|string|max:300',
-            'kelas' => 'required|string|max:10',
+            'kelas' => 'required|string|max:4',
         ]);
 
         Student::create([

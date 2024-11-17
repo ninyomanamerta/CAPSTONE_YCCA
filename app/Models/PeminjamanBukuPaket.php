@@ -28,5 +28,7 @@ class PeminjamanBukuPaket extends Model
         return $this->hasMany(DetailPeminjamanBukuPaket::class, 'id_pinjam');
     }
 
+    
+
 
 }

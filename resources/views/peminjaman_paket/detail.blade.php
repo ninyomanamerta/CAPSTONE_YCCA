@@ -24,31 +24,35 @@
                 <div class="row">
                   <!-- Kolom untuk ikon -->
                   <div class="col-1 d-flex align-items-start mt-1">
-                    <i class="bi bi-person-square" style="font-size: 60px; color: #798eb3;"></i>
+                    <i class="bi bi-person-square" style="font-size: 50px; color: #798eb3;"></i>
                   </div>
                   <!-- Kolom untuk teks -->
-                  <div class="col-4 mt-3 mb-2">
-                    <h5 class="sub-title">Nama : Moana</h5>
-                    <h5 class="sub-title">NIS : 1202210259</h5>
-                    <h5 class="sub-title">Kelas Saat Ini : 7A</h5>
+                  <div class="col-5 mt-3 mb-2 mt-4">
+                    <h5 class="sub-title">Nama : {{ $student->nama_siswa }}</h5>
                   </div>
-                  <div class="col-6 mt-3">
-                    <h5 class="sub-title">Total Buku Yang Dipinjam : 10</h5>
-                    <h5 class="sub-title">Total Buku Yang Dikembalikan : 0</h5>
-                 </div>
+                  <div class="col-3 mt-3 mb-2 mt-4">
+                    <h5 class="sub-title">NIS : {{ $student->nis }}</h5>
+                  </div>
+                  <div class="col-3 mt-3 mb-2 mt-4">
+                    <h5 class="sub-title">Kelas Saat Ini : {{ $student->kelas }}</h5>
+                  </div>
+
                 </div>
             </div>
         </div><!-- End Default Card -->
     </section>
 
-    {{-- Kelas 7 --}}
+    @foreach ($peminjamanByClassLevels as $classLevel => $peminjamanList)
     <section class="section dashboard mt-4">
         <div class="row">
             <div class="col-12 px-3">
                 <div class="card recent-sales overflow-auto">
                     <div class="card-body">
-                        <h1 class="card-title px-2" style="font-size: 16px">Daftar Peminjaman Buku Paket Kelas : 7A</h1>
-
+                        <h1 class="card-title px-2" style="font-size: 16px">Daftar Peminjaman Buku Paket Kelas: {{ $classLevel }} <span> |
+                            @php
+                               $kelasCollection = $peminjamanList->pluck('kelas')->unique();
+                            @endphp
+                                {{ $kelasCollection->implode(', ') }} </span></h1>
                         <table class="table table-borderless datatable">
                             <thead>
                                 <tr>
@@ -63,23 +67,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>10/12/2022</td>
-                                        <td>Matematika Alpro</td>
-                                        <td>202020</td>
-                                        <td><a href="#" class="badge bg-success">Dipinjam</a></td>
-                                        <th>-</th>
-                                        <th>-</th>
-                                        <td>
-                                        <a href="" class="badge bg-warning">Update</a>
-                                        <form action="" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Yakin ingin menghapus Data peminjaman ini?');">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                @forelse ($peminjamanList as $peminjaman)
+                                    @foreach ($peminjaman->detailPeminjamanBukuPaket as $index => $detail)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $peminjaman->created_at->format('d/m/Y') }}</td>
+                                            <td>{{ $detail->bukuPaket->packageBook->judul }}</td>
+                                            <td>{{ $detail->bukuPaket->packageBook->jenis->nomor_induk_jenis }}{{ $detail->bukuPaket->packageBook->mapel->nomor_induk_mapel }}{{ $detail->bukuPaket->packageBook->submapel->nomor_induk_submapel }}{{ $detail->bukuPaket->packageBook->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->bukuPaket->nomor_induk, 4, '0', STR_PAD_LEFT) }}</td>
+                                            <td><a href="#" class="badge bg-success">{{ $detail->status_peminjaman }}</a></td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>
+                                                <a href="#" class="badge bg-warning">Update</a>
+                                                <form action="#" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Yakin ingin menghapus Data peminjaman ini?');">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @empty
+                                    {{-- <tr>
+                                        <td colspan="8">Tidak ada data peminjaman untuk kelas {{ $classLevel }}</td>
+                                    </tr> --}}
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -87,105 +99,7 @@
             </div>
         </div>
     </section>
-
-
-    {{-- Kelas 8 --}}
-    <section class="section dashboard mt-4">
-        <div class="row">
-            <div class="col-12 px-3">
-                <div class="card recent-sales overflow-auto">
-                    <div class="card-body">
-                        <h1 class="card-title px-2" style="font-size: 16px">Daftar Peminjaman Buku Paket Kelas : 8</h1>
-
-                        <table class="table table-borderless datatable">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Tgl Pinjam</th>
-                                    <th>Judul Buku</th>
-                                    <th>No Induk</th>
-                                    <th>Status</th>
-                                    <th>Tgl Kembali</th>
-                                    <th>Keterangan</th>
-                                    <th style="display: flex; justify-content: flex-end;">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>10/12/2022</td>
-                                        <td>Matematika Alpro</td>
-                                        <td>202020</td>
-                                        <td><a href="#" class="badge bg-success">Dipinjam</a></td>
-                                        <th>-</th>
-                                        <th>-</th>
-                                        <td>
-                                        <a href="" class="badge bg-warning">Update</a>
-                                        <form action="" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Yakin ingin menghapus Data peminjaman ini?');">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    {{-- Kelas 9 --}}
-    <section class="section dashboard mt-4">
-        <div class="row">
-            <div class="col-12 px-3">
-                <div class="card recent-sales overflow-auto">
-                    <div class="card-body">
-                        <h1 class="card-title px-2" style="font-size: 16px">Daftar Peminjaman Buku Paket Kelas : 9</h1>
-
-                        <table class="table table-borderless datatable">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Tgl Pinjam</th>
-                                    <th>Judul Buku</th>
-                                    <th>No Induk</th>
-                                    <th>Status</th>
-                                    <th>Tgl Kembali</th>
-                                    <th>Keterangan</th>
-                                    <th style="display: flex; justify-content: flex-end;">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>10/12/2022</td>
-                                        <td>Matematika Alpro</td>
-                                        <td>202020</td>
-                                        <td><a href="#" class="badge bg-success">Dipinjam</a></td>
-                                        <th>-</th>
-                                        <th>-</th>
-                                        <td>
-                                        <a href="" class="badge bg-warning">Update</a>
-                                        <form action="" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Yakin ingin menghapus Data peminjaman ini?');">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+@endforeach
 
 
 </main>

@@ -96,6 +96,7 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 // Peminjaman Buku Paket
     Route::get('/paket/peminjaman/add', [PeminjamanBukuPaketController::class, 'create'])->name('pinjamPaket.create');
     Route::post('/paket/peminjaman/store', [PeminjamanBukuPaketController::class, 'store'])->name('pinjamPaket.store');
+    Route::get('/paket/peminjaman/detail/siswa/{id}', [PeminjamanBukuPaketController::class, 'showPeminjamanByClassLevels'])->name('pinjamPaket.create');
 
 
 
