@@ -69,14 +69,11 @@
                                             </button>
                                         
                                             {{-- Delete --}}
-                                            <form action="{{ route('peminjamanbukupengayaan.destroy', $peminjaman->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="badge bg-danger" style="border: none;">
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </td>
+                                            <button type="button" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $peminjaman->id }}">
+                                                Delete
+                                            </button>
+                                          </td>
+
                                                 {{-- Modal Konfirmasi Pengembalian --}}
                                                 <div class="modal fade" id="verifikasiModal{{ $peminjaman->id }}" tabindex="-1" aria-labelledby="verifikasiModalLabel{{ $peminjaman->id }}" aria-hidden="true">
                                                     <div class="modal-dialog">
@@ -100,40 +97,68 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- Modal Detail Buku -->
-                                                  <!-- Modal Detail Buku -->
+
+
+                                                <!-- Modal Detail Buku -->                                              
                                                 <div class="modal fade" id="detailModal{{ $peminjaman->id }}" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-                                                  <div class="modal-dialog">
-                                                      <div class="modal-content">
-                                                          <div class="modal-header">
-                                                              <h5 class="modal-title" id="detailModalLabel">Detail Peminjaman Buku</h5>
-                                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                          </div>
-                                                          <div class="modal-body">
-                                                              <p><strong>Nama Siswa:</strong> {{ $peminjaman->student->nama_siswa }}</p>
-                                                              <p><strong>Buku yang Dipinjam:</strong> {{ $peminjaman->book->judul }}</p>
-                                                              <p><strong>Nomor Buku:</strong> {{ $peminjaman->id_judul_buku }}{{ str_pad($peminjaman->id_detail_buku, 4, '0', STR_PAD_LEFT) }}</p>
-                                                              <p><strong>Tanggal Peminjaman:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pinjam)->format('F d, Y') }}</p>
-                                                              <p><strong>Tanggal Pengembalian:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pengembalian)->format('F d, Y') }}</p>
-                                                              <p><strong>Status:</strong> 
-                                                                  @if($peminjaman->status === 'dikembalikan')
-                                                                      <span class="badge bg-success">Buku telah Dikembalikan</span>
-                                                                  @elseif($peminjaman->status === 'dipinjam')
-                                                                      <span class="badge bg-primary">Di Pinjam</span>
-                                                                  @elseif($peminjaman->status === 'telat')
-                                                                      <span class="badge bg-warning">Telat Pengembalian</span>
-                                                                  @endif
-                                                              </p>
-                                                          </div>
-                                                          <div class="modal-footer">
-                                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                                          </div>
-                                                      </div>
-                                                  </div>
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="detailModalLabel">Detail Peminjaman Buku</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p><strong>Nama Siswa:</strong> {{ $peminjaman->student->nama_siswa }}</p>
+                                                                <p><strong>Buku yang Dipinjam:</strong> {{ $peminjaman->book->judul }}</p>
+                                                                <p><strong>Nomor Buku:</strong> {{ $peminjaman->id_judul_buku }}</p>
+                                                                <p><strong>Dikasih oleh:</strong> {{ $peminjaman->peminjam }}</p>
+                                                                <p><strong>Nomor Induk Buku:</strong> {{ str_pad($peminjaman->id_detail_buku, 4, '0', STR_PAD_LEFT) }}</p>
+                                                                <p><strong>Tanggal Peminjaman:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pinjam)->format('F d, Y') }}</p>
+                                                                <p><strong>Tanggal Pengembalian:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pengembalian)->format('F d, Y') }}</p>
+                                                                <p><strong>Status:</strong> 
+                                                                    @if($peminjaman->status === 'dikembalikan')
+                                                                        <span class="badge bg-success">Buku telah Dikembalikan</span>
+                                                                    @elseif($peminjaman->status === 'dipinjam')
+                                                                        <span class="badge bg-primary">Di Pinjam</span>
+                                                                    @elseif($peminjaman->status === 'telat')
+                                                                        <span class="badge bg-warning">Telat Pengembalian</span>
+                                                                    @endif
+                                                                </p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
 
-                                            </td>
+
+                                                <!-- Modal Konfirmasi Delete -->
+                                                <div class="modal fade" id="deleteModal{{ $peminjaman->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $peminjaman->id }}" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteModalLabel{{ $peminjaman->id }}">Konfirmasi Penghapusan</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Apakah Anda yakin ingin menghapus data peminjaman ini?
+                                                                <p></p>
+                                                                <p><strong>Nama Siswa:</strong> {{ $peminjaman->student->nama_siswa }}</p>
+                                                                <p><strong>Buku:</strong> {{ $peminjaman->book->judul }}</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                                <form action="{{ route('peminjamanbukupengayaan.destroy', $peminjaman->id) }}" method="POST" style="display:inline;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                   
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -141,7 +166,7 @@
 
                     </div>
                 </div>
-            </div><!-- End Recent Sales -->
+            </div>
         </div>
     </section>
 </main>
