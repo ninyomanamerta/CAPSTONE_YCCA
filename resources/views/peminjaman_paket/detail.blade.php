@@ -3,11 +3,11 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1>Data Peminjam Buku Paket</h1>
+        <h1 class="mb-3">Data Peminjam Buku Paket</h1>
 
-      <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
+      {{-- <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
       <a href="" class="btn btn-primary">Pinjam Buku Paket</a>
-      </div>
+      </div> --}}
 
         @if(Session::has('success'))
             <div class="alert alert-success" role="alert">
@@ -52,7 +52,8 @@
                             @php
                                $kelasCollection = $peminjamanList->pluck('kelas')->unique();
                             @endphp
-                                {{ $kelasCollection->implode(', ') }} </span></h1>
+                                {{ $kelasCollection->implode(', ') }} </span>
+                        </h1>
                         <table class="table table-borderless datatable">
                             <thead>
                                 <tr>
@@ -68,18 +69,27 @@
                             </thead>
                             <tbody>
                                 @forelse ($peminjamanList as $peminjaman)
+                                @php
+                                    $peminjamanId = $peminjaman->id;
+                                @endphp
                                     @foreach ($peminjaman->detailPeminjamanBukuPaket as $index => $detail)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ $peminjaman->created_at->format('d/m/Y') }}</td>
-                                            <td>{{ $detail->bukuPaket->packageBook->judul }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($detail->tanggal_pinjam)->format('d/m/Y') }}</td>
+                                            <td>{{ \Illuminate\Support\Str::limit($detail->bukuPaket->packageBook->judul, 15, '...') }}</td>
                                             <td>{{ $detail->bukuPaket->packageBook->jenis->nomor_induk_jenis }}{{ $detail->bukuPaket->packageBook->mapel->nomor_induk_mapel }}{{ $detail->bukuPaket->packageBook->submapel->nomor_induk_submapel }}{{ $detail->bukuPaket->packageBook->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->bukuPaket->nomor_induk, 4, '0', STR_PAD_LEFT) }}</td>
-                                            <td><a href="#" class="badge bg-success">{{ $detail->status_peminjaman }}</a></td>
-                                            <td>-</td>
-                                            <td>-</td>
                                             <td>
-                                                <a href="#" class="badge bg-warning">Update</a>
-                                                <form action="#" method="POST" style="display:inline;">
+                                                <a href="#" class="badge {{ $detail->status_peminjaman == 'borrowed' ? 'bg-secondary' : 'bg-success' }}">
+                                                    {{ $detail->status_peminjaman }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{ $detail->status_peminjaman == 'returned' ? $detail->updated_at->format('d/m/Y') : '-' }}
+                                            </td>
+                                            <td>{{ \Illuminate\Support\Str::limit($detail->keterangan ?? '-', 15, '...') }}</td>
+                                            <td>
+                                                <a href="" class="badge bg-primary">Detail</a>
+                                                <form action="{{ route('pinjamPaket.destroyBook', $detail->id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Yakin ingin menghapus Data peminjaman ini?');">Delete</button>
@@ -87,10 +97,9 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                    <a href="{{ route('pinjamPaket.edit', $peminjamanId) }}" class="btn btn-primary ml-2 mb-3">Tambah Buku</a>
+                                    <span><a href="{{ route('pinjamPaket.status', $peminjamanId) }}" class="btn btn-warning ml-2 mb-3">Pengembalian Buku</a></span>
                                 @empty
-                                    {{-- <tr>
-                                        <td colspan="8">Tidak ada data peminjaman untuk kelas {{ $classLevel }}</td>
-                                    </tr> --}}
                                 @endforelse
                             </tbody>
                         </table>

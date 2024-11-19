@@ -14,6 +14,8 @@ class DetailPeminjamanBukuPaket extends Model
     protected $fillable = [
         'id_pinjam',
         'id_buku_paket',
+        'keterangan',
+        'tanggal_pinjam',
         'status_peminjaman',
     ];
 
@@ -26,5 +28,10 @@ class DetailPeminjamanBukuPaket extends Model
     public function bukuPaket()
     {
         return $this->belongsTo(DetailPackageBook::class, 'id_buku_paket');
+    }
+
+    public function packageBook()
+    {
+        return $this->belongsTo(PackageBook::class, 'id_package_books', 'id');
     }
 }

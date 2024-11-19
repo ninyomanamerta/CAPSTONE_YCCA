@@ -13,41 +13,49 @@
             </ul>
         </div>
         @endif
- 
+
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title ml-4 mb-6">Formulir Peminjaman Buku Paket</h4>
 
                 <!-- Horizontal Form -->
-                <form action="{{ route('pinjamPaket.store') }}" method="POST" class="px-3">
+                <form action="{{ route('pinjamPaket.update', $peminjamanPaket->id) }}" method="POST" class="px-3">
                     @csrf
+                    @method('PUT')
+
+                    <input type="hidden" name="student" value="{{ $peminjamanPaket->siswa->id }}">
 
                     {{-- Penanggung Jawab --}}
                     <div class="row mb-3">
                         <label for="pic" class="col-sm-2 col-form-label">Penanggung Jawab</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="pic" name="pic" required value="{{ old('pic') }}" placeholder="Petugas yang meminjamkan buku">
+                            <input type="text" class="form-control readonly" id="pic" name="pic" placeholder="Petugas yang meminjamkan buku" value="{{ old('pic', $peminjamanPaket->penanggung_jawab) }}" readonly required >
                         </div>
                     </div>
 
                     {{-- Stundet --}}
                     <div class="row mb-8">
                         <label for="student" class="col-sm-2 col-form-label">Data Siswa</label>
-                        <div class="col-sm-10">
-                            <select class="form-control select2" name="student" style="width: 100%;">
-                                <option value="">Pilih nama siswa</option>
-                                @foreach($students as $student)
-                                    <option value="{{ $student->id }}">Kelas : {{ $student->kelas }} | {{ $student->nis }} | {{ $student->nama_siswa }} </option>
-                                @endforeach
-                            </select>
+                        <div class="col-sm-10 ">
+                            <input type="text" class="form-control readonly" name="studentAs" value="{{ $peminjamanPaket->kelas }} | {{ $peminjamanPaket->siswa->nis }} | {{ $peminjamanPaket->siswa->nama_siswa }}" readonly>
                         </div>
-                        <h5 class="sub-title-2 mt-2" style="margin-left: 190px">Jika data siswa tidak sesuai, update <strong> <a href="{{ route('student.index') }}" style="color: #899bbd">disini!</a></strong></h5>
                     </div>
 
-                    {{-- Buku Paket --}}
-                    <div class="row mb-2">
-                        <label for="books" class="col-form-label">Buku Paket <span> | Total Yang Dipinjam <span id="bookCount">: 1 </span> </span> </label>
+                    {{-- Data Buku Lama --}}
+                    <div class="form-group">
+                        <label for="books-old" class="mb-2">Buku Paket Yang Telah Dipinjam</label>
+                        <ul class="list-group">
+                            @foreach($peminjamanPaket->detailPeminjamanBukuPaket as $detail)
+                                <input type="text" class="form-control mb-2 readonly" name="books-old" value="{{ $detail->bukuPaket->packageBook->judul }} | {{ $detail->bukuPaket->packageBook->jenis->nomor_induk_jenis }}{{ $detail->bukuPaket->packageBook->mapel->nomor_induk_mapel }}{{ $detail->bukuPaket->packageBook->submapel->nomor_induk_submapel }}{{ $detail->bukuPaket->packageBook->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->bukuPaket->nomor_induk, 4, '0', STR_PAD_LEFT) }}" readonly>
+                            @endforeach
+                        </ul>
+                    </div>
 
+
+
+                    {{-- Add Buku Paket --}}
+                    <div class="row mb-2 mt-3">
+                        <label for="books" class="col-form-label">Buku Paket Yang Ditambahkan <span> | Total Yang Ditambahkan <span id="bookCount">: 1 </span> </span> </label>
                         <div class="col-10 mt-1 mb-2" id="select-container">
                             <select class="form-control select2Books" name="books[]" style="width: 110%; margin-left: 14px;" id="books_1">
                                 <option value="">Pilih opsi</option>

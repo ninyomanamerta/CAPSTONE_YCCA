@@ -1813,6 +1813,10 @@ h6 {
     font-weight: 400;
 }
 
+.readonly {
+    background-color: #d6dde6;
+}
+
 
 
 .select2-selection {
