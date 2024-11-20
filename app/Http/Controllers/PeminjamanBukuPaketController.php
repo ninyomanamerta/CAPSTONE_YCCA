@@ -22,7 +22,15 @@ class PeminjamanBukuPaketController extends Controller
      */
     public function index()
     {
-        //
+        $siswaPeminjam = Student::with(['peminjamanBukuPaket'])
+            ->whereHas('peminjamanBukuPaket', function ($query) {
+                $query->whereNotNull('id');
+            })
+            ->orderByRaw("SUBSTRING_INDEX(kelas, '', 1), kelas")
+            ->get();
+
+        // Return ke view dengan data siswa peminjaman
+        return view('peminjaman_paket.index', compact('siswaPeminjam'));
     }
 
     /**
@@ -31,7 +39,9 @@ class PeminjamanBukuPaketController extends Controller
     public function create()
     {
 
-        $students = Student::all();
+        $students = Student::query()
+            ->orderByRaw("SUBSTRING_INDEX(kelas, ' ', 1), kelas")
+            ->get();
         $books = PackageBook::with(['detailPackageBooks' => function ($query) {
             $query->where('status_peminjaman', 'available');
         }, 'jenis', 'mapel', 'submapel', 'subkelas'])
@@ -95,6 +105,9 @@ class PeminjamanBukuPaketController extends Controller
             DB::commit();
 
             return redirect()->back()->with('success', 'Peminjaman buku berhasil!');
+
+
+
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -222,6 +235,8 @@ class PeminjamanBukuPaketController extends Controller
         try {
             $peminjaman = PeminjamanBukuPaket::with('detailPeminjamanBukuPaket')->findOrFail($id);
 
+            $siswaId = $request->input('student');
+
             // Perbarui hanya data penanggung jawab
             $peminjaman->update([
                 'penanggung_jawab' => $validated['pic'],
@@ -247,7 +262,8 @@ class PeminjamanBukuPaketController extends Controller
             }
 
             DB::commit();
-            return redirect()->back()->with('success', 'Data peminjaman berhasil diperbarui!');
+            // return redirect()->back()->with('success', 'Data peminjaman berhasil diperbarui!');
+            return redirect("/paket/peminjaman/detail/siswa/{$siswaId}")->with('success', 'Data peminjaman berhasil diperbarui!');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui data peminjaman.');
@@ -336,6 +352,8 @@ class PeminjamanBukuPaketController extends Controller
 
         return redirect("/paket/peminjaman/detail/siswa/{$siswaId}")->with('success', 'Pengembalian buku berhasil');
     }
+
+
 
 
 

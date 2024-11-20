@@ -75,7 +75,8 @@
 
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="" class="mt-2 btn btn-warning mb-2">Batal</a>
+                        <a href="javascript:history.back()" class="mt-2 btn btn-warning mb-2">Batal</a>
+
                     </div>
                 </form><!-- End Horizontal Form -->
 

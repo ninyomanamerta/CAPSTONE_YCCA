@@ -93,7 +93,7 @@
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="peminjaman" class="collapse sidebar-submenu">
-                <li><a class="nav-link" href="">Paket</a></li>
+                <li><a class="nav-link" href="{{ route('pinjamPaket.index') }}">Paket</a></li>
                 <li><a class="nav-link" href="{{ route('peminjamanbukupengayaan.index') }}">Pengayaan</a></li>
             </ul>
         </li>
