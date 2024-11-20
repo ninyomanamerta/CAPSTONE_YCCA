@@ -76,7 +76,7 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ \Carbon\Carbon::parse($detail->tanggal_pinjam)->format('d/m/Y') }}</td>
-                                            <td>{{ \Illuminate\Support\Str::limit($detail->bukuPaket->packageBook->judul, 15, '...') }}</td>
+                                            <td>{{ \Illuminate\Support\Str::limit($detail->bukuPaket->packageBook->judul, 20, '...') }}</td>
                                             <td>{{ $detail->bukuPaket->packageBook->jenis->nomor_induk_jenis }}{{ $detail->bukuPaket->packageBook->mapel->nomor_induk_mapel }}{{ $detail->bukuPaket->packageBook->submapel->nomor_induk_submapel }}{{ $detail->bukuPaket->packageBook->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->bukuPaket->nomor_induk, 4, '0', STR_PAD_LEFT) }}</td>
                                             <td>
                                                 <a href="#" class="badge {{ $detail->status_peminjaman == 'borrowed' ? 'bg-secondary' : 'bg-success' }}">
@@ -88,7 +88,8 @@
                                             </td>
                                             <td>{{ \Illuminate\Support\Str::limit($detail->keterangan ?? '-', 15, '...') }}</td>
                                             <td>
-                                                <a href="" class="badge bg-primary">Detail</a>
+                                                {{-- <a href="#" data-bs-toggle="modal" data-bs-target="#detailModal" data-id="{{ $detail->id }}" class="view-detail"><span class="badge bg-success">Detail</span> --}}
+
                                                 <form action="{{ route('pinjamPaket.destroyBook', $detail->id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
@@ -109,6 +110,75 @@
         </div>
     </section>
 @endforeach
+
+<!-- Modal -->
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailModalLabel">Detail Peminjaman Buku Paket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Judul Buku:</strong> <span id="modal-detail"></span></p>
+                <p><strong>No Induk:</strong> <span id="modal-noinduk"></span></p>
+                <p><strong>Tanggal Pinjam:</strong> <span id="modal-tanggal"></span></p>
+                <p><strong>Tanggal Kembali:</strong> <span id="modal-tanggal-update"></span></p>
+                <p><strong>Keterangan:</strong> <span id="modal-keterangan"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script>
+    $('.view-detail').on('click', function() {
+    var peminjamanId = $(this).data('id');
+
+    // Menampilkan loading message
+    $('#modal-detail').text('Loading...');
+    $('#modal-noinduk').text('Loading...');
+    $('#modal-tanggal').text('Loading...');
+    $('#modal-tanggal-update').text('Loading...');
+    $('#modal-keterangan').text('Loading...');
+
+    $.ajax({
+        url: '/pinjamPaket/modal/' + peminjamanId,
+        method: 'GET',
+        success: function(data) {
+
+            var detail = data.detailPeminjamanBukuPaket;
+
+            $('#modal-detail').text(detail.buku_paket.package_book.judul);
+            $('#modal-noinduk').text(detail.buku_paket.nomor_induk);
+
+            const options = {year: 'numeric', month: 'long', day: 'numeric'};
+
+            const createdDate = new Date(detail.tanggal_pinjam);
+            $('#modal-tanggal').text(createdDate.toLocaleDateString(undefined, options));
+
+            const updatedDate = new Date(detail.updated_at);
+            $('#modal-tanggal-update').text(updatedDate.toLocaleDateString(undefined, options));
+
+            $('#modal-keterangan').text(detail.keterangan || '-');
+
+
+            $('#detailModal').modal('show');
+        },
+        error: function(xhr) {
+            console.error(xhr.responseText);
+            alert('Terjadi kesalahan saat memuat data. Status: ' + xhr.status);
+        }
+    });
+});
+</script>
+
 
 
 </main>

@@ -80,7 +80,7 @@
                                 </div>
 
                                 <div class="form-group mb-2 col-4">
-                                    <input type="text" class="form-control" name="keterangan[{{ $detail->id }}]" id="keterangan-{{ $detail->id }}" value="{{ old('keterangan.' . $detail->id) }}" placeholder="Opsional...">
+                                    <input type="text" class="form-control" name="keterangan[{{ $detail->id }}]" id="keterangan-{{ $detail->id }}" value="{{ old('keterangan.' . $detail->id,  $detail->keterangan) }}" placeholder="Opsional...">
                                 </div>
                             </div>
                             @endforeach

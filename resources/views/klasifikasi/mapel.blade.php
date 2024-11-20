@@ -109,7 +109,6 @@
 <script>
     $(document).ready(function() {
         $('.view-course').on('click', function() {
-            // Kosongkan data modal sebelum request baru diproses
             $('#modal-course').text('Loading...');
             $('#modal-noinduk').text('Loading...');
             $('#modal-tanggal').text('Loading...');

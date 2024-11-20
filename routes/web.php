@@ -102,7 +102,8 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::delete('/paket/peminjaman/delete/{id}', [PeminjamanBukuPaketController::class, 'destroyBook'])->name('pinjamPaket.destroyBook');
     Route::get('/paket/peminjaman/status/{id}', [PeminjamanBukuPaketController::class, 'status'])->name('pinjamPaket.status');
     Route::put('/paket/pinjam/status/{id}', [PeminjamanBukuPaketController::class, 'updateStatus'])->name('pinjamPaket.updateStatus');
-
+    Route::get('/pinjamPaket/{id}', [PeminjamanBukuPaketController::class, 'show']);
+    Route::get('/pinjamPaket/modal/{id}', [PeminjamanBukuPaketController::class, 'showModal']);
 
 
 

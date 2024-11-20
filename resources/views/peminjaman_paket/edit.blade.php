@@ -63,7 +63,7 @@
                                     @foreach($book->detailPackageBooks as $detail)
                                         @if($detail->status_peminjaman === 'available')
                                             <option value="{{ $detail->id }}">
-                                                {{ $book->judul }} | {{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
+                                                {{ $book->judul }} | {{ $book->jenis->nomor_induk_jenis }}{{ $book->mapel->nomor_induk_mapel }}{{ $book->submapel->nomor_induk_submapel }}{{ $book->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
                                             </option>
                                         @endif
                                     @endforeach

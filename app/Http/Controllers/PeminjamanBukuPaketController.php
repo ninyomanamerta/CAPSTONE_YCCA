@@ -151,10 +151,44 @@ class PeminjamanBukuPaketController extends Controller
 
 
 
-    public function show(PeminjamanBukuPaket $peminjamanBukuPaket)
+    public function show($id)
     {
-        //
+
+        $peminjamanPaket = PeminjamanBukuPaket::with('detailPeminjamanBukuPaket.bukuPaket.packageBook')
+        ->find($id); // Gunakan find daripada findOrFail untuk debugging
+
+        if (!$peminjamanPaket) {
+            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+        }
+
+        $detail = $peminjamanPaket->detailPeminjamanBukuPaket->first();
+
+        return response()->json([
+            'detailPeminjamanBukuPaket' => $detail,
+        ]);
     }
+
+    public function showModal($id)
+{
+    \Log::info('Request for modal with ID: ' . $id);
+
+    try {
+        $detailPeminjaman = DetailPeminjamanBukuPaket::with([
+            'bukuPaket.packageBook.jenis',
+            'bukuPaket.packageBook.mapel',
+            'bukuPaket.packageBook.submapel',
+            'bukuPaket.packageBook.subkelas'
+        ])->findOrFail($id);
+
+        \Log::info('Detail Peminjaman: ', $detailPeminjaman->toArray());
+
+        return response()->json(['detailPeminjamanBukuPaket' => $detailPeminjaman]);
+    } catch (\Exception $e) {
+        \Log::error('Error fetching detail: ' . $e->getMessage());
+        return response()->json(['message' => 'Data tidak ditemukan'], 404);
+    }
+}
+
 
     /**
      * Show the form for editing the specified resource.
@@ -263,50 +297,45 @@ class PeminjamanBukuPaketController extends Controller
     }
 
     public function updateStatus(Request $request, $id)
-{
-    // Validasi input
-    $validated = $request->validate([
-        'pic-return' => 'required|string',
-        'status' => 'array',
-        'keterangan' => 'array|nullable',
-        'status.*' => 'in:borrowed,returned',
-    ]);
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'pic-return' => 'required|string',
+            'status' => 'array',
+            'keterangan' => 'array|nullable',
+            'status.*' => 'in:borrowed,returned',
+        ]);
 
-    // Temukan peminjaman berdasarkan ID
-    $peminjamanPaket = PeminjamanBukuPaket::findOrFail($id);
+        $siswaId = $request->input('student');
 
-    // Update petugas pengembalian
-    $peminjamanPaket->pengembalian = $validated['pic-return'];
-    $peminjamanPaket->save();
+        $peminjamanPaket = PeminjamanBukuPaket::findOrFail($id);
 
-    // Loop detail peminjaman buku paket untuk memperbarui status dan keterangan
-    foreach ($peminjamanPaket->detailPeminjamanBukuPaket as $detail) {
-        // Update status hanya jika status berubah
-        if (isset($validated['status'][$detail->id]) && $validated['status'][$detail->id] !== $detail->status_peminjaman) {
-            $detail->status_peminjaman = $validated['status'][$detail->id];
-        }
+        $peminjamanPaket->pengembalian = $validated['pic-return'];
+        $peminjamanPaket->save();
 
-        // Update keterangan jika ada dan berubah
-        if (isset($validated['keterangan'][$detail->id]) && $validated['keterangan'][$detail->id] !== $detail->keterangan) {
-            $detail->keterangan = $validated['keterangan'][$detail->id];
-        }
+        foreach ($peminjamanPaket->detailPeminjamanBukuPaket as $detail) {
+            if (isset($validated['status'][$detail->id]) && $validated['status'][$detail->id] !== $detail->status_peminjaman) {
+                $detail->status_peminjaman = $validated['status'][$detail->id];
+            }
 
-        // Simpan perubahan status dan keterangan
-        $detail->save();
+            if (isset($validated['keterangan'][$detail->id]) && $validated['keterangan'][$detail->id] !== $detail->keterangan) {
+                $detail->keterangan = $validated['keterangan'][$detail->id];
+            }
 
-        // Jika status buku adalah 'returned', maka update status buku di detail_package_books
-        if ($detail->status_peminjaman == 'returned') {
-            $packageBook = DetailPackageBook::where('id', $detail->id_buku_paket)->first();
-            if ($packageBook) {
-                $packageBook->status_peminjaman = 'available'; // Buku kembali tersedia
-                $packageBook->save();
+            $detail->save();
+
+            if ($detail->status_peminjaman == 'returned') {
+                $packageBook = DetailPackageBook::where('id', $detail->id_buku_paket)->first();
+                if ($packageBook) {
+                    $packageBook->status_peminjaman = 'available';
+                    $packageBook->save();
+                }
             }
         }
-    }
 
-    // Redirect kembali dengan pesan sukses
-    return redirect("/paket/peminjaman/detail/siswa/{$id}")->with('success', 'Pengembalian buku berhasil');
-}
+
+        return redirect("/paket/peminjaman/detail/siswa/{$siswaId}")->with('success', 'Pengembalian buku berhasil');
+    }
 
 
 
