@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\BookCaseController;
 use App\Http\Controllers\PackageBookController;
+use App\Http\Controllers\PeminjamanBukuPaketController;
 use App\Http\Controllers\PeminjamanBukuPengayaanController;
 
 
@@ -94,6 +95,21 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::get('/paket/{id}/edit', [PackageBookController::class, 'edit'])->name('paket.edit');
     Route::delete('/paket/destroyAll/{id}', [PackageBookController::class, 'destroyAll'])->name('paket.destroyAll');
 
+// Peminjaman Buku Paket
+    Route::get('/paket/peminjaman/add', [PeminjamanBukuPaketController::class, 'create'])->name('pinjamPaket.create');
+    Route::post('/paket/peminjaman/store', [PeminjamanBukuPaketController::class, 'store'])->name('pinjamPaket.store');
+    Route::get('/paket/peminjaman/detail/siswa/{id}', [PeminjamanBukuPaketController::class, 'showPeminjamanByClassLevels'])->name('pinjamPaket.detail');
+    Route::get('/paket/peminjaman/edit/{id}', [PeminjamanBukuPaketController::class, 'edit'])->name('pinjamPaket.edit');
+    Route::put('/paket/peminjaman/edit/{id}', [PeminjamanBukuPaketController::class, 'update'])->name('pinjamPaket.update');
+    Route::delete('/paket/peminjaman/delete/{id}', [PeminjamanBukuPaketController::class, 'destroyBook'])->name('pinjamPaket.destroyBook');
+    Route::get('/paket/peminjaman/status/{id}', [PeminjamanBukuPaketController::class, 'status'])->name('pinjamPaket.status');
+    Route::put('/paket/pinjam/status/{id}', [PeminjamanBukuPaketController::class, 'updateStatus'])->name('pinjamPaket.updateStatus');
+    Route::get('/pinjamPaket/{id}', [PeminjamanBukuPaketController::class, 'show']);
+    Route::get('/pinjamPaket/modal/{id}', [PeminjamanBukuPaketController::class, 'showModal']);
+
+
+
+
 
 
 // Pengayaan
@@ -137,21 +153,7 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 //     return view('peminjaman_paket.detail');
 //     });
 
-//     Route::get('/peminjaman_paket/index', function () {
-//         return view('peminjaman_paket.index');
-//         });
-    
-// Route::get('/peminjaman_pengayaan/detail', function () {
-//     return view('peminjaman_pengayaan.detail');
-//     });
 
-//     Route::get('/peminjaman_pengayaan/index', function () {
-//         return view('peminjaman_pengayaan.index');
-//         });
-        
-// Route::get('/book/edit', function () {
-//     return view('rak.edit');
-//     });
 
 
 

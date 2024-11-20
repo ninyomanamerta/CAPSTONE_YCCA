@@ -14,6 +14,8 @@ class PeminjamanBukuPaket extends Model
     protected $fillable = [
         'id_siswa',
         'penanggung_jawab',
+        'pengembalian',
+        'kelas',
     ];
 
 
@@ -26,6 +28,8 @@ class PeminjamanBukuPaket extends Model
     {
         return $this->hasMany(DetailPeminjamanBukuPaket::class, 'id_pinjam');
     }
+
+
 
 
 }

@@ -105,43 +105,51 @@
         </div>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-        <script>
-            $(document).ready(function() {
-            $('.view-course').on('click', function() {
-                var courseId = $(this).data('id');
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.view-course').on('click', function() {
+            $('#modal-course').text('Loading...');
+            $('#modal-noinduk').text('Loading...');
+            $('#modal-tanggal').text('Loading...');
+            $('#modal-tanggal-update').text('Loading...');
 
-                $.ajax({
-                    url: '/klasifikasi/mapel/' + courseId,
-                    method: 'GET',
-                    success: function(data) {
-                        console.log(data);
-                        $('#modal-course').text(data.mapel);
-                        $('#modal-noinduk').text(data.nomor_induk_mapel);
+            var courseId = $(this).data('id');
 
-                        // Format tanggal
-                        const createdDate = new Date(data.created_at);
-                        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                        $('#modal-tanggal').text(createdDate.toLocaleDateString(undefined, options));
+            $.ajax({
+                url: '/klasifikasi/mapel/' + courseId,
+                method: 'GET',
+                success: function(data) {
+                    console.log(data);
+                    $('#modal-course').text(data.mapel);
+                    $('#modal-noinduk').text(data.nomor_induk_mapel);
 
-                        const updatedDate = new Date(data.updated_at);
-                        $('#modal-tanggal-update').text(updatedDate.toLocaleDateString(undefined, options));
+                    // Format tanggal
+                    const createdDate = new Date(data.created_at);
+                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    $('#modal-tanggal').text(createdDate.toLocaleDateString(undefined, options));
 
-                        // Tampilkan modal
-                        $('#courseModal').modal('show');
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                        alert('Terjadi kesalahan saat memuat data.');
-                    }
-                });
+                    const updatedDate = new Date(data.updated_at);
+                    $('#modal-tanggal-update').text(updatedDate.toLocaleDateString(undefined, options));
+
+                    // Tampilkan modal
+                    $('#courseModal').modal('show');
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
+                    alert('Terjadi kesalahan saat memuat data.');
+                }
             });
         });
+    });
+</script>
+
 
 
         </script>
 
       </div>
+      @push('scripts')
     </section>
 </main>
 
