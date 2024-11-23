@@ -177,4 +177,50 @@ class PackageBookController extends Controller
             return redirect()->route('paket.index')->with('error', 'Gagal menghapus semua buku paket: ' . $e->getMessage());
         }
     }
+
+    public function showDamagedBook()
+    {
+
+        $packageBook = PackageBook::with(['detailPackageBooks' => function($query) {
+            $query->where('status_peminjaman', 'available');
+            }])->get();
+        return view('paket.damagedBook', compact('packageBook'));
+
+    }
+
+    public function updateDamagedBook(Request $request)
+    {
+        $damagedBooks = $request->input('damaged_books', []);
+
+        if (!empty($damagedBooks)) {
+            DetailPackageBook::whereIn('id', $damagedBooks)
+                            ->update(['status_peminjaman' => 'damaged']);
+        }
+
+        return redirect()->route('paket.index')->with('success', 'Buku berhasil ditandai rusak');
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:detail_package_books,id',
+            'status' => 'required|in:available,damaged',
+        ]);
+
+        $bookDetail = DetailPackageBook::findOrFail($validated['id']);
+        $bookDetail->status_peminjaman = $validated['status'];
+        $bookDetail->save();
+
+        return redirect()->back()->with('success', 'Status buku berhasil diubah.');
+    }
+
+    public function showAll()
+    {
+        $packageBook = PackageBook::with('detailPackageBooks')
+        ->get();
+
+        return view('paket.showAll', compact('packageBook'));
+    }
+
+
 }
