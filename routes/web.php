@@ -165,9 +165,9 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 //     return view('pengayaan.test');
 //     });
 
-// Route::get('damaged', function () {
-//     return view('paket.damagedBook');
-//     });
+Route::get('/landingpage', function () {
+    return view('auth.landingpage');
+    });
 
 
 
