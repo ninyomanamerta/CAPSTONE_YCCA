@@ -60,12 +60,12 @@
           </ul>
       </li><!-- End Dashboard Nav -->
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" href="#">
                 <i class="bi bi-search"></i>
                 <span>Cari</span>
             </a>
-        </li><!-- End Register Page Nav -->
+        </li><!-- End Register Page Nav --> --}}
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('rak.index') }}">
