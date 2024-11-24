@@ -6,7 +6,8 @@
         <h1>Data Buku Paket</h1>
 
         <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-            <a href="{{ route('paket.create') }}" class="btn btn-primary">Tambah Buku Paket</a>
+            <a href="{{ route('paket.create') }}" class="btn btn-primary mr-2">Tambah Buku Paket</a>
+            <span><a href="{{ route('paket.damaged') }}" class="btn btn-danger">Tandai Buku Rusak</a></span>
         </div>
 
         @if(Session::has('success'))
@@ -62,7 +63,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-
+                        <a href="{{ route('paket.showAll') }}" class="btn btn-primary float-end mt-2">Semua Buku Paket</a>
                     </div>
                 </div>
             </div>

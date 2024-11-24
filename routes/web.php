@@ -94,6 +94,13 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::put('/paket/{id}', [PackageBookController::class, 'update'])->name('paket.update');
     Route::get('/paket/{id}/edit', [PackageBookController::class, 'edit'])->name('paket.edit');
     Route::delete('/paket/destroyAll/{id}', [PackageBookController::class, 'destroyAll'])->name('paket.destroyAll');
+    Route::get('/paket/bukuRusak', [PackageBookController::class, 'showDamagedBook'])->name('paket.damaged');
+    Route::patch('/paket/bukuRusak/update', [PackageBookController::class, 'updateDamagedBook'])->name('paket.damagedUpdate');
+    Route::patch('/paket/bukuRusak/update/status', [PackageBookController::class, 'updateStatus'])->name('paket.updateStatus');
+    Route::get('/paket/showAll', [PackageBookController::class, 'showAll'])->name('paket.showAll');
+
+
+
 
 // Peminjaman Buku Paket
     Route::get('/paket/peminjaman/add', [PeminjamanBukuPaketController::class, 'create'])->name('pinjamPaket.create');
@@ -115,6 +122,12 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 
 // Pengayaan
     Route::get('/pengayaan', [EnrichmentbookController::class, 'index'])->name('enrichmentBooks.index');
+    Route::get('/pengayaan/damagedBooks', [EnrichmentbookController::class, 'damagedBooks'])->name('enrichmentBooks.damagedBooks');
+    Route::patch('/pengayaan/damagedBooks/update', [EnrichmentbookController::class, 'updateDamagedBooks'])->name('enrichmentBooks.updateDamagedBooks');
+    Route::get('/pengayaan/showAll', [EnrichmentbookController::class, 'showAll'])->name('enrichmentBooks.showAll');
+    Route::patch('/pengayaan/damagedBooks/update/status', [EnrichmentbookController::class, 'updateStatus'])->name('enrichmentBooks.updateStatus');
+
+
     Route::get('/pengayaan/add', [EnrichmentbookController::class, 'create'])->name('enrichmentBooks.create');
     Route::post('/pengayaan/store', [EnrichmentbookController::class, 'store'])->name('enrichmentBooks.store');
     Route::get('/pengayaan/{id}', [EnrichmentbookController::class, 'show']);
@@ -123,6 +136,8 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::get('/pengayaan/{id}/edit', [EnrichmentbookController::class, 'edit'])->name('enrichmentBooks.edit');
     Route::get('/pengayaan/detail/{id}', [EnrichmentbookController::class, 'detail'])->name('enrichmentBooks.detail');
     Route::delete('/pengayaan/detail/{id}', [EnrichmentbookController::class, 'destroyDetail'])->name('enrichmentBooks.destroyDetail');
+
+
 
 
 // Peminjaman Buku Pengayaan
@@ -150,8 +165,8 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 //     return view('pengayaan.test');
 //     });
 
-// Route::get('/peminjaman_paket/detail', function () {
-//     return view('peminjaman_paket.detail');
+// Route::get('damaged', function () {
+//     return view('paket.damagedBook');
 //     });
 
 

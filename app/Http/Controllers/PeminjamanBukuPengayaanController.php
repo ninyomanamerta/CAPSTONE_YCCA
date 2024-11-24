@@ -92,31 +92,31 @@ class PeminjamanBukuPengayaanController extends Controller
     {
         // Find the peminjaman record by ID
         $peminjaman = peminjaman_buku_pengayaan::findOrFail($id);
-        
+
         // Update the status of the peminjaman
         $peminjaman->status = $request->input('status');
-        
+
         // Jika status peminjaman berubah menjadi 'dikembalikan', perbarui status buku
         if ($peminjaman->status === 'dikembalikan') {
             // Temukan buku detail berdasarkan id_detail_buku
             $book = detailenrichmentbook::find($peminjaman->id_detail_buku);
-            
+
             if ($book) {
                 // Update status buku menjadi 'available'
                 $book->status_peminjaman = 'available';
                 $book->save(); // Simpan perubahan status buku
             }
         }
-        
+
         // Simpan perubahan peminjaman
         $peminjaman->save();
-        
+
         // Redirect back with a success message
         return redirect()->route('peminjamanbukupengayaan.index')
                          ->with('success', 'Status peminjaman berhasil diperbarui.');
     }
-    
-    
+
+
 
 
     /**
@@ -140,6 +140,16 @@ class PeminjamanBukuPengayaanController extends Controller
 
     // App\Models\peminjaman_buku_pengayaan.php
 
+
+    public function notification()
+    {
+        $today = Carbon::now();
+        $count = peminjaman_buku_pengayaan::where('status', 'dipinjam')
+            ->whereDate('tgl_pinjam', '<=', $today->subDays(7)) // Sudah lebih dari 7 hari
+            ->count();
+
+        return $count;
+    }
 
 
 }

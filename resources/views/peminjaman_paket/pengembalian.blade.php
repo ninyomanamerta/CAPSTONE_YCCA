@@ -80,8 +80,13 @@
                                 </div>
 
                                 <div class="form-group mb-2 col-4">
-                                    <input type="text" class="form-control" name="keterangan[{{ $detail->id }}]" id="keterangan-{{ $detail->id }}" value="{{ old('keterangan.' . $detail->id,  $detail->keterangan) }}" placeholder="Opsional...">
+                                    <select class="form-control" name="keterangan[{{ $detail->id }}]" id="keterangan-{{ $detail->id }}">
+                                        <option value="" {{ $detail->keterangan == '' ? 'selected' : '' }}>Opsional</option>
+                                        <option value="Ganti baru" {{ $detail->keterangan == 'Ganti Baru' ? 'selected' : '' }}>Ganti Baru</option>
+                                    </select>
                                 </div>
+
+
                             </div>
                             @endforeach
                         </ul>
