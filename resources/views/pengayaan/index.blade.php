@@ -6,7 +6,8 @@
         <h1>Data Buku Pengayaan</h1>
 
         <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-            <a href="{{ route('enrichmentBooks.create') }}" class="btn btn-primary">Tambah Buku Pengayaan</a>
+            <a href="{{ route('enrichmentBooks.create') }}" class="btn btn-primary mr-2">Tambah Buku Pengayaan</a>
+            <span><a href="{{ route('enrichmentBooks.damagedBooks') }}" class="btn btn-danger">Tandai Buku Rusak</a></span>
         </div>
 
         @if(Session::has('success'))
@@ -61,6 +62,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <a href="{{ route('enrichmentBooks.showAll') }}" class="btn btn-primary float-end mt-2">Semua Buku Pengayaan</a>
 
                     </div>
                 </div>

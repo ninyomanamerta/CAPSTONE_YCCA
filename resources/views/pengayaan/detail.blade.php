@@ -71,12 +71,18 @@
                                         <td>{{ $enrichmentBooks->bookcase->lokasi }}</td>
                                         <td>
                                             @if($detail->status_peminjaman === 'available')
-                                            <a href="#" class="badge bg-success">Available</a>
+                                                <a href="#" class="badge bg-success">Available</a>
+                                            @elseif ($detail->status_peminjaman === 'damaged')
+                                                <a href="#" class="badge bg-danger">Buku Rusak</a>
                                             @else
                                                 <a href="#" class="badge bg-secondary">No Available</a>
                                             @endif
                                           </td>
                                         <td>
+                                            <button type="button" class="badge bg-warning" style="border: none;" data-bs-toggle="modal" data-bs-target="#updateStatusModal"
+                                                data-id="{{ $detail->id }}" data-status="{{ $detail->status_peminjaman }}">
+                                                Ubah Status
+                                            </button>
                                             {{-- <a href="{{ route('enrichmentbooks.show', $book->id) }}" class="badge bg-success">View</a> --}}
                                             {{-- <a href="{{ route('enrichmentBooks.edit', $book->id) }}" class="badge bg-warning">Update</a> --}}
                                             <form action="{{ route('enrichmentBooks.destroyDetail', $detail->id) }}" method="POST" style="display:inline;">
@@ -89,6 +95,52 @@
                                 @endforeach
                             </tbody>
                         </table>
+
+                        <!-- Modal -->
+                    <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <form method="POST" action="{{ route('enrichmentBooks.updateStatus') }}">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="updateStatusModalLabel">Ubah Status Buku</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <input type="hidden" name="id" id="book-id">
+                                    <div class="mb-3">
+                                        <label for="status" class="form-label">Status</label>
+                                        <select class="form-control" name="status" id="status">
+                                        <option value="available">Tidak Rusak</option>
+                                        <option value="damaged">Rusak</option>
+                                        <option value="nonavailable">No Available</option>
+                                        </select>
+                                    </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        const updateStatusModal = document.getElementById('updateStatusModal');
+                        updateStatusModal.addEventListener('show.bs.modal', (event) => {
+                        const button = event.relatedTarget;
+                        const bookId = button.getAttribute('data-id');
+                        const status = button.getAttribute('data-status');
+
+                        const modalBookId = updateStatusModal.querySelector('#book-id');
+                        const modalStatus = updateStatusModal.querySelector('#status');
+
+                        modalBookId.value = bookId;
+                        modalStatus.value = status;
+                        });
+                    </script>
 
                     </div>
                 </div>

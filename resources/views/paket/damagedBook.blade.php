@@ -46,7 +46,7 @@
                                         @foreach($package->detailPackageBooks as $index => $detail)
                                         <tr>
                                             <td>{{ $globalIndex++ }}</td>
-                                            <td>{{ $package->judul }}</td>
+                                            <td>{{ \Illuminate\Support\Str::limit($package->judul, 16, '...') }}</td>
                                             <td>{{ $package->mapel->mapel }}</td>
                                             <td>{{ $package->submapel->sub_mapel }}</td>
                                             <td>Kelas {{ $package->subkelas->sub_kelas }}</td>

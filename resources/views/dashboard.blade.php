@@ -25,7 +25,7 @@
 
               <div class="d-flex align-items-center">
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                  <i class="bi bi-cart"></i>
+                  <i class="bi bi-journal"></i>
                 </div>
                 <div class="ps-3">
                   <h6>{{ $totalBukuPaket }}</h6>
@@ -41,14 +41,14 @@
 
         <!-- Sales Card -->
         <div class="col-xxl-3 col-md-6">
-          <div class="card info-card sales-card">
+          <div class="card info-card revenue-card">
 
             <div class="card-body">
               <h5 class="card-title">Ketersediaan Buku <span>| Paket</span></h5>
 
               <div class="d-flex align-items-center">
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                  <i class="bi bi-cart"></i>
+                <i class="bi bi-bookmark-check"></i>
                 </div>
                 <div class="ps-3">
                   <h6>{{ $bukuPaketTersedia }}</h6>
@@ -63,14 +63,14 @@
 
         <!-- Sales Card -->
         <div class="col-xxl-3 col-md-6">
-          <div class="card info-card sales-card">
+          <div class="card info-card customers-card">
 
             <div class="card-body">
               <h5 class="card-title">Jumlah Buku <span>| Pengayaan</span></h5>
 
               <div class="d-flex align-items-center">
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                  <i class="bi bi-cart"></i>
+                    <i class="bi bi-journal-bookmark"></i>
                 </div>
                 <div class="ps-3">
                   <h6>{{ $totalBukuPengayaan }}</h6>
@@ -85,14 +85,14 @@
 
         <!-- Sales Card -->
         <div class="col-xxl-3 col-md-6">
-          <div class="card info-card sales-card">
+          <div class="card info-card book-card">
 
             <div class="card-body">
               <h5 class="card-title">Ketersediaan Buku <span>| Pengayaan</span></h5>
 
               <div class="d-flex align-items-center">
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                  <i class="bi bi-cart"></i>
+                    <i class="bi bi-bookmark-heart"></i>
                 </div>
                 <div class="ps-3">
                   <h6>{{ $bukuPengayaanTersedia }}</h6>

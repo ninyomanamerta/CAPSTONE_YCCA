@@ -162,4 +162,47 @@ class EnrichmentbookController extends Controller
             ->with('success', 'Detail buku berhasil dihapus');
     }
 
+    public function damagedBooks() {
+        $enrichmentBooks = enrichmentbook::with(['detailEnrichmentBooks' => function($query) {
+            $query->where('status_peminjaman', 'available');
+        }])->get();
+
+
+        return view('pengayaan.damagedBooks', compact('enrichmentBooks'));
+    }
+
+    public function updateDamagedBooks(Request $request)
+    {
+        $damagedBooks = $request->input('damaged_books', []);
+
+        if (!empty($damagedBooks)) {
+            detailenrichmentbook::whereIn('id', $damagedBooks)
+                            ->update(['status_peminjaman' => 'damaged']);
+        }
+
+        return redirect()->route('enrichmentBooks.index')->with('success', 'Buku Pengayaan berhasil ditandai rusak');
+    }
+
+    public function showAll()
+    {
+        $enrichmentBooks = enrichmentbook::with('detailEnrichmentBooks')->get();
+        return view('pengayaan.showAll', compact('enrichmentBooks'));
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:detail_enrichment_book,id',
+            'status' => 'required|in:available,damaged,nonavailable',
+        ]);
+
+        $bookDetail = detailenrichmentbook::findOrFail($validated['id']);
+        $bookDetail->status_peminjaman = $validated['status'];
+        $bookDetail->save();
+
+        return redirect()->back()->with('success', 'Status buku berhasil diubah.');
+    }
+
+
+
 }

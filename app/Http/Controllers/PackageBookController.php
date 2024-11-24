@@ -204,7 +204,7 @@ class PackageBookController extends Controller
     {
         $validated = $request->validate([
             'id' => 'required|exists:detail_package_books,id',
-            'status' => 'required|in:available,damaged',
+            'status' => 'required|in:available,damaged,nonavailable',
         ]);
 
         $bookDetail = DetailPackageBook::findOrFail($validated['id']);
