@@ -1,5 +1,11 @@
 @extends('layouts.master')
 @section('content')
+<style>
+.modal-body p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+</style>
 
 <main id="main" class="main">
     <div class="pagetitle">
@@ -84,45 +90,17 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-              <p><strong>Jenis Buku:</strong> <span id="modal-jenis_buku"></span></p>
-              <p><strong>Nomor Induk:</strong> <span id="modal-nomor_induk_jenis"></span></p>
-              <p><strong>Tanggal Ditambahkan:</strong> <span id="modal-tanggal"></span></p>
-          </div>
+            <p><strong>Jenis Buku:</strong> {{ $item->jenis_buku }}</span></p>
+            <p><strong>Nomor Induk:</strong> {{ $item->nomor_induk_jenis }}</span></p>
+            <p><strong>Tanggal Ditambahkan:</strong> {{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y') }}</span></p>
+            <p><strong>Tanggal Perubahan:</strong> {{ \Carbon\Carbon::parse($item->updated_at)->format('F d, Y') }}</span></p>
+        </div>               
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
           </div>
       </div>
   </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Handle View button click
-        $('.view-jenis').on('click', function() {
-            var jenisId = $(this).data('id');
-
-            // Fetch the BookType data using AJAX
-            $.ajax({
-                url: '/klasifikasi/jenis/' + jenisId,  // Assuming the route is correct
-                method: 'GET',
-                success: function(data) {
-                    // Populate modal with the data from AJAX response
-                    $('#modal-jenis_buku').text(data.jenis_buku);
-                    $('#modal-nomor_induk_jenis').text(data.nomor_induk_jenis);
-
-                    // Format the date
-                    const date = new Date(data.created_at);
-                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                    $('#modal-tanggal').text(date.toLocaleDateString(undefined, options));
-                },
-                error: function(xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-        });
-    });
-</script>
 
     </section>
 </main>
