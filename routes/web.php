@@ -78,7 +78,7 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::get('/jenis', [BookTypeController::class, 'index'])->name('jenis.index');
     Route::get('/jenis/add', [BookTypeController::class, 'create'])->name('jenis.create');
     Route::post('/jenis/store', [BookTypeController::class, 'store'])->name('jenis.store');
-    Route::get('/jenis/{id}', [BookTypeController::class, 'show']);
+    Route::get('/jenis/{id}', [BookTypeController::class, 'show'])->name('jenis.show');
     Route::delete('/jenis/{id}', [BookTypeController::class, 'destroy'])->name('jenis.destroy');
     Route::put('/jenis/{id}', [BookTypeController::class, 'update'])->name('jenis.update');
     Route::get('/jenis/{id}/edit', [BookTypeController::class, 'edit'])->name('jenis.edit');
