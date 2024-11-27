@@ -3,7 +3,18 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1 class="mb-4">Tambah Peminjaman Buku Pengayaan</h1>
+        <h1 class="mb-2">Tambah Peminjaman Buku Pengayaan</h1>
+        <nav class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="javascript:history.back()">
+                        <i class="bi bi-arrow-left-short" style="font-size: 20px"></i>
+                        <span style="font-size: 20px">Kembali</span>
+                    </a>
+                </li>
+            </ol>
+        </nav>
+
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -50,7 +61,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <!-- Nomor Buku yang Tersedia -->
                     <div class="row mb-3">
                         <label for="id_detail_buku" class="col-sm-2 col-form-label">Nomor Buku yang Tersedia</label>
@@ -61,7 +72,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <!-- Nama yang Memberikan Pinjaman -->
                     <div class="row mb-3">
                         <label for="peminjam" class="col-sm-2 col-form-label">Nama yang Memberikan Pinjaman</label>
@@ -88,7 +99,7 @@
 
                     <!-- Status -->
                     <input type="hidden" name="status" value="dipinjam">
-            
+
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <a href="{{ route('peminjamanbukupengayaan.index') }}" class="mt-2 btn btn-warning mb-2">Batal</a>

@@ -3,7 +3,7 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Klasifikasi Buku</h1>
+      <h1>Klasifikasi Mapel Buku</h1>
 
       <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
       <a href="{{ route('course.create') }}" class="btn btn-primary">Tambah Mapel Buku</a>
@@ -51,7 +51,7 @@
                         <form action="{{ route('course.destroy', $course->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Delete</button>
+                            <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Semua data terkait mapel akan ikut terhapus. Apakah Anda yakin ingin menghapus data ini?');">Delete</button>
                         </form>
                     </td>
                   </tr>
@@ -141,7 +141,7 @@
         </script>
 
       </div>
-      @push('scripts')
+
     </section>
 </main>
 

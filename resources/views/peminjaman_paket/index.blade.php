@@ -10,11 +10,24 @@
         <a href="{{ route('pinjamPaket.create') }}" class="btn btn-primary mb-3">Tambah Peminjaman Buku Paket</a>
     </div>
 
+
     @if(Session::has('success'))
         <div class="alert alert-success" role="alert" style="padding-top:10px">
             {{ Session::get('success') }}
         </div>
     @endif
+
+
+
+    @if(Cookie::has('message'))
+    <div class="alert alert-danger" role="alert">
+        {{ Cookie::get('message') }}
+    </div>
+    @endif
+
+
+
+
 
     <section class="section dashboard">
         <div class="row">
@@ -48,7 +61,13 @@
                               <td class="col-3">{{ $student->nama_siswa }}</td>
                               <td class="col-1">{{ $student->kelas }}</td>
                               <td class="col-0" style="display: flex; justify-content: flex-end;">
-                                  <a href="{{ route('pinjamPaket.detail', $student->id) }}"><span class="badge bg-success">Lihat Detail</span></a>
+
+                                <a href="{{ route('pinjamPaket.detail', $student->id) }}"><span class="badge bg-success">Lihat Detail</span></a>
+                                <form action="{{ route('pinjamPaket.destroyByStudent', $student->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="badge bg-danger hover-effect" style="border: none; " onclick="return confirm('Dengan menghapus data ini maka semua data peminjaman yang terkait siswa {{ addslashes($student->nama_siswa) }} akan terhapus. Yakin ingin menghapus ?');">Delete</button>
+                                </form>
 
 
                               </td>

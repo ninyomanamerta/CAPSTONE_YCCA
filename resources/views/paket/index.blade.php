@@ -54,7 +54,7 @@
                                             <form action="{{ route('paket.destroyAll', $packageBook->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Yakin ingin menghapus semua buku paket?');">Delete</button>
+                                                <button type="submit" class="badge bg-danger hover-effect" style="border: none; " onclick="return confirm('Yakin ingin menghapus semua buku paket?');">Delete</button>
                                             </form>
 
 

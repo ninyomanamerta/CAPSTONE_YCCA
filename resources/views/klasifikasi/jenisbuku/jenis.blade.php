@@ -9,7 +9,7 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Klasifikasi Buku</h1>
+      <h1>Klasifikasi Jenis Buku</h1>
 
       <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
       <a href="{{ route('jenis.create') }}" class="btn btn-primary">Tambah Jenis Buku</a>
@@ -56,7 +56,7 @@
                           <form action="{{ route('jenis.destroy', $item->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Delete</button>
+                            <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Semua data terkait jenis buku akan terhapus. Apakah Anda yakin ingin menghapus data ini?');">Delete</button>
                         </form>
                     </td>
                       </td>
@@ -86,7 +86,7 @@
             <p><strong>Nomor Induk:</strong> {{ $item->nomor_induk_jenis }}</span></p>
             <p><strong>Tanggal Ditambahkan:</strong> {{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y') }}</span></p>
             <p><strong>Tanggal Perubahan:</strong> {{ \Carbon\Carbon::parse($item->updated_at)->format('F d, Y') }}</span></p>
-        </div>               
+        </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
           </div>
