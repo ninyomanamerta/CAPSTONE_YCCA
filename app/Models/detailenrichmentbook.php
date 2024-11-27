@@ -30,5 +30,10 @@ class detailenrichmentbook extends Model
         return $this->belongsTo(Bookcase::class, 'id_rak');
     }
 
+    public function borrowedEnrichmentBooks()
+    {
+        return $this->hasMany(peminjaman_buku_pengayaan::class, 'id_detail_buku');
+    }
+
 
 }
