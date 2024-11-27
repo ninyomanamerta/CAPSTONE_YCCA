@@ -3,7 +3,7 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Klasifikasi Buku</h1>
+      <h1>Klasifikasi Sub Mapel</h1>
 
       <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
       <a href="{{ route('subCourse.create') }}" class="btn btn-primary">Tambah Sub Mapel</a>
@@ -51,7 +51,7 @@
                         <form action="{{ route('subCourse.destroy', $subCourse->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Delete</button>
+                            <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Semua data terkait submapel juga akan ikut terhapus. Apakah Anda yakin ingin menghapus data ini?');">Delete</button>
                         </form>
                     </td>
                   </tr>
@@ -102,6 +102,12 @@
         <script>
             $(document).ready(function() {
             $('.view-subCourse').on('click', function() {
+
+                $('#modal-subCourse').text('Loading...');
+                $('#modal-noinduk').text('Loading...');
+                $('#modal-tanggal').text('Loading...');
+                $('#modal-tanggal-update').text('Loading...');
+
                 var subCourseId = $(this).data('id');
 
                 $.ajax({
@@ -136,6 +142,7 @@
 
       </div>
     </section>
+
 </main>
 
 @endsection

@@ -51,7 +51,7 @@
                         <form action="{{ route('rak.destroy', $rak->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Delete</button>
+                            <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Semua data terakit rak akan dihapus. Apakah Anda yakin ingin menghapus data ini?');">Delete</button>
                         </form>
 
                     </td>
@@ -90,7 +90,14 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
         <script>
             $(document).ready(function() {
+
+
+
                 $('.view-rak').on('click', function() {
+                    $('#modal-lokasi').text('Loading...');
+                    $('#modal-keterangan').text('Loading...');
+                    $('#modal-tanggal').text('Loading...');
+
                     var rakId = $(this).data('id');
 
                     $.ajax({

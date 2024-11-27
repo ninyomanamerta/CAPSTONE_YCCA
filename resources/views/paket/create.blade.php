@@ -3,7 +3,19 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1 class="mb-4">Tambah Data Buku Paket</h1>
+      <h1 class="mb-2">Tambah Data Buku Paket</h1>
+      <nav class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="javascript:history.back()">
+                    <i class="bi bi-arrow-left-short" style="font-size: 20px"></i>
+                    <span style="font-size: 20px">Kembali</span>
+                </a>
+            </li>
+        </ol>
+    </nav>
+
+
       @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -55,7 +67,7 @@
             <div class="row mb-3">
                 <label for="klasifikasi_submapel" class="col-sm-2 col-form-label">Klasifikasi Sub Mapel</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="klasifikasi_submapel" name="klasifikasi_submapel">
+                    <select class="form-control" id="klasifikasi_submapel" name="klasifikasi_submapel" required>
                         <option value="">Pilih Sub Mapel</option>
                         @foreach($subCourses as $subCourse)
                             <option value="{{ $subCourse->id }}">{{ $subCourse->sub_mapel }}</option>

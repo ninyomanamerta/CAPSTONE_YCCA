@@ -14,6 +14,9 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cookie;
+
 
 class PeminjamanBukuPaketController extends Controller
 {
@@ -77,7 +80,7 @@ class PeminjamanBukuPaketController extends Controller
             ->exists();
 
             if ($existingLoan) {
-                return redirect()->back()->withErrors(['student' => 'Siswa ini sudah melakukan peminjaman di tingkat kelas ' . $currentClassLevel]);
+                return redirect()->route('pinjamPaket.index')->withCookie(cookie('message', 'Siswa sudah melakukan peminjaman di tingkat kelas ' . $currentClassLevel . '. Ubah kelas atau tambahkan melalui Lihat Detail!', 1));
             }
 
             $peminjaman = PeminjamanBukuPaket::create([
@@ -104,7 +107,7 @@ class PeminjamanBukuPaketController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'Peminjaman buku berhasil!');
+            return redirect('/paket/peminjaman')->with('success', 'Data peminjaman buku paket berhasil disimpan!');
 
 
 
@@ -351,6 +354,36 @@ class PeminjamanBukuPaketController extends Controller
 
 
         return redirect("/paket/peminjaman/detail/siswa/{$siswaId}")->with('success', 'Pengembalian buku berhasil');
+    }
+
+
+    public function destroyByStudent($id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $peminjamanBukuPaket = PeminjamanBukuPaket::where('id_siswa', $id)->get();
+            foreach ($peminjamanBukuPaket as $peminjaman) {
+                $detailPeminjaman = DetailPeminjamanBukuPaket::where('id_pinjam', $peminjaman->id)->get();
+
+                foreach ($detailPeminjaman as $detail) {
+                    $detailBook = DetailPackageBook::find($detail->id_buku_paket);
+                    $detailBook->update([
+                        'status_peminjaman' => 'available',
+                    ]);
+
+                    $detail->delete();
+                }
+                $peminjaman->delete();
+            }
+
+            DB::commit();
+            return redirect()->route('peminjaman.index')->with('success', 'Data peminjaman siswa berhasil dihapus.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus data peminjaman: ' . $e->getMessage());
+        }
     }
 
 

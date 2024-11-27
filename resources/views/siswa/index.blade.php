@@ -101,8 +101,14 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
             <script>
                 $(document).ready(function() {
+
                     // View detail siswa
                     $('.view-student').on('click', function() {
+                        $('#modal-nis').text('Loading...');
+                        $('#modal-nama').text('Loading...');
+                        $('#modal-kelas').text('Loading...');
+                        $('#modal-tanggal').text('Loading...');
+                    
                         var studentId = $(this).data('id');
                         $.ajax({
                             url: '/siswa/' + studentId,
@@ -137,6 +143,7 @@
 
         </div>
     </section>
+
 </main>
 
 @endsection

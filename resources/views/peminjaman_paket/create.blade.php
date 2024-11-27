@@ -3,7 +3,20 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1 class="mb-4">Peminjaman Buku Paket</h1>
+        <h1 class="mb-2">Peminjaman Buku Paket</h1>
+
+        <nav class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="javascript:history.back()">
+                        <i class="bi bi-arrow-left-short" style="font-size: 20px"></i>
+                        <span style="font-size: 20px">Kembali</span>
+                    </a>
+                </li>
+            </ol>
+        </nav>
+
+
         @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -13,6 +26,7 @@
             </ul>
         </div>
         @endif
+
 
         <div class="card">
             <div class="card-body">
@@ -78,6 +92,7 @@
                         <a href="javascript:history.back()" class="mt-2 btn btn-warning mb-2">Batal</a>
 
                     </div>
+
                 </form><!-- End Horizontal Form -->
 
             </div>

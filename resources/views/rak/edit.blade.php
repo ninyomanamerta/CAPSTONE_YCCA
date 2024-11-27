@@ -4,7 +4,17 @@
 <main id="main" class="main">
     <div class="pagetitle">
 
-      <h1 class="mb-4">Merubah Data Rak</h1>
+      <h1 class="mb-2">Merubah Data Rak</h1>
+      <nav class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="javascript:history.back()">
+                    <i class="bi bi-arrow-left-short" style="font-size: 20px"></i>
+                    <span style="font-size: 20px">Kembali</span>
+                </a>
+            </li>
+        </ol>
+    </nav>
       @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -15,9 +25,9 @@
         </div>
       @endif
 
-      <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
+      {{-- <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
       <a href="" class="btn btn-primary">Tambah Rak</a>
-      </div>
+      </div> --}}
 
       <div class="card">
         <div class="card-body">

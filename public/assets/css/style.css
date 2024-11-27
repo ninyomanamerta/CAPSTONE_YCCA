@@ -25,8 +25,13 @@ a {
 }
 
 a:hover {
-    color: #717ff5;
+    color: #cdd1f1;
     text-decoration: none;
+}
+
+.hover-effect:hover {
+    color: #cdd1f1;
+    cursor: pointer;
 }
 
 h1,

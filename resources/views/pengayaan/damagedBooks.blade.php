@@ -3,10 +3,19 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1>Daftar Buku Pengayaan</h1>
-        <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-            {{-- <a href="" class="btn btn-primary">Tambah Buku Paket</a> --}}
-        </div>
+        <h1 class="mb-2">Daftar Buku Pengayaan</h1>
+        <nav class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="javascript:history.back()">
+                        <i class="bi bi-arrow-left-short" style="font-size: 20px"></i>
+                        <span style="font-size: 20px">Kembali</span>
+                    </a>
+                </li>
+            </ol>
+        </nav>
+
+
         @if(Session::has('success'))
             <div class="alert alert-success" role="alert">
                 {{ Session::get('success') }}
