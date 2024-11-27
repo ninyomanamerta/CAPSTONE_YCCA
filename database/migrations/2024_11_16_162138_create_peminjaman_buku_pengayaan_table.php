@@ -26,6 +26,12 @@ return new class extends Migration {
             $table->foreign('id_siswa')->references('id')->on('students');
 
         });
+        
+        Schema::table('peminjaman_buku_pengayaan', function (Blueprint $table) {
+            $table->dropForeign(['id_siswa']);
+            $table->foreign('id_siswa')->references('id')->on('students')->onDelete('cascade');
+        });
+        
     }
 
     /**

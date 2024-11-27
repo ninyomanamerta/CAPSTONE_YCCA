@@ -90,8 +90,16 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $student = Student::findOrFail($id);
+    
+        // Hapus data terkait di kedua tabel
+        $student->peminjamanBukuPaket()->delete();
+        $student->peminjamanBukuPengayaan()->delete();
+    
+        // Hapus data siswa
         $student->delete();
-
-        return redirect()->route('student.index')->with('success', 'Data siswa berhasil dihapus!');
+    
+        return redirect()->route('student.index')->with('success', 'Data siswa beserta peminjaman berhasil dihapus!');
     }
+    
+    
 }

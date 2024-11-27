@@ -19,6 +19,12 @@ return new class extends Migration
 
             $table->foreign('id_siswa')->references('id')->on('students')->onDelete('cascade');
         });
+
+        Schema::table('peminjaman_buku_paket', function (Blueprint $table) {
+            $table->dropForeign(['id_siswa']);
+            $table->foreign('id_siswa')->references('id')->on('students')->onDelete('cascade');
+        });
+        
     }
 
     /**

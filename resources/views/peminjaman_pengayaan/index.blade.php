@@ -47,32 +47,30 @@
 
                                           {{-- Fetch status from the related detail_buku --}}
                                           <td>
-                                              @if (!$peminjaman->status)
-                                                  <a href="#" class="badge bg-danger">Status Tidak Diketahui</a>
-                                              @elseif ($peminjaman->status === 'dikembalikan')
-                                                  <a href="#" class="badge bg-success"> Buku telah Dikembalikan</a>
-                                              @elseif($peminjaman->status === 'dipinjam')
-                                                  <a href="#" class="badge bg-primary">Di Pinjam</a>
-                                              @elseif ($peminjaman->status === 'telat')
-                                                  <a href="#" class="badge bg-warning">Telat Pengembalian</a>
-                                              @endif                                  
+                                            @if($peminjaman->status === 'dikembalikan')
+                                            <span class="badge bg-warning">Buku telah Dikembalikan</span>
+                                        @elseif($peminjaman->status === 'dipinjam')
+                                            <span class="badge bg-primary">Di Pinjam</span>
+                                        @elseif($peminjaman->status === 'telat')
+                                            <span class="badge bg-danger">Telat Pengembalian</span>
+                                        @endif                                
                                           </td>
                                           <td style="display: flex; gap: 10px; justify-content: flex-end;">
                                             {{-- Lihat Detail --}}
-                                           <a href="#" class="badge bg-success" data-bs-toggle="modal" data-bs-target="#detailModal{{ $peminjaman->id }}">
+                                           <a href="#" class="badge bg-success" style="border:none" data-bs-toggle="modal" data-bs-target="#detailModal{{ $peminjaman->id }}">
                                               Lihat Detail
                                           </a>
                                         
                                             {{-- Verifikasi Pengembalian --}}
-                                            <button type="button" class="badge bg-warning" data-bs-toggle="modal" data-bs-target="#verifikasiModal{{ $peminjaman->id }}">
+                                            <button type="button" class="badge bg-warning"  style="border:none" data-bs-toggle="modal" data-bs-target="#verifikasiModal{{ $peminjaman->id }}">
                                                 Verifikasi
                                             </button>
                                         
                                             {{-- Delete --}}
-                                            <button type="button" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $peminjaman->id }}">
+                                            <button type="button" class="badge bg-danger" style="border:none" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $peminjaman->id }}">
                                                 Delete
                                             </button>
-                                          </td>
+                                          </td> 
 
                                                 {{-- Modal Konfirmasi Pengembalian --}}
                                                 <div class="modal fade" id="verifikasiModal{{ $peminjaman->id }}" tabindex="-1" aria-labelledby="verifikasiModalLabel{{ $peminjaman->id }}" aria-hidden="true">
@@ -110,18 +108,17 @@
                                                             <div class="modal-body">
                                                                 <p><strong>Nama Siswa:</strong> {{ $peminjaman->student->nama_siswa }}</p>
                                                                 <p><strong>Buku yang Dipinjam:</strong> {{ $peminjaman->book->judul }}</p>
-                                                                <p><strong>Nomor Buku:</strong> {{ $peminjaman->id_judul_buku }}</p>
                                                                 <p><strong>Dikasih oleh:</strong> {{ $peminjaman->peminjam }}</p>
                                                                 <p><strong>Nomor Induk Buku:</strong> {{ str_pad($peminjaman->id_detail_buku, 4, '0', STR_PAD_LEFT) }}</p>
                                                                 <p><strong>Tanggal Peminjaman:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pinjam)->format('F d, Y') }}</p>
                                                                 <p><strong>Tanggal Pengembalian:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pengembalian)->format('F d, Y') }}</p>
                                                                 <p><strong>Status:</strong> 
                                                                     @if($peminjaman->status === 'dikembalikan')
-                                                                        <span class="badge bg-success">Buku telah Dikembalikan</span>
+                                                                        <span class="badge bg-warning">Buku telah Dikembalikan</span>
                                                                     @elseif($peminjaman->status === 'dipinjam')
                                                                         <span class="badge bg-primary">Di Pinjam</span>
                                                                     @elseif($peminjaman->status === 'telat')
-                                                                        <span class="badge bg-warning">Telat Pengembalian</span>
+                                                                        <span class="badge bg-danger">Telat Pengembalian</span>
                                                                     @endif
                                                                 </p>
                                                             </div>

@@ -3,16 +3,8 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Klasifikai Buku</h1>
+      <h1>Klasifikasi Buku</h1>
 
-      <nav>
-        <ol class="breadcrumb text-bold mt-1">
-          <li class="breadcrumb-item active"><a href="">Jenis</a></li>
-          <li class="breadcrumb-item active"><a href="">Mapel</a></li>
-          <li class="breadcrumb-item active"><a href="">Sub Mapel</a></li>
-          <li class="breadcrumb-item active"><a href="" style="color: #1c1b1a; font-weight: bold; font-size:15px;"><b>Sub Kelas</b></a></li>
-        </ol>
-      </nav>
       <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
       <a href="{{ route('class.create') }}" class="btn btn-primary">Tambah Sub Kelas</a>
       </div>
