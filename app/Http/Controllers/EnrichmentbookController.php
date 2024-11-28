@@ -6,6 +6,7 @@ use App\Models\EnrichmentBook;
 use Illuminate\Http\Request;
 use App\Models\BookCase;
 use App\Models\detailenrichmentbook;
+use Illuminate\Support\Facades\DB;
 
 class EnrichmentbookController extends Controller
 {
@@ -202,6 +203,32 @@ class EnrichmentbookController extends Controller
 
         return redirect()->back()->with('success', 'Status buku berhasil diubah.');
     }
+
+    public function destroyAll($id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $enrichmentBook = EnrichmentBook::findOrFail($id);
+
+            if ($enrichmentBook->detailEnrichmentBooks()->exists()) {
+                foreach ($enrichmentBook->detailEnrichmentBooks as $detail) {
+                    $detail->borrowedEnrichmentBooks()->delete();
+                    $detail->delete();
+                }
+            }
+
+            $enrichmentBook->delete();
+
+            DB::commit();
+
+            return redirect()->route('enrichmentBooks.index')->with('success', 'Buku pengayaan beserta data peminjaman terkait berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('enrichmentBooks.index')->with('error', 'Gagal menghapus buku pengayaan: ' . $e->getMessage());
+        }
+    }
+
 
 
 

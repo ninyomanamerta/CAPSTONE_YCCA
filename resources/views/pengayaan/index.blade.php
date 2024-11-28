@@ -52,7 +52,7 @@
                                         <td>
                                             <a href="{{ route('enrichmentBooks.detail', $book->id) }}" class="badge bg-success">Detail</a>
                                             <a href="{{ route('enrichmentBooks.edit', $book->id) }}" class="badge bg-warning">Update</a>
-                                            <form action="{{ route('enrichmentBooks.destroy', $book->id) }}" method="POST" style="display:inline;">
+                                            <form action="{{ route('enrichmentBooks.destroyAll', $book->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Yakin ingin menghapus buku ini?');">Delete</button>
