@@ -378,7 +378,7 @@ class PeminjamanBukuPaketController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('peminjaman.index')->with('success', 'Data peminjaman siswa berhasil dihapus.');
+            return redirect()->route('pinjamPaket.index')->with('success', 'Data peminjaman siswa berhasil dihapus.');
 
         } catch (\Exception $e) {
             DB::rollBack();

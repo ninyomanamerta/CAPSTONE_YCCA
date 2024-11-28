@@ -24,9 +24,11 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $today = Carbon::now();
-            $terlambatCount = peminjaman_buku_pengayaan::where('status', 'dipinjam')
-                ->whereDate('tgl_pinjam', '<=', $today->subDays(7))
-                ->count();
+            // $terlambatCount = peminjaman_buku_pengayaan::where('status', 'dipinjam')
+            //     ->whereDate('tgl_pinjam', '<=', $today->subDays(7))
+            //     ->count();
+            $terlambatCount = peminjaman_buku_pengayaan::where('status', 'telat')
+               ->count();
 
             $view->with('terlambatCount', $terlambatCount);
         });

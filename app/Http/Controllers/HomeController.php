@@ -49,7 +49,8 @@ class HomeController extends Controller
         $statusGantiBaru = DetailPeminjamanBukuPaket::where('status_peminjaman', 'returned')->where('keterangan', 'Ganti baru')->count();
         $today = Carbon::now();
         $totalPeminjamanPengayaan = peminjaman_buku_pengayaan::count();
-        $terlambat = peminjaman_buku_pengayaan::where('status', 'dipinjam')->whereDate('tgl_pinjam', '<=', $today->subDays(7))->count();
+        // $terlambat = peminjaman_buku_pengayaan::where('status', 'dipinjam')->whereDate('tgl_pinjam', '<=', $today->subDays(7))->count();
+        $terlambat = peminjaman_buku_pengayaan::where('status', 'telat')->count();
         $sedangDiPinjam = peminjaman_buku_pengayaan::where('status', 'dipinjam')->where('tgl_pinjam', '>', $today->subDays(7))->count();
         $dikembalikan = peminjaman_buku_pengayaan::where('status', 'dikembalikan')->count();
 
@@ -63,18 +64,27 @@ class HomeController extends Controller
         ->get();
 
         //Line Chart
+        // month
         $monthlyData = DB::table('peminjaman_buku_pengayaan')
         ->select(DB::raw('YEAR(tgl_pinjam) as year, MONTH(tgl_pinjam) as month, COUNT(*) as total_peminjaman'))
         ->groupBy(DB::raw('YEAR(tgl_pinjam), MONTH(tgl_pinjam)'))
         ->orderBy(DB::raw('YEAR(tgl_pinjam), MONTH(tgl_pinjam)'))
         ->get();
 
+        //date
+        $dailyData = DB::table('peminjaman_buku_pengayaan')
+            ->select(DB::raw('DATE(tgl_pinjam) as date, COUNT(*) as total_peminjaman'))
+            ->groupBy(DB::raw('DATE(tgl_pinjam)'))
+            ->orderBy(DB::raw('DATE(tgl_pinjam)'))
+            ->get();
+
+
 
 
         return view('dashboard', compact('totalBukuPaket', 'bukuPaketRusak', 'bukuPaketTersedia', 'bukuPaketPinjam',
         'totalBukuPengayaan', 'bukuPengayaanRusak', 'bukuPengayaanTersedia', 'bukuPengayaanPinjam',
         'statusBorrowed', 'statusReturned', 'statusGantiBaru', 'totalPeminjaman', 'totalPeminjamanPengayaan', 'sedangDiPinjam',
-        'terlambat', 'dikembalikan', 'mostBorrowedBooks', 'monthlyData'));
+        'terlambat', 'dikembalikan', 'mostBorrowedBooks', 'monthlyData', 'dailyData'));
 
 
 
