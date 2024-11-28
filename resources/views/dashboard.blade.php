@@ -263,10 +263,17 @@
                 <canvas id="lineChart" style="max-height: 400px;"></canvas>
                 <script>
                   document.addEventListener("DOMContentLoaded", () => {
-                    const months = @json($monthlyData->pluck('month')->toArray());
-                    const years = @json($monthlyData->pluck('year')->toArray());
-                    const totalPeminjaman = @json($monthlyData->pluck('total_peminjaman')->toArray());
-                    const labels = months.map((month, index) => `${months[index]}/${years[index]}`);
+                    const dates = @json($dailyData->pluck('date')->toArray());
+                    const totalPeminjaman = @json($dailyData->pluck('total_peminjaman')->toArray());
+
+                    const labels = dates.map(date => {
+                        const parsedDate = new Date(date);
+                        const day = String(parsedDate.getDate()).padStart(2, '0');
+                        const month = String(parsedDate.getMonth() + 1).padStart(2, '0');
+                        const year = parsedDate.getFullYear();
+                        return `${day}/${month}/${year}`; 
+                    });
+
 
                     new Chart(document.querySelector('#lineChart'), {
                       type: 'line',
