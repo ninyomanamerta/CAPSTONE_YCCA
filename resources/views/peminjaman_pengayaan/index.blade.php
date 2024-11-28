@@ -109,10 +109,12 @@
                                                                 <p><strong>Nama Siswa:</strong> {{ $peminjaman->student->nama_siswa }}</p>
                                                                 <p><strong>Buku yang Dipinjam:</strong> {{ $peminjaman->book->judul }}</p>
                                                                 <p><strong>Dikasih oleh:</strong> {{ $peminjaman->peminjam }}</p>
-                                                                <p><strong>Nomor Induk Buku:</strong> {{ str_pad($peminjaman->id_detail_buku, 4, '0', STR_PAD_LEFT) }}</p>
+                                                                <p><strong>Nomor Induk Buku:</strong> {{ $peminjaman->id_judul_buku }}.{{ str_pad($peminjaman->detailenrichmentbook->no_induk , 4, '0', STR_PAD_LEFT) }}</p>
                                                                 <p><strong>Tanggal Peminjaman:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pinjam)->format('F d, Y') }}</p>
-                                                                <p><strong>Tanggal Pengembalian:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pengembalian)->format('F d, Y') }}</p>
-                                                                <p><strong>Status:</strong>
+
+                                                                <p><strong>Batas Pengembalian:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pengembalian)->format('F d, Y') }}</p>
+                                                                <p><strong>Status:</strong> 
+
                                                                     @if($peminjaman->status === 'dikembalikan')
                                                                         <span class="badge bg-warning">Buku telah Dikembalikan</span>
                                                                     @elseif($peminjaman->status === 'dipinjam')

@@ -16,9 +16,21 @@ class PeminjamanBukuPengayaanController extends Controller
      */
     public function index()
     {
-        $peminjaman_pengayaan = peminjaman_buku_pengayaan::with('student', 'book')->get(); // Ambil data dengan relasi
+        $today = Carbon::now(); // Waktu saat ini
+
+        // Update status 'telat' jika tanggal pengembalian sudah lewat hari ini
+        peminjaman_buku_pengayaan::where('status', 'dipinjam')
+            ->whereDate('tgl_pengembalian', '<', $today)
+            ->update(['status' => 'telat']);
+
+        // Ambil data peminjaman
+        $peminjaman_pengayaan = peminjaman_buku_pengayaan::with('student', 'book')->get();
+
         return view('peminjaman_pengayaan.index', compact('peminjaman_pengayaan'));
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -55,14 +67,14 @@ class PeminjamanBukuPengayaanController extends Controller
             'peminjam' => $request->peminjam,
             'tgl_pinjam' => $request->tgl_pinjam,
             'tgl_pengembalian' => $request->tgl_pengembalian,
-            'status' => 'dipinjam',
+            'status' => $request->status,
         ]);
         // Update status buku menjadi 'dipinjam'
-         $book = detailenrichmentbook::find($request->id_detail_buku); // Temukan buku berdasarkan id
-         if ($book) {
-             $book->status_peminjaman = 'dipinjam'; // Perbarui status
-             $book->save(); // Simpan perubahan
-         }
+        $book = detailenrichmentbook::find($request->id_detail_buku); // Temukan buku berdasarkan id
+        if ($book) {
+            $book->status_peminjaman = 'dipinjam'; // Perbarui status
+            $book->save(); // Simpan perubahan
+        }
 
         return redirect()->route('peminjamanbukupengayaan.index')->with('success', 'Peminjaman berhasil ditambahkan!');
     }
@@ -114,7 +126,7 @@ class PeminjamanBukuPengayaanController extends Controller
 
         // Redirect back with a success message
         return redirect()->route('peminjamanbukupengayaan.index')
-                         ->with('success', 'Status peminjaman berhasil diperbarui.');
+            ->with('success', 'Status peminjaman berhasil diperbarui.');
     }
 
 
@@ -125,18 +137,41 @@ class PeminjamanBukuPengayaanController extends Controller
      */
     public function destroy($id)
     {
+        // Temukan peminjaman berdasarkan id
         $peminjaman_buku_pengayaan = peminjaman_buku_pengayaan::findOrFail($id);
+        
+        // Temukan buku detail yang terhubung dengan peminjaman
+        $book = detailenrichmentbook::find($peminjaman_buku_pengayaan->id_detail_buku);
+    
+        // Jika buku ditemukan, ubah statusnya menjadi 'available'
+        if ($book) {
+            $book->status_peminjaman = 'available'; // Ubah status menjadi available
+            $book->save(); // Simpan perubahan
+        }
+    
+        // Hapus data peminjaman
         $peminjaman_buku_pengayaan->delete();
-        return redirect()->route('peminjamanbukupengayaan.index')->with('success', 'Peminjaman berhasil dihapus!');
+    
+        // Redirect kembali dengan pesan sukses
+        return redirect()->route('peminjamanbukupengayaan.index')
+                         ->with('success', 'Peminjaman berhasil dihapus dan status buku diperbarui menjadi available!');
     }
+    
 
     public function getBooksByJudul($judulId)
     {
         $books = detailenrichmentbook::where('id_pengayaan', $judulId)
             ->where('status_peminjaman', 'available')
-            ->get(['id', 'no_induk']); // Ensure you're fetching 'id' and 'no_induk'
+            ->get(['id','no_induk']); // Ensure you're fetching 'id' and 'no_induk'
 
-        return response()->json($books);
+            return response()->json($books->map(function($book) {
+                return [
+                    'id' => $book->id,  // Menyertakan ID untuk keperluan pengambilan data lebih lanjut
+                    'no_induk' => $book->no_induk // Menampilkan no_induk untuk kebutuhan tampilan
+                ];
+            }));
+            
+    
     }
 
     // App\Models\peminjaman_buku_pengayaan.php
@@ -145,12 +180,29 @@ class PeminjamanBukuPengayaanController extends Controller
     public function notification()
     {
         $today = Carbon::now();
-        $count = peminjaman_buku_pengayaan::where('status', 'dipinjam')
-            ->whereDate('tgl_pinjam', '<=', $today->subDays(7)) // Sudah lebih dari 7 hari
+        $count = peminjaman_buku_pengayaan::where('status', 'telat')
+            // ->whereDate('tgl_pinjam', '<=', $today->subDays(7)) // Sudah lebih dari 7 hari
             ->count();
 
         return $count;
     }
+
+    // public function updateLateStatus()
+    // {
+    //     $today = Carbon::today(); // Hari ini, mulai dari pukul 00:00
+
+    //     // Ambil semua peminjaman yang masih 'dipinjam' dan sudah lewat tanggal pengembalian
+    //     $overdueLoans = peminjaman_buku_pengayaan::where('status', 'dipinjam')
+    //         ->whereDate('tgl_pengembalian', '<', $today)
+    //         ->get();
+
+    //     foreach ($overdueLoans as $loan) {
+    //         $loan->status = 'telat'; // Perbarui status ke 'telat'
+    //         $loan->save(); // Simpan perubahan
+    //     }
+    // }
+
+
 
 
 }
