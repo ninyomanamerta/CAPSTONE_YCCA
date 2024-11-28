@@ -41,14 +41,5 @@ class peminjaman_buku_pengayaan extends Model
         return $this->belongsTo(detailenrichmentbook::class, 'id_detail_buku', 'id'); // Assuming id_detail_buku is the foreign key in detailenrichmentbook table.
     }
 
-    public function getStatusAttribute($value)
-    {
-        // Jika status belum 'dikembalikan', cek apakah tanggal pengembalian sudah lewat
-        if ($value === 'dipinjam' && $this->tgl_pengembalian < now()) {
-            return 'telat';
-        }
-
-        return $value;
-    }
 }
 
