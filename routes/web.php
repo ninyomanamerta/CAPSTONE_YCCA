@@ -118,10 +118,6 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 
 
 
-
-
-
-
 // Pengayaan
     Route::get('/pengayaan', [EnrichmentbookController::class, 'index'])->name('enrichmentBooks.index');
     Route::get('/pengayaan/damagedBooks', [EnrichmentbookController::class, 'damagedBooks'])->name('enrichmentBooks.damagedBooks');
@@ -138,6 +134,8 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::get('/pengayaan/{id}/edit', [EnrichmentbookController::class, 'edit'])->name('enrichmentBooks.edit');
     Route::get('/pengayaan/detail/{id}', [EnrichmentbookController::class, 'detail'])->name('enrichmentBooks.detail');
     Route::delete('/pengayaan/detail/{id}', [EnrichmentbookController::class, 'destroyDetail'])->name('enrichmentBooks.destroyDetail');
+    Route::delete('/pengayaan/deleteAll/{id}', [EnrichmentbookController::class, 'destroyAll'])->name('enrichmentBooks.destroyAll');
+
 
 
 

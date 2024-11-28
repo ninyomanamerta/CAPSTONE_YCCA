@@ -43,7 +43,7 @@
                                         <td class="col-3">{{ $peminjaman->book->judul }}</td>
                                         <td class="col-2">{{ \Carbon\Carbon::parse($peminjaman->tgl_pinjam)->format('F d, Y') }}</td>
                                         <td class="col-2">{{ \Carbon\Carbon::parse($peminjaman->tgl_pengembalian)->format('F d, Y') }}</td>
-                  
+
 
                                           {{-- Fetch status from the related detail_buku --}}
                                           <td>
@@ -53,24 +53,24 @@
                                             <span class="badge bg-primary">Di Pinjam</span>
                                         @elseif($peminjaman->status === 'telat')
                                             <span class="badge bg-danger">Telat Pengembalian</span>
-                                        @endif                                
+                                        @endif
                                           </td>
                                           <td style="display: flex; gap: 10px; justify-content: flex-end;">
                                             {{-- Lihat Detail --}}
                                            <a href="#" class="badge bg-success" style="border:none" data-bs-toggle="modal" data-bs-target="#detailModal{{ $peminjaman->id }}">
                                               Lihat Detail
                                           </a>
-                                        
+
                                             {{-- Verifikasi Pengembalian --}}
                                             <button type="button" class="badge bg-warning"  style="border:none" data-bs-toggle="modal" data-bs-target="#verifikasiModal{{ $peminjaman->id }}">
                                                 Verifikasi
                                             </button>
-                                        
+
                                             {{-- Delete --}}
                                             <button type="button" class="badge bg-danger" style="border:none" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $peminjaman->id }}">
                                                 Delete
                                             </button>
-                                          </td> 
+                                          </td>
 
                                                 {{-- Modal Konfirmasi Pengembalian --}}
                                                 <div class="modal fade" id="verifikasiModal{{ $peminjaman->id }}" tabindex="-1" aria-labelledby="verifikasiModalLabel{{ $peminjaman->id }}" aria-hidden="true">
@@ -97,7 +97,7 @@
                                                 </div>
 
 
-                                                <!-- Modal Detail Buku -->                                              
+                                                <!-- Modal Detail Buku -->
                                                 <div class="modal fade" id="detailModal{{ $peminjaman->id }}" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -111,8 +111,10 @@
                                                                 <p><strong>Dikasih oleh:</strong> {{ $peminjaman->peminjam }}</p>
                                                                 <p><strong>Nomor Induk Buku:</strong> {{ $peminjaman->id_judul_buku }}.{{ str_pad($peminjaman->detailenrichmentbook->no_induk , 4, '0', STR_PAD_LEFT) }}</p>
                                                                 <p><strong>Tanggal Peminjaman:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pinjam)->format('F d, Y') }}</p>
+
                                                                 <p><strong>Batas Pengembalian:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pengembalian)->format('F d, Y') }}</p>
                                                                 <p><strong>Status:</strong> 
+
                                                                     @if($peminjaman->status === 'dikembalikan')
                                                                         <span class="badge bg-warning">Buku telah Dikembalikan</span>
                                                                     @elseif($peminjaman->status === 'dipinjam')
@@ -155,7 +157,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>                                   
+                                                </div>
                                     </tr>
                                 @endforeach
                             </tbody>
