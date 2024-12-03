@@ -59,7 +59,7 @@
                               <th scope="row" class="col-1">{{ $index + 1 }}</th>
                               <td class="col-2">{{ $student->nis }}</td>
                               <td class="col-3">{{ $student->nama_siswa }}</td>
-                              <td class="col-1">{{ $student->kelas }}</td>
+                              <td class="col-1"></td>
                               <td class="col-0" style="display: flex; justify-content: flex-end;">
 
                                 <a href="{{ route('pinjamPaket.detail', $student->id) }}"><span class="badge bg-success">Lihat Detail</span></a>

@@ -7,6 +7,7 @@
 
         <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
             <a href="{{ route('student.create') }}" class="btn btn-primary">Tambah Siswa</a>
+            <span class="ml-2"><a href="{{ route('student.import') }}" class="btn btn-success">Import Data</a></span>
         </div>
 
         @if(Session::has('success'))
@@ -28,7 +29,9 @@
                                     <th scope="col">No</th>
                                     <th scope="col">NIS</th>
                                     <th scope="col">Nama</th>
-                                    <th scope="col">Kelas</th>
+                                    <th scope="col">Tk I</th>
+                                    <th scope="col">Tk II</th>
+                                    <th scope="col">Tk III</th>
                                     <th scope="col" style="display: flex; justify-content: flex-end;">Aksi</th>
                                 </tr>
                             </thead>
@@ -38,7 +41,55 @@
                                     <th scope="row" class="col-1">{{ $index + 1 }}</th>
                                     <td class="col-2">{{ $student->nis }}</td>
                                     <td class="col-3">{{ $student->nama_siswa }}</td>
-                                    <td class="col-1">{{ $student->kelas }}</td>
+
+                                    <td class="col-1">
+                                        @php
+                                            $kelas = $student->detailSiswa->where('tingkat', 7)->first();
+                                        @endphp
+
+                                        @if($kelas)
+                                            @if($kelas->current_class)
+                                                <span class="student">{{ $kelas->tingkat }}{{ $kelas->kelas }}</span>
+                                            @else
+                                                {{ $kelas->tingkat }}{{ $kelas->kelas }}
+                                            @endif
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+
+                                    <td class="col-1">
+                                        @php
+                                            $kelas = $student->detailSiswa->where('tingkat', 8)->first();
+                                        @endphp
+
+                                        @if($kelas)
+                                            @if($kelas->current_class)
+                                                <span class="student">{{ $kelas->tingkat }}{{ $kelas->kelas }}</span>
+                                            @else
+                                                {{ $kelas->tingkat }}{{ $kelas->kelas }}
+                                            @endif
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+
+                                    <td class="col-1">
+                                        @php
+                                            $kelas = $student->detailSiswa->where('tingkat', 9)->first();
+                                        @endphp
+
+                                        @if($kelas)
+                                            @if($kelas->current_class)
+                                                <span class="student">{{ $kelas->tingkat }}{{ $kelas->kelas }}</span>
+                                            @else
+                                                {{ $kelas->tingkat }}{{ $kelas->kelas }}
+                                            @endif
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+
                                     <td class="col-0" style="display: flex; justify-content: flex-end;">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#studentModal" data-id="{{ $student->id }}" class="view-student"><span class="badge bg-success">View</span></a>
                                         <a href="{{ route('student.edit', $student->id) }}"><span class="badge bg-warning">Update</span></a>
@@ -48,6 +99,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div><!-- End Recent Sales -->
@@ -63,7 +115,7 @@
                         <div class="modal-body">
                             <p><strong>NIS Siswa:</strong> <span id="modal-nis"></span></p>
                             <p><strong>Nama Siswa:</strong> <span id="modal-nama"></span></p>
-                            <p><strong>Kelas:</strong> <span id="modal-kelas"></span></p>
+                            <p><strong>Kelas Saat Ini:</strong> <span id="modal-kelas"></span></p>
                             <p><strong>Tanggal Dibuat:</strong> <span id="modal-tanggal"></span></p>
                         </div>
                         <div class="modal-footer">
@@ -108,7 +160,7 @@
                         $('#modal-nama').text('Loading...');
                         $('#modal-kelas').text('Loading...');
                         $('#modal-tanggal').text('Loading...');
-                    
+
                         var studentId = $(this).data('id');
                         $.ajax({
                             url: '/siswa/' + studentId,
@@ -116,7 +168,18 @@
                             success: function(data) {
                                 $('#modal-nis').text(data.nis);
                                 $('#modal-nama').text(data.nama_siswa);
-                                $('#modal-kelas').text(data.kelas);
+
+                                let currentClassDetail = data.kelas.find(function(detail) {
+                                    return detail.current_class === 'Yes';
+                                });
+
+                                if (currentClassDetail) {
+                                    $('#modal-kelas').text(currentClassDetail.tingkat.toString() + currentClassDetail.kelas);
+                                } else {
+                                    $('#modal-kelas').text('N/A');
+                                }
+
+                                //$('#modal-kelas').text(data.kelas);
 
                                 // Format tanggal
                                 const date = new Date(data.created_at);

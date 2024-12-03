@@ -33,6 +33,8 @@ Route::get('/siswa/{id}', [StudentController::class, 'show']);
 Route::get('/siswa/{id}/edit', [StudentController::class, 'edit'])->name('student.edit');
 Route::put('/siswa/{id}', [StudentController::class, 'update'])->name('student.update');
 Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
+Route::get('/siswa/add/import/file', [StudentController::class, 'import'])->name('student.import');
+Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->name('student.proses');
 
 
 // BookCase
