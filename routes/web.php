@@ -165,6 +165,10 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
 //     return view('pengayaan.test');
 //     });
 
+Route::get('/editprofile', function () {
+    return view('editprofile');
+});
+
 Route::get('/landingpage', function () {
     return view('auth.landingpage');
     });
