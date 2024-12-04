@@ -30,7 +30,7 @@
                                     <th scope="col">Nama Siswa</th>
                                     <th scope="col">Buku yang Dipinjam</th>
                                     <th scope="col">Tanggal Peminjaman</th>
-                                    <th scope="col">Tanggal Pengembalian</th>
+                                    <th scope="col">Batas Pengembalian</th>
                                     <th scope="col">Status</th>
                                     <th scope="col" style="display: flex; justify-content: flex-end;">Aksi</th>
                                 </tr>
@@ -41,8 +41,8 @@
                                         <th scope="row" class="col-1">{{ $index + 1 }}</th>
                                         <td class="col-2">{{ $peminjaman->student->nama_siswa }}</td>
                                         <td class="col-3">{{ $peminjaman->book->judul }}</td>
-                                        <td class="col-2">{{ \Carbon\Carbon::parse($peminjaman->tgl_pinjam)->format('F d, Y') }}</td>
-                                        <td class="col-2">{{ \Carbon\Carbon::parse($peminjaman->tgl_pengembalian)->format('F d, Y') }}</td>
+                                        <td class="col-2">{{ \Carbon\Carbon::parse($peminjaman->tgl_pinjam)->format('d M Y') }}</td>
+                                        <td class="col-2">{{ \Carbon\Carbon::parse($peminjaman->tgl_pengembalian)->format('d M Y') }}</td>
 
 
                                           {{-- Fetch status from the related detail_buku --}}
@@ -113,7 +113,7 @@
                                                                 <p><strong>Tanggal Peminjaman:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pinjam)->format('F d, Y') }}</p>
 
                                                                 <p><strong>Batas Pengembalian:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pengembalian)->format('F d, Y') }}</p>
-                                                                <p><strong>Status:</strong> 
+                                                                <p><strong>Status:</strong>
 
                                                                     @if($peminjaman->status === 'dikembalikan')
                                                                         <span class="badge bg-warning">Buku telah Dikembalikan</span>

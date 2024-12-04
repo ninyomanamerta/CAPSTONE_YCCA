@@ -1,10 +1,25 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
+<main id="main" class="main">
+    <div class="pagetitle mb-4">
+        <h1>Edit Profile</h1>
+        <nav class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="javascript:history.back()">
+                        <i class="bi bi-arrow-left-short" style="font-size: 20px"></i>
+                        <span style="font-size: 20px">Kembali</span>
+                    </a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="card w-100 w-md-75 w-lg-50">
             <div class="card-header text-center bg-primary text-white">
-                <h3>Edit Profil</h3>
+                <h3>Form Edit Profil</h3>
             </div>
 
             <div class="card-body">
@@ -14,7 +29,7 @@
 
                     <div class="form-group mb-3">
                         <label for="name" class="form-label">Nama</label>
-                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" 
+                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
                             value="{{ old('name', $user->name) }}" required>
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -23,7 +38,7 @@
 
                     <div class="form-group mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
+                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                             value="{{ old('email', $user->email) }}" required>
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -32,7 +47,7 @@
 
                     <div class="form-group mb-3">
                         <label for="nip" class="form-label">NIP</label>
-                        <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror" 
+                        <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror"
                             value="{{ old('nip', $user->nip) }}"/>
                         @error('nip')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -41,7 +56,7 @@
 
                     <div class="form-group mb-3">
                         <label for="jabatan" class="form-label">Jabatan</label>
-                        <input type="text" name="jabatan" class="form-control @error('jabatan') is-invalid @enderror" 
+                        <input type="text" name="jabatan" class="form-control @error('jabatan') is-invalid @enderror"
                             value="{{ old('jabatan', $user->jabatan) }}"/>
                         @error('jabatan')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -50,7 +65,7 @@
 
                     <div class="form-group mb-3">
                         <label for="current_password" class="form-label">Password Lama</label>
-                        <input type="password" name="current_password" class="form-control @error('current_password') is-invalid @enderror" 
+                        <input type="password" name="current_password" class="form-control @error('current_password') is-invalid @enderror"
                             value="{{ old('current_password') }}"/>
                         @error('current_password')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -59,7 +74,7 @@
 
                     <div class="form-group mb-3">
                         <label for="new_password" class="form-label">Password Baru</label>
-                        <input type="password" name="new_password" class="form-control @error('new_password') is-invalid @enderror" 
+                        <input type="password" name="new_password" class="form-control @error('new_password') is-invalid @enderror"
                             value="{{ old('new_password') }}"/>
                         @error('new_password')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -75,7 +90,7 @@
                     <!-- Tombol dalam satu baris dengan jarak rapat -->
                     <div class="d-flex justify-content-end mb-3">
                         <button type="submit" class="btn btn-primary me-2 w-32">Simpan Perubahan</button>
-                        <button type="button" class="btn btn-danger me-2 w-32" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus Akun</button>
+                        {{-- <button type="button" class="btn btn-danger me-2 w-32" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus Akun</button> --}}
                         <a href="{{ url('home') }}" class="btn btn-secondary w-32">Kembali ke Halaman Utama</a>
                     </div>
                 </form>
@@ -166,4 +181,6 @@
         });
     </script>
     @endpush
+
+</main>
 @endsection
