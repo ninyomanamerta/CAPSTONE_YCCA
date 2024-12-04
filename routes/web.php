@@ -138,6 +138,10 @@ Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->n
     Route::delete('/pengayaan/detail/{id}', [EnrichmentbookController::class, 'destroyDetail'])->name('enrichmentBooks.destroyDetail');
     Route::delete('/pengayaan/deleteAll/{id}', [EnrichmentbookController::class, 'destroyAll'])->name('enrichmentBooks.destroyAll');
 
+    Route::get('/pengayaan/import/file', [EnrichmentbookController::class, 'import'])->name('enrichmentBooks.import');
+    Route::post('/pengayaan/import/file/store', [EnrichmentbookController::class, 'proses'])->name('enrichmentBooks.proses');
+
+
 
 
 

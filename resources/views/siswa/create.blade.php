@@ -45,6 +45,12 @@
               </div>
             </div>
             <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Tingkat</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" id="tingkat" name="tingkat" placeholder="Masukan tingkat saat ini" required value="{{ old('tingkat') }}">
+                </div>
+            </div>
+            <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Kelas</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="kelas" name="kelas" placeholder="Masukan kelas saat ini" required value="{{ old('kelas') }}">

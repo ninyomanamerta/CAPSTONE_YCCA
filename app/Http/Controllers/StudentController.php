@@ -7,6 +7,7 @@ use App\Models\DetailStudents;
 use Illuminate\Http\Request;
 use App\Imports\StudentImport;
 use Excel;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -33,19 +34,47 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nis' => 'required|string|max:20|unique:students,nis',
-            'namasiswa' => 'required|string|max:300',
-            'kelas' => 'required|string|max:4',
+        $validated = $request->validate([
+            'nis' => 'required|string|max:255',
+            'namasiswa' => 'required|string|max:255',
+            'tingkat' => 'required|integer',
+            'kelas' => 'required|string|max:2',
         ]);
 
-        Student::create([
-            'nis' => $request->nis,
-            'nama_siswa' => $request->namasiswa,
-            'kelas' => $request->kelas,
-        ]);
+        DB::beginTransaction();
 
-        return redirect()->route('student.index')->with('success', 'Data siswa berhasil ditambahkan!');
+        try {
+            $student = Student::where('nis', $validated['nis'])->first();
+
+            if (!$student) {
+
+                $student = Student::create([
+                    'nis' => $validated['nis'],
+                    'nama_siswa' => $validated['namasiswa'],
+                ]);
+            }
+
+            DetailStudents::where('id_siswa', $student->id)->update(['current_class' => false]);
+
+            DetailStudents::create([
+                'id_siswa' => $student->id,
+                'tingkat' => $validated['tingkat'],
+                'kelas' => $validated['kelas'],
+                'current_class' => true,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('student.index')->with('success', 'Data siswa berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->back()
+                ->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data siswa: ' . $e->getMessage()])
+                ->withInput();
+        }
+
+
     }
 
     /**

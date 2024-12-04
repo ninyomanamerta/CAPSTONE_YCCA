@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\BookCase;
 use App\Models\detailenrichmentbook;
 use Illuminate\Support\Facades\DB;
+use App\Imports\EnrichmentImport;
+use Excel;
 
 class EnrichmentbookController extends Controller
 {
@@ -36,6 +38,7 @@ class EnrichmentbookController extends Controller
 
         $validated = $request->validate([
             'tgl_masuk' => 'required|date',
+            'kategori' => 'required|string|max:255',
             'judul' => 'required|string|max:255',
             'tahun' => 'required|numeric',
             'pengarang' => 'required|string|max:255',
@@ -50,6 +53,7 @@ class EnrichmentbookController extends Controller
 
         $enrichmentBooks = EnrichmentBook::create([
             'tgl_masuk' => $validated['tgl_masuk'],
+            'kategori' => $validated['kategori'],
             'judul' => $validated['judul'],
             'tahun' => $validated['tahun'],
             'pengarang' => $validated['pengarang'],
@@ -114,6 +118,7 @@ class EnrichmentbookController extends Controller
         $enrichmentBooks = EnrichmentBook::findOrFail($id);
         $request->validate([
             'tgl_masuk' => 'required|date',
+            'kategori' => 'required|string|max:255',
             'judul' => 'required|string|max:255',
             'tahun' => 'required|numeric',
             'pengarang' => 'required|string|max:255',
@@ -124,6 +129,7 @@ class EnrichmentbookController extends Controller
 
         $enrichmentBooks->update([
             'tgl_masuk' => $request->tgl_masuk,
+            'kategori' => $request->kategori,
             'judul' => $request->judul,
             'tahun' => $request->tahun,
             'pengarang' => $request->pengarang,
@@ -227,6 +233,20 @@ class EnrichmentbookController extends Controller
             DB::rollBack();
             return redirect()->route('enrichmentBooks.index')->with('error', 'Gagal menghapus buku pengayaan: ' . $e->getMessage());
         }
+    }
+
+
+    public function import()
+    {
+        return view('pengayaan.import');
+    }
+
+    public function proses(Request $request)
+    {
+        Excel::import(new EnrichmentImport, $request->file('books'));
+
+        return redirect()->route('enrichmentBooks.index')->with('success', 'Data buku pengayaan berhasil ditambahkan!');
+
     }
 
 

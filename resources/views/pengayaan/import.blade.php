@@ -3,7 +3,7 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1 class="mb-2">Import Data Siswa</h1>
+      <h1 class="mb-2">Import Data Buku Pengayaan</h1>
       <nav class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -27,23 +27,23 @@
 
       <div class="card mt-2">
         <div class="card-body">
-            <h4 class="card-title ml-4 mb-6">Formulir Tambah Data Siswa</h4>
+            <h4 class="card-title ml-4 mb-6">Formulir Tambah Buku Pengayaan</h4>
 
           <!-- Horizontal Form -->
-          <form action="{{ route('student.proses') }}" method="POST" enctype="multipart/form-data" class="px-3">
+          <form action="{{ route('enrichmentBooks.proses') }}" method="POST" enctype="multipart/form-data" class="px-3">
             @csrf
             <div class="row mb-3">
-              <label class="col-sm-12">Masukan Data Siswa</label>
+              <label class="col-sm-12">Masukan Data Buku Pengayaan</label>
             </div>
 
             <div class="col-sm-12">
-                <input type="file" class="form-control" id="students" name="students" required value="{{ old('students') }}">
+                <input type="file" class="form-control" id="books" name="books" required value="{{ old('books') }}">
             </div>
 
 
             <div class="text-center">
               <button type="submit" class="btn btn-primary">Simpan</button>
-              <a href="{{ route('student.index') }}" class="mt-2 btn btn-warning mb-2">Batal</a>
+              <a href="{{ route('enrichmentBooks.index') }}" class="mt-2 btn btn-warning mb-2">Batal</a>
             </div>
           </form><!-- End Horizontal Form -->
 

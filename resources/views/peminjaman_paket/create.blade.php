@@ -51,7 +51,7 @@
                             <select class="form-control select2" name="student" style="width: 100%;">
                                 <option value="">Pilih nama siswa</option>
                                 @foreach($students as $student)
-                                    <option value="{{ $student->id }}">Kelas : {{ $student->kelas }} | {{ $student->nis }} | {{ $student->nama_siswa }} </option>
+                                    <option value="{{ $student->id }}">Kelas: {{ $student->detailSiswa->first()->tingkat }}{{ $student->detailSiswa->first()->kelas }} | {{ $student->nis }} | {{ $student->nama_siswa }} </option>
                                 @endforeach
                             </select>
                         </div>
