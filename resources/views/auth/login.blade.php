@@ -109,6 +109,12 @@
                                     Login
                                 </button>
                             </div>
+                            <div class="col">
+                                <p class="mb-0" style="font-size: 16px">
+                                    Belum punya akun?
+                                    <a href="{{ route('register') }}" style="color: #ffff">Register disini</a>
+                                </p>
+                            </div>
                             @if (Route::has('password.request'))
                             {{-- <div class="col-auto">
                                 <a class="btn btn-link" href="{{ route('password.request') }}">

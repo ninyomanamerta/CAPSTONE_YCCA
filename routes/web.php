@@ -12,7 +12,7 @@ use App\Http\Controllers\BookCaseController;
 use App\Http\Controllers\PackageBookController;
 use App\Http\Controllers\PeminjamanBukuPaketController;
 use App\Http\Controllers\PeminjamanBukuPengayaanController;
-
+use App\Http\Controllers\UserProfile;
 
 
 Route::get('/', function () {
@@ -24,6 +24,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Profile
+Route::get('/profile', [UserProfile::class, 'edit'])->name('profile');
+Route::post('/profile/update', [UserProfile::class, 'update'])->name('profile.update');
+Route::delete('/profile/delete', [UserProfile::class, 'destroy'])->name('profile.delete');
+
 
 // Student
 Route::get('/siswa', [StudentController::class, 'index'])->name('student.index');
@@ -174,7 +180,3 @@ Route::get('/landingpage', function () {
 
 
 
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
