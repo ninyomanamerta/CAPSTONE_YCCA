@@ -31,7 +31,7 @@
     <section class="section dashboard">
         <div class="card mt-8 mb-3 col-12 px-3">
             <div class="card-body">
-                <h5 class="card-title2">{{ $enrichmentBooks->judul }}</h5>
+                <h5 class="card-title2">{{ $enrichmentBooks->judul }} <span style="font-size: 14px; color: #798eb3;"> | Kategori : {{ $enrichmentBooks->kategori }} </span> </h5>
                 <div class="row">
                   <!-- Kolom untuk ikon -->
                   <div class="col-1 d-flex align-items-start mt-1">

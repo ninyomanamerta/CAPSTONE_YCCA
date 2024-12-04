@@ -6,8 +6,10 @@
         <h1>Data Buku Pengayaan</h1>
 
         <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-            <a href="{{ route('enrichmentBooks.create') }}" class="btn btn-primary mr-2">Tambah Buku Pengayaan</a>
-            <span><a href="{{ route('enrichmentBooks.damagedBooks') }}" class="btn btn-danger">Tandai Buku Rusak</a></span>
+            <a href="{{ route('enrichmentBooks.create') }}" class="btn btn-primary mr-2"><i class="bi bi-plus-lg"></i></a>
+            <span><a href="{{ route('enrichmentBooks.import') }}" class="btn btn-success"><i class="bi bi-file-earmark-plus-fill"></i></a></span>
+            <span class="ml-2"><a href="{{ route('enrichmentBooks.damagedBooks') }}" class="btn btn-danger" ><i class="bi bi-trash3"></i></a></span>
+
         </div>
 
         @if(Session::has('success'))
@@ -29,10 +31,10 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tgl Masuk</th>
-                                    {{-- <th>Pengarang</th> --}}
+                                    {{-- <th>Kategori</th> --}}
                                     <th>Judul</th>
                                     {{-- <th>Penerbit</th> --}}
-                                    <th>Thn Terbit</th>
+                                    <th>Tahun</th>
                                     <th>Eks</th>
                                     <th>Rak</th>
                                     <th style="display: flex; justify-content: flex-end;">Aksi</th>
@@ -43,7 +45,7 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ \Carbon\Carbon::parse($book->tgl_masuk)->format('d M Y') }}</td>
-                                        {{-- <td>{{ $book->pengarang }}</td> --}}
+                                        {{-- <td>{{ $book->kategori }}</td> --}}
                                         <td>{{ \Illuminate\Support\Str::limit($book->judul, 40, '...') }}</td>
                                         {{-- <td>{{ $book->penerbit ?? '-' }}</td> <!-- Pastikan kolom ini ada di database jika diperlukan --> --}}
                                         <td>{{ $book->tahun }}</td>
@@ -62,11 +64,14 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('enrichmentBooks.showAll') }}" class="btn btn-primary float-end mt-2">Semua Buku Pengayaan</a>
-
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
+            <a href="{{ route('enrichmentBooks.showAll') }}" class="btn btn-primary float-end">Semua Buku Pengayaan</a>
+
         </div>
     </section>
 </main>

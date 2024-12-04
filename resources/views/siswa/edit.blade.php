@@ -14,7 +14,7 @@
             </li>
         </ol>
     </nav>
-     
+
       @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -46,11 +46,44 @@
                 <input type="text" class="form-control" id="namasiswa" name="namasiswa" placeholder="Masukan nama siswa" required value="{{ old('namasiswa', $student->nama_siswa) }}">
               </div>
             </div>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Kelas</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="kelas" name="kelas" placeholder="Masukan kelas saat ini" required value="{{ old('kelas', $student->kelas) }}">
+
+            <div class="form-group">
+                <div class="row ">
+
+                    <div class="form-group mb-2 col-5">
+                        <label for="tingkat">Tingkat</label>
+                    </div>
+                    <div class="form-group mb-2 col-5" >
+                        <label for="kelas">Kelas</label>
+                    </div>
+                    <div class="form-group mb-2 col-2" >
+                        <label for="kelas">Kelas Saat Ini</label>
+                    </div>
+
                 </div>
+
+                <ul class="list-group">
+                    @foreach($student->detailSiswa as $detail)
+                    <div class="row ">
+
+                        <div class="form-group mb-2 col-5">
+                            <input type="number" class="form-control mb-2" name="tingkat[]" value="{{ $detail->tingkat }}">
+                        </div>
+
+                        <div class="form-group mb-2 col-5">
+                            <input type="text" class="form-control mb-2" name="kelas[]" value="{{ $detail->kelas }}">
+                        </div>
+
+                        <input type="hidden" name="detail_ids[]" value="{{ $detail->id }}">
+
+
+                        <div class="form-group mb-2 col-3 mt-1">
+                            <span class="student"><input type="checkbox" name="current_class[]" value="{{ $detail->id }}"></span>
+                        </div>
+
+                    </div>
+                    @endforeach
+                </ul>
             </div>
 
             <div class="text-center">

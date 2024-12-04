@@ -42,7 +42,13 @@
                     <h5 class="sub-title">NIS : {{ $student->nis }}</h5>
                   </div>
                   <div class="col-3 mt-3 mb-2 mt-4">
-                    <h5 class="sub-title">Kelas Saat Ini : {{ $student->kelas }}</h5>
+                    <h5 class="sub-title">Kelas Saat Ini :
+                        @if ($currentClassDetail = $student->detailSiswa->where('current_class', true)->first())
+                            {{ $currentClassDetail->tingkat }}{{ $currentClassDetail->kelas }}
+                        @else
+                            Tidak ada kelas aktif
+                        @endif
+                    </h5>
                   </div>
 
                 </div>

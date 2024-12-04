@@ -25,12 +25,23 @@ class PeminjamanBukuPaketController extends Controller
      */
     public function index()
     {
-        $siswaPeminjam = Student::with(['peminjamanBukuPaket'])
-            ->whereHas('peminjamanBukuPaket', function ($query) {
-                $query->whereNotNull('id');
-            })
-            ->orderByRaw("SUBSTRING_INDEX(kelas, '', 1), kelas")
-            ->get();
+        // $siswaPeminjam = Student::with(['peminjamanBukuPaket'])
+        //     ->whereHas('peminjamanBukuPaket', function ($query) {
+        //         $query->whereNotNull('id');
+        //     })
+        //     // ->orderByRaw("SUBSTRING_INDEX(kelas, '', 1), kelas")
+        //     ->get();
+
+        // // Return ke view dengan data siswa peminjaman
+        // return view('peminjaman_paket.index', compact('siswaPeminjam'));
+
+        $siswaPeminjam = Student::with(['peminjamanBukuPaket', 'detailSiswa' => function ($query) {
+            $query->where('current_class', true); // Ambil hanya detail dengan current_class = true
+        }])
+        ->whereHas('peminjamanBukuPaket', function ($query) {
+            $query->whereNotNull('id');
+        })
+        ->get();
 
         // Return ke view dengan data siswa peminjaman
         return view('peminjaman_paket.index', compact('siswaPeminjam'));
@@ -42,9 +53,9 @@ class PeminjamanBukuPaketController extends Controller
     public function create()
     {
 
-        $students = Student::query()
-            ->orderByRaw("SUBSTRING_INDEX(kelas, ' ', 1), kelas")
-            ->get();
+        $students = Student::with(['detailSiswa' => function ($query) {
+            $query->where('current_class', true);
+            }])->get();
         $books = PackageBook::with(['detailPackageBooks' => function ($query) {
             $query->where('status_peminjaman', 'available');
         }, 'jenis', 'mapel', 'submapel', 'subkelas'])
@@ -58,65 +69,69 @@ class PeminjamanBukuPaketController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'student' => 'required|exists:students,id',
-            'pic' => 'required|string|max:255',
-            'books' => 'required|array',
-            'books.*' => 'exists:detail_package_books,id',
-        ]);
+{
+    $validated = $request->validate([
+        'student' => 'required|exists:students,id',
+        'pic' => 'required|string|max:255',
+        'books' => 'required|array',
+        'books.*' => 'exists:detail_package_books,id',
+    ]);
 
-        DB::beginTransaction();
+    DB::beginTransaction();
 
-        try {
+    try {
+        $student = Student::with('detailSiswa')->findOrFail($validated['student']);
 
-            $student = Student::findOrFail($validated['student']);
+        $currentClassDetail = $student->detailSiswa->where('current_class', true)->first();
 
-            $currentClassLevel = intval(substr($student->kelas, 0, 1));
+        if (!$currentClassDetail) {
+            return redirect()->route('pinjamPaket.index')
+                ->with('error', 'Siswa tidak memiliki kelas aktif. Harap periksa data siswa.');
+        }
 
-        // Periksa apakah sudah ada peminjaman di tingkat kelas ini
-            $existingLoan = PeminjamanBukuPaket::where('id_siswa', $student->id)
-            ->whereRaw('CAST(LEFT(kelas, 1) AS UNSIGNED) = ?', [$currentClassLevel])
+        $currentClass = $currentClassDetail->tingkat . $currentClassDetail->kelas;
+
+        $currentLevel = $currentClassDetail->tingkat;
+
+        $existingLoan = PeminjamanBukuPaket::where('id_siswa', $student->id)
+            ->where('kelas', 'like', $currentLevel . '%')
             ->exists();
 
-            if ($existingLoan) {
-                return redirect()->route('pinjamPaket.index')->withCookie(cookie('message', 'Siswa sudah melakukan peminjaman di tingkat kelas ' . $currentClassLevel . '. Ubah kelas atau tambahkan melalui Lihat Detail!', 1));
-            }
+        if ($existingLoan) {
+            return redirect()->route('pinjamPaket.index')->withCookie(
+                cookie('message', 'Siswa sudah melakukan peminjaman di tingkat kelas ' . $currentLevel . '. Ubah kelas atau tambahkan melalui Lihat Detail!', 1)
+            );
+        }
 
-            $peminjaman = PeminjamanBukuPaket::create([
-                'id_siswa' => $student->id,
-                'penanggung_jawab' => $validated['pic'],
-                'kelas' => $student->kelas,
+        $peminjaman = PeminjamanBukuPaket::create([
+            'id_siswa' => $student->id,
+            'penanggung_jawab' => $validated['pic'],
+            'kelas' => $currentClass,
+        ]);
+
+        foreach ($validated['books'] as $bookId) {
+            DetailPeminjamanBukuPaket::create([
+                'id_pinjam' => $peminjaman->id,
+                'id_buku_paket' => $bookId,
+                'status_peminjaman' => 'borrowed',
+                'tanggal_pinjam' => Carbon::now(),
             ]);
 
-            foreach ($validated['books'] as $bookId) {
-                DetailPeminjamanBukuPaket::create([
-                    'id_pinjam' => $peminjaman->id,
-                    'id_buku_paket' => $bookId,
-                    'status_peminjaman' => 'borrowed',
-                    'tanggal_pinjam' => Carbon::now(),
-
-
-                ]);
-
-                $detailBook = DetailPackageBook::findOrFail($bookId);
-                $detailBook->update([
-                    'status_peminjaman' => 'nonavailable',
-                ]);
-            }
-
-            DB::commit();
-
-            return redirect('/paket/peminjaman')->with('success', 'Data peminjaman buku paket berhasil disimpan!');
-
-
-
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses peminjaman.');
+            $detailBook = DetailPackageBook::findOrFail($bookId);
+            $detailBook->update([
+                'status_peminjaman' => 'nonavailable',
+            ]);
         }
+
+        DB::commit();
+
+        return redirect('/paket/peminjaman')->with('success', 'Data peminjaman buku paket berhasil disimpan!');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses peminjaman.');
     }
+}
+
 
     /**
      * Display the specified resource.
@@ -125,7 +140,8 @@ class PeminjamanBukuPaketController extends Controller
     public function showPeminjamanByClassLevels($id)
     {
         // Ambil data siswa berdasarkan ID
-        $student = Student::findOrFail($id);
+        $student = Student::with('detailSiswa')->findOrFail($id);
+        $currentClassDetail = $student->detailSiswa->where('current_class', true)->first();
 
         $peminjamanByClassLevels = [
             '7' => PeminjamanBukuPaket::with([
@@ -162,7 +178,7 @@ class PeminjamanBukuPaketController extends Controller
 
         // dd($peminjamanByClassLevels);
 
-        return view('peminjaman_paket.detail', compact('student', 'peminjamanByClassLevels'));
+        return view('peminjaman_paket.detail', compact('student', 'peminjamanByClassLevels','currentClassDetail'));
     }
 
 

@@ -29,6 +29,7 @@
                 <thead>
                   <tr>
                     <th scope="col">No</th>
+                    <th scope="col">ID Rak</th>
                     <th scope="col">Lokasi Rak</th>
                     <th scope="col">Keterangan</th>
                     <th scope="col">Tgl Ditambahkan</th>
@@ -40,6 +41,7 @@
                 @foreach ($rak as $index => $rak)
                   <tr>
                     <th scope="row" class="col-1">{{ $index + 1 }}</th>
+                    <td class="col-2">{{ $rak->id }}</td>
                     <td class="col-2">{{ $rak->lokasi }}</td>
                     <td class="col-1">{{ $rak->keterangan }}</td>
                     <td class="col-1">{{ \Carbon\Carbon::parse($rak->created_at)->format('F d, Y') }}</td>

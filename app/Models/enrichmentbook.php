@@ -12,6 +12,7 @@ class enrichmentbook extends Model
 
     protected $fillable = [
         'tgl_masuk',
+        'kategori',
         'judul',
         'tahun',
         'pengarang',

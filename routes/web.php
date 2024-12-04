@@ -33,6 +33,8 @@ Route::get('/siswa/{id}', [StudentController::class, 'show']);
 Route::get('/siswa/{id}/edit', [StudentController::class, 'edit'])->name('student.edit');
 Route::put('/siswa/{id}', [StudentController::class, 'update'])->name('student.update');
 Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
+Route::get('/siswa/add/import/file', [StudentController::class, 'import'])->name('student.import');
+Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->name('student.proses');
 
 
 // BookCase
@@ -135,6 +137,10 @@ Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('stude
     Route::get('/pengayaan/detail/{id}', [EnrichmentbookController::class, 'detail'])->name('enrichmentBooks.detail');
     Route::delete('/pengayaan/detail/{id}', [EnrichmentbookController::class, 'destroyDetail'])->name('enrichmentBooks.destroyDetail');
     Route::delete('/pengayaan/deleteAll/{id}', [EnrichmentbookController::class, 'destroyAll'])->name('enrichmentBooks.destroyAll');
+
+    Route::get('/pengayaan/import/file', [EnrichmentbookController::class, 'import'])->name('enrichmentBooks.import');
+    Route::post('/pengayaan/import/file/store', [EnrichmentbookController::class, 'proses'])->name('enrichmentBooks.proses');
+
 
 
 
