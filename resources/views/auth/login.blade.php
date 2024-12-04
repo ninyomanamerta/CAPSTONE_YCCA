@@ -99,7 +99,7 @@
                         </div>
 
                         <!-- Submit button -->
-                        <div class="row input-group-newsletter">
+                        <div class="row align-items-center">
                             <div class="col-auto">
                                 <button
                                     class="btn btn-primary"
