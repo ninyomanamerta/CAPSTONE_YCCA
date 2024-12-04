@@ -47,7 +47,8 @@
             <div class="masthead-content text-white">
                 <div class="container-fluid px-4 px-lg-0">
                     <img src="{{ asset('assets/Photo/edulibputih.png') }}" class="mx-auto mb-2" alt="" width="100" height="100">
-
+                    <span style="font-size: 30px"> X </span>
+                    <span><img src="{{ asset('assets/Photo/smp2baleendah.png') }}" class="mx-auto mb-2" alt="" width="100" height="100"></span>
                     <h1 class="fst-italic lh-1 mb-4">Selamat Datang Di EduLib</h1>
                     <p class="mb-5">Buat manajemen perpustakaan Anda menjadi lebih mudah. Login Atau Register untuk menggunakan EduLib!</p>
 
