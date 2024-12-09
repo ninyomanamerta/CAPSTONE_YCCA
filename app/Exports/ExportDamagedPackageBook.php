@@ -18,7 +18,7 @@ class ExportDamagedPackageBook implements FromCollection, WithHeadings, WithMapp
     */
     public function collection()
     {
-        return PackageBook::with(['jenis', 'mapel', 'submapel', 'subkelas', 'detailPackageBooks'])
+        return PackageBook::with(['jenis', 'mapel', 'submapel', 'subkelas', 'detailPackageBooks', 'subklasifikasi', 'subklasifikasith'])
             ->whereHas('detailPackageBooks', function ($query) {
                 $query->where('status_peminjaman', 'damaged');
             })
@@ -35,8 +35,10 @@ class ExportDamagedPackageBook implements FromCollection, WithHeadings, WithMapp
                 $combinedKey =
                     strval($packageBook->jenis->nomor_induk_jenis) .
                     strval($packageBook->mapel->nomor_induk_mapel) .
-                    strval($packageBook->submapel->nomor_induk_submapel) .
-                    strval($packageBook->subkelas->nomor_induk_subkelas) .
+                    strval(optional($packageBook->submapel)->nomor_induk_submapel) .
+                    strval(optional($packageBook->subkelas)->nomor_induk_subkelas) .
+                    strval(optional($packageBook->subklasifikasi)->nomor_induk_klasifikasi) .
+                    strval(optional($packageBook->subklasifikasith)->nomor_induk_klasifikasi4) .
                     '.' .
                     $formattedNomorInduk;
 
@@ -50,7 +52,6 @@ class ExportDamagedPackageBook implements FromCollection, WithHeadings, WithMapp
                     $packageBook->judul,
                     $packageBook->tahun_terbit,
                     $packageBook->penerbit,
-                    $packageBook->eksemplar,
                     $packageBook->sumber,
                     $combinedKey,
                     'Buku Rusak',
@@ -69,7 +70,6 @@ class ExportDamagedPackageBook implements FromCollection, WithHeadings, WithMapp
             'Judul',
             'Tahun Terbit',
             'Penerbit',
-            'Eksemplar',
             'Sumber',
             'Nomor Induk',
             'Status',

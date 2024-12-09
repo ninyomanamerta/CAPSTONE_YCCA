@@ -22,6 +22,8 @@ class PackageBook extends Model
         'id_mapel',
         'id_submapel',
         'id_subkelas',
+        'id_subklasifikasi',
+        'id_subklasifikasith',
     ];
 
     // Relasi dengan tabel type_books
@@ -46,6 +48,18 @@ class PackageBook extends Model
     public function subkelas()
     {
         return $this->belongsTo(SubClass::class, 'id_subkelas');
+    }
+
+    // Relasi dengan tabel sub_klasifikasi
+    public function subklasifikasi()
+    {
+        return $this->belongsTo(SubClasification::class, 'id_subklasifikasi');
+    }
+
+    // Relasi dengan tabel sub_klasifikasi
+    public function subklasifikasith()
+    {
+        return $this->belongsTo(SubClasificationTh::class, 'id_subklasifikasith');
     }
 
     public function detailPackageBooks()

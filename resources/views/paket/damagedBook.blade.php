@@ -45,7 +45,6 @@
                                         <th>Judul</th>
                                         <th>Mapel</th>
                                         <th>Sub Mapel</th>
-                                        <th>Kelas</th>
                                         <th>Nomor Induk</th>
                                         <th>Status</th>
                                         <th>Tandai Rusak</th>
@@ -60,9 +59,8 @@
                                             <td>{{ \Illuminate\Support\Str::limit($package->judul, 16, '...') }}</td>
                                             <td>{{ $package->mapel->mapel }}</td>
                                             <td>{{ $package->submapel->sub_mapel }}</td>
-                                            <td>Kelas {{ $package->subkelas->sub_kelas }}</td>
                                             <td>
-                                                {{ $package->jenis->nomor_induk_jenis }}{{ $package->mapel->nomor_induk_mapel }}{{ $package->submapel->nomor_induk_submapel }}{{ $package->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
+                                                {{ $package->jenis->nomor_induk_jenis }}{{ $package->mapel->nomor_induk_mapel }}{{ optional($package->submapel)->nomor_induk_submapel }}{{ optional($package->subkelas)->nomor_induk_subkelas }}{{ optional($package->subklasifikasi)->nomor_induk_klasifikasi }}{{ optional($package->subklasifikasith)->nomor_induk_klasifikasi4 }}.{{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
                                             </td>
                                             <td>
                                                 @if($detail->status_peminjaman === 'available')

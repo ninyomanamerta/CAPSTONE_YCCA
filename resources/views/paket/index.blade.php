@@ -47,7 +47,7 @@
                                         <td>{{ $packageBook->tahun_terbit }}</td>
                                         <td>{{ $packageBook->penerbit }}</td>
                                         <td>{{ $packageBook->detail_package_books_count }}</td>
-                                        <td>{{ $packageBook->sumber }}</td>
+                                        <td>{{ $packageBook->sumber ? $packageBook->sumber : '-' }}</td>
                                         <td>
                                             <a href="{{ route('paket.detail', $packageBook->id) }}" class="badge bg-success">Detail</a>
                                             <a href="{{ route('paket.edit', $packageBook->id) }}" class="badge bg-warning">Update</a>
