@@ -14,6 +14,7 @@ use App\Http\Controllers\PeminjamanBukuPaketController;
 use App\Http\Controllers\PeminjamanBukuPengayaanController;
 use App\Http\Controllers\UserProfile;
 use App\Http\Controllers\SubClasificationController;
+use App\Http\Controllers\SubClasificationThController;
 
 
 Route::get('/', function () {
@@ -66,31 +67,40 @@ Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->n
     Route::delete('/klasifikasi/mapel/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
 
 // SubCourse
-    Route::get('/klasifikasi/submapel', [SubCourseController::class, 'index'])->name('subCourse.index');
-    Route::get('/klasifikasi/submapel/add', [SubCourseController::class, 'create'])->name('subCourse.create');
-    Route::post('/klasifikasi/submapel/store', [SubCourseController::class, 'store'])->name('subCourse.store');
+    Route::get('/klasifikasi/subI', [SubCourseController::class, 'index'])->name('subCourse.index');
+    Route::get('/klasifikasi/subI/add', [SubCourseController::class, 'create'])->name('subCourse.create');
+    Route::post('/klasifikasi/subI/store', [SubCourseController::class, 'store'])->name('subCourse.store');
     Route::get('/klasifikasi/submapel/{id}', [SubCourseController::class, 'show']);
-    Route::get('/klasifikasi/submapel/{id}/edit', [SubCourseController::class, 'edit'])->name('subCourse.edit');
-    Route::put('/klasifikasi/submapel/{id}', [SubCourseController::class, 'update'])->name('subCourse.update');
-    Route::delete('/klasifikasi/submapel/{id}', [SubCourseController::class, 'destroy'])->name('subCourse.destroy');
+    Route::get('/klasifikasi/subI/{id}/edit', [SubCourseController::class, 'edit'])->name('subCourse.edit');
+    Route::put('/klasifikasi/subI/{id}', [SubCourseController::class, 'update'])->name('subCourse.update');
+    Route::delete('/klasifikasi/subI/{id}', [SubCourseController::class, 'destroy'])->name('subCourse.destroy');
 
 // SubClass
-    Route::get('/klasifikasi/subkelas', [SubClassController::class, 'index'])->name('class.index');
-    Route::get('/klasifikasi/subkelas/add', [SubClassController::class, 'create'])->name('class.create');
-    Route::post('/klasifikasi/subkelas/store', [SubClassController::class, 'store'])->name('class.store');
+    Route::get('/klasifikasi/subII', [SubClassController::class, 'index'])->name('class.index');
+    Route::get('/klasifikasi/subII/add', [SubClassController::class, 'create'])->name('class.create');
+    Route::post('/klasifikasi/subII/store', [SubClassController::class, 'store'])->name('class.store');
     Route::get('/klasifikasi/subkelas/{id}', [SubClassController::class, 'show']);
-    Route::get('/klasifikasi/subkelas/{id}/edit', [SubClassController::class, 'edit'])->name('class.edit');
-    Route::put('/klasifikasi/subkelas/{id}', [SubClassController::class, 'update'])->name('class.update');
-    Route::delete('/klasifikasi/subkelas/{id}', [SubClassController::class, 'destroy'])->name('class.destroy');
+    Route::get('/klasifikasi/subII/{id}/edit', [SubClassController::class, 'edit'])->name('class.edit');
+    Route::put('/klasifikasi/subII/{id}', [SubClassController::class, 'update'])->name('class.update');
+    Route::delete('/klasifikasi/subII/{id}', [SubClassController::class, 'destroy'])->name('class.destroy');
 
 // Sub Klasifikasi (III)
-    Route::get('/klasifikasi/subklasifikasi', [SubClasificationController::class, 'index'])->name('klasifikasi.index');
-    Route::get('/klasifikasi/subklasifikasi/add', [SubClasificationController::class, 'create'])->name('klasifikasi.create');
-    Route::post('/klasifikasi/subklasifikasi/store', [SubClasificationController::class, 'store'])->name('klasifikasi.store');
+    Route::get('/klasifikasi/subIII', [SubClasificationController::class, 'index'])->name('klasifikasi.index');
+    Route::get('/klasifikasi/subIII/add', [SubClasificationController::class, 'create'])->name('klasifikasi.create');
+    Route::post('/klasifikasi/subIII/store', [SubClasificationController::class, 'store'])->name('klasifikasi.store');
     Route::get('/klasifikasi/subklasifikasi/{id}', [SubClasificationController::class, 'show']);
-    Route::get('/klasifikasi/subklasifikasi/{id}/edit', [SubClasificationController::class, 'edit'])->name('klasifikasi.edit');
-    Route::put('/klasifikasi/subklasifikasi/{id}', [SubClasificationController::class, 'update'])->name('klasifikasi.update');
-    Route::delete('/klasifikasi/subklasifikasi/{id}', [SubClasificationController::class, 'destroy'])->name('klasifikasi.destroy');
+    Route::get('/klasifikasi/subIII/{id}/edit', [SubClasificationController::class, 'edit'])->name('klasifikasi.edit');
+    Route::put('/klasifikasi/subIII/{id}', [SubClasificationController::class, 'update'])->name('klasifikasi.update');
+    Route::delete('/klasifikasi/subIII/{id}', [SubClasificationController::class, 'destroy'])->name('klasifikasi.destroy');
+
+// Sub Klasifikasi (IV)
+    Route::get('/klasifikasi/subIV', [SubClasificationThController::class, 'index'])->name('klasifikasiTh.index');
+    Route::get('/klasifikasi/subIV/add', [SubClasificationThController::class, 'create'])->name('klasifikasiTh.create');
+    Route::post('/klasifikasi/subIV/store', [SubClasificationThController::class, 'store'])->name('klasifikasiTh.store');
+    Route::get('/klasifikasi/subIV/{id}', [SubClasificationThController::class, 'show']);
+    Route::get('/klasifikasi/subIV/{id}/edit', [SubClasificationThController::class, 'edit'])->name('klasifikasiTh.edit');
+    Route::put('/klasifikasi/subIV/{id}', [SubClasificationThController::class, 'update'])->name('klasifikasiTh.update');
+    Route::delete('/klasifikasi/subIV/{id}', [SubClasificationThController::class, 'destroy'])->name('klasifikasiTh.destroy');
 
 
 // Klasifikasi Jenis
