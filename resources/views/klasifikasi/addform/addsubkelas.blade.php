@@ -3,7 +3,7 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1 class="mb-2">Tambah Sub Kelas</h1>
+      <h1 class="mb-2">Tambah Sub Klasifikasi II</h1>
       <nav class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -28,15 +28,15 @@
 
       <div class="card">
         <div class="card-body">
-            <h4 class="card-title ml-4 mb-6">Formulir Tambah Sub Kelas</h4>
+            <h4 class="card-title ml-4 mb-6">Formulir Tambah Sub Klasifikasi II</h4>
 
           <!-- Horizontal Form -->
           <form action="{{ route('class.store') }}" method="POST" class="px-3">
             @csrf
             <div class="row mb-3">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Sub Kelas</label>
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Sub Klasifikasi II</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="subkelas" name="subkelas" placeholder="Masukan sub kelas" required value="{{ old('subkelas') }}">
+                <input type="text" class="form-control" id="subkelas" name="subkelas" placeholder="Masukan judul sub klasifikasi II" required value="{{ old('subkelas') }}">
               </div>
             </div>
             <div class="row mb-3">

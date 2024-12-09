@@ -13,6 +13,7 @@ use App\Http\Controllers\PackageBookController;
 use App\Http\Controllers\PeminjamanBukuPaketController;
 use App\Http\Controllers\PeminjamanBukuPengayaanController;
 use App\Http\Controllers\UserProfile;
+use App\Http\Controllers\SubClasificationController;
 
 
 Route::get('/', function () {
@@ -81,6 +82,15 @@ Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->n
     Route::get('/klasifikasi/subkelas/{id}/edit', [SubClassController::class, 'edit'])->name('class.edit');
     Route::put('/klasifikasi/subkelas/{id}', [SubClassController::class, 'update'])->name('class.update');
     Route::delete('/klasifikasi/subkelas/{id}', [SubClassController::class, 'destroy'])->name('class.destroy');
+
+// Sub Klasifikasi (III)
+    Route::get('/klasifikasi/subklasifikasi', [SubClasificationController::class, 'index'])->name('klasifikasi.index');
+    Route::get('/klasifikasi/subklasifikasi/add', [SubClasificationController::class, 'create'])->name('klasifikasi.create');
+    Route::post('/klasifikasi/subklasifikasi/store', [SubClasificationController::class, 'store'])->name('klasifikasi.store');
+    Route::get('/klasifikasi/subklasifikasi/{id}', [SubClasificationController::class, 'show']);
+    Route::get('/klasifikasi/subklasifikasi/{id}/edit', [SubClasificationController::class, 'edit'])->name('klasifikasi.edit');
+    Route::put('/klasifikasi/subklasifikasi/{id}', [SubClasificationController::class, 'update'])->name('klasifikasi.update');
+    Route::delete('/klasifikasi/subklasifikasi/{id}', [SubClasificationController::class, 'destroy'])->name('klasifikasi.destroy');
 
 
 // Klasifikasi Jenis

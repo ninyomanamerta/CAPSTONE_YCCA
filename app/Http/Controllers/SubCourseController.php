@@ -31,7 +31,7 @@ class SubCourseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'submapel' => 'required|string|unique:sub_courses,sub_mapel',
+            'submapel' => 'required|string',
             'noinduk' => 'nullable|string',
         ]);
 
@@ -40,7 +40,7 @@ class SubCourseController extends Controller
             'nomor_induk_submapel' => $request->noinduk,
         ]);
 
-        return redirect()->route('subCourse.index')->with('success', 'Sub Mapel berhasil ditambahkan!');
+        return redirect()->route('subCourse.index')->with('success', 'Sub Klasifikasi I berhasil ditambahkan!');
     }
 
     /**
@@ -69,8 +69,8 @@ class SubCourseController extends Controller
         $subCourse = SubCourse::findOrFail($id);
 
         $request->validate([
-            'submapel' => 'required|string|unique:sub_courses,sub_mapel,' . $subCourse->id,
-            'noinduk' => 'nullable|string,' . $subCourse->id,
+            'submapel' => 'required|string|max:255',
+            'noinduk' => 'required|string|max:4',
         ]);
 
         $subCourse->update([
@@ -78,7 +78,7 @@ class SubCourseController extends Controller
             'nomor_induk_submapel' => $request->noinduk,
         ]);
 
-        return redirect()->route('subCourse.index')->with('success', 'Data sub mapel berhasil di update!');
+        return redirect()->route('subCourse.index')->with('success', 'Data sub klasifikasi I berhasil di update!');
 
 
     }
@@ -91,6 +91,6 @@ class SubCourseController extends Controller
         $subCourse = SubCourse::findOrFail($id);
         $subCourse->delete();
 
-        return redirect()->route('subCourse.index')->with('success', 'Data sub mapel berhasil dihapus!');
+        return redirect()->route('subCourse.index')->with('success', 'Data sub klasifikasi I berhasil dihapus!');
     }
 }

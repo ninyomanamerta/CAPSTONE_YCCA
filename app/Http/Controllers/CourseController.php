@@ -31,8 +31,8 @@ class CourseController extends Controller
     {
 
         $request->validate([
-            'mapel' => 'required|string|unique:courses,mapel',
-            'noinduk' => 'required|string|unique:courses,nomor_induk_mapel',
+            'mapel' => 'required|string',
+            'noinduk' => 'required|string',
         ]);
 
         Course::create([
@@ -70,8 +70,8 @@ class CourseController extends Controller
         $course = Course::findOrFail($id);
 
         $request->validate([
-            'mapel' => 'required|string|unique:courses,mapel,' . $course->id,
-            'noinduk' => 'required|string|unique:courses,nomor_induk_mapel,' . $course->id,
+            'mapel' => 'required|string|max:255',
+            'noinduk' => 'required|string|max:4',
         ]);
 
         $course->update([
