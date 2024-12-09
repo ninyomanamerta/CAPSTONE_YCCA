@@ -8,8 +8,10 @@ use App\Models\BookType;
 use App\Models\Course;
 use App\Models\SubCourse;
 use App\Models\SubClass;
+use App\Exports\ExportDamagedPackageBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Excel;
 
 class PackageBookController extends Controller
 {
@@ -221,6 +223,12 @@ class PackageBookController extends Controller
 
         return view('paket.showAll', compact('packageBook'));
     }
+
+    public function exportFile()
+    {
+        return Excel::download(new ExportDamagedPackageBook, 'Buku Paket Rusak.xlsx');
+    }
+
 
 
 }

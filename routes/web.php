@@ -107,6 +107,8 @@ Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->n
     Route::patch('/paket/bukuRusak/update/status', [PackageBookController::class, 'updateStatus'])->name('paket.updateStatus');
     Route::get('/paket/showAll', [PackageBookController::class, 'showAll'])->name('paket.showAll');
 
+    Route::get('/paket/bukuRusak/exportFile', [PackageBookController::class, 'exportFile'])->name('paket.damagedExport');
+
 
 
 

@@ -16,15 +16,15 @@
     </nav>
 
 
-      <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-      {{-- <a href="" class="btn btn-primary">Tambah Buku Paket</a> --}}
-      </div>
-
       @if(Session::has('success'))
         <div class="alert alert-success" role="alert">
             {{ Session::get('success') }}
         </div>
       @endif
+    </div>
+
+    <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
+        <a href="{{ route('paket.damagedExport') }}" class="btn btn-primary">Export Buku Rusak</a>
     </div>
 
 

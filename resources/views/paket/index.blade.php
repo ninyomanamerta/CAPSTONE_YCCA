@@ -7,6 +7,7 @@
 
         <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
             <a href="{{ route('paket.create') }}" class="btn btn-primary mr-2">Tambah Buku Paket</a>
+            <span><a href="{{ route('paket.showAll') }}" class="btn btn-success mr-2">Semua Buku Paket</a></span>
             <span><a href="{{ route('paket.damaged') }}" class="btn btn-danger">Tandai Buku Rusak</a></span>
         </div>
 
@@ -63,7 +64,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('paket.showAll') }}" class="btn btn-primary float-end mt-2">Semua Buku Paket</a>
+
                     </div>
                 </div>
             </div>
