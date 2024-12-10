@@ -33,7 +33,7 @@
                                     <th>Judul</th>
                                     <th>Thn Terbit</th>
                                     <th>Penerbit</th>
-                                    <th>Eksemplar</th>
+                                    <th>Eks</th>
                                     <th>Sumber</th>
                                     <th style="display: flex; justify-content: flex-end;">Aksi</th>
                                 </tr>

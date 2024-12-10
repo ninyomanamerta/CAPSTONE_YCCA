@@ -6,9 +6,10 @@
         <h1>Data Buku Pengayaan</h1>
 
         <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-            <a href="{{ route('enrichmentBooks.create') }}" class="btn btn-primary mr-2"><i class="bi bi-plus-lg"></i></a>
-            <span><a href="{{ route('enrichmentBooks.import') }}" class="btn btn-success"><i class="bi bi-file-earmark-plus-fill"></i></a></span>
-            <span class="ml-2"><a href="{{ route('enrichmentBooks.damagedBooks') }}" class="btn btn-danger" ><i class="bi bi-trash3"></i></a></span>
+            <a href="{{ route('enrichmentBooks.create') }}" class="btn btn-primary mr-2">Tambah Buku Pengayaan</a>
+            <span><a href="{{ route('enrichmentBooks.import') }}" class="btn btn-success">Import Buku</a></span>
+            <span class="ml-2"><a href="{{ route('enrichmentBooks.damagedBooks') }}" class="btn btn-danger" >Tandai Buku Rusak</a></span>
+            <span class="ml-2"><a href="{{ route('enrichmentBooks.showAll') }}" class="btn btn-warning float-end" style="color: white">Semua Buku</a></span>
 
         </div>
 
@@ -69,10 +70,10 @@
             </div>
         </div>
 
-        <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
+        {{-- <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
             <a href="{{ route('enrichmentBooks.showAll') }}" class="btn btn-primary float-end">Semua Buku Pengayaan</a>
 
-        </div>
+        </div> --}}
     </section>
 </main>
 

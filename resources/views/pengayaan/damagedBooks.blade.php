@@ -23,6 +23,10 @@
         @endif
     </div>
 
+    <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
+        <a href="{{ route('enrichmentBooks.damagedExport') }}" class="btn btn-primary">Export Buku Rusak</a>
+    </div>
+
     <section class="section dashboard">
         <div class="row mt-4">
             <div class="col-12 px-3">
@@ -54,7 +58,10 @@
                                         <tr>
                                             <td>{{ $globalIndex++ }}</td>
                                             <td>{{ \Illuminate\Support\Str::limit($enrichmentBook->judul, 20, '...') }}</td>
-                                            <td>{{ str_pad($detail->no_induk, 4, '0', STR_PAD_LEFT) }}</td>
+                                            {{-- <td>{{ str_pad($detail->no_induk, 4, '0', STR_PAD_LEFT) }}</td> --}}
+                                            <td>
+                                                {{ $enrichmentBook->jenis->nomor_induk_jenis }}{{ $enrichmentBook->mapel->nomor_induk_mapel }}{{ optional($enrichmentBook->submapel)->nomor_induk_submapel }}{{ optional($enrichmentBook->subkelas)->nomor_induk_subkelas }}{{ optional($enrichmentBook->subklasifikasi)->nomor_induk_klasifikasi }}{{ optional($enrichmentBook->subklasifikasith)->nomor_induk_klasifikasi4 }}.{{ str_pad($detail->no_induk, 4, '0', STR_PAD_LEFT) }}
+                                            </td>
                                             <td>{{ $enrichmentBook->tahun }}</td>
                                             <td>{{ $enrichmentBook->pengarang }}</td>
                                             <td>{{ $enrichmentBook->bookcase->lokasi ?? '-' }}</td>

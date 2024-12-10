@@ -11,6 +11,7 @@ use App\Models\SubClass;
 use App\Models\SubClasification;
 use App\Models\SubClasificationTh;
 use App\Exports\ExportDamagedPackageBook;
+use App\Exports\ExportAllPackageBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Excel;
@@ -69,10 +70,38 @@ class PackageBookController extends Controller
             'jumlah' => 'required|numeric|min:1',
         ]);
 
-        $existingPackageBook = PackageBook::where('judul', $validated['judul'])
-        ->where('id_jenis', $validated['klasifikasi_jenis'])
-        ->where('id_mapel', $validated['klasifikasi_mapel'])
-        ->first();
+        $query = PackageBook::query();
+
+        $query->where('judul', $validated['judul'])
+            ->where('id_jenis', $validated['klasifikasi_jenis'])
+            ->where('id_mapel', $validated['klasifikasi_mapel']);
+
+        if (!empty($validated['klasifikasi_submapel'])) {
+            $query->where('id_submapel', $validated['klasifikasi_submapel']);
+        } else {
+            $query->whereNull('id_submapel');
+        }
+
+        if (!empty($validated['klasifikasi_subkelas'])) {
+            $query->where('id_subkelas', $validated['klasifikasi_subkelas']);
+        } else {
+            $query->whereNull('id_subkelas');
+        }
+
+        if (!empty($validated['klasifikasi_subclasification'])) {
+            $query->where('id_subklasifikasi', $validated['klasifikasi_subclasification']);
+        } else {
+            $query->whereNull('id_subklasifikasi');
+        }
+
+        if (!empty($validated['klasifikasi_subclasificationth'])) {
+            $query->where('id_subklasifikasith', $validated['klasifikasi_subclasificationth']);
+        } else {
+            $query->whereNull('id_subklasifikasith');
+        }
+
+        $existingPackageBook = $query->first();
+
 
         if (!$existingPackageBook) {
             $packageBookData = [
@@ -104,12 +133,12 @@ class PackageBookController extends Controller
 
             $packageBook = PackageBook::create($packageBookData);
             $nomorInduk = 1;
+
         } else {
             $lastNomorInduk = DetailPackageBook::where('id_package_books', $existingPackageBook->id)
                 ->max('nomor_induk');
 
             $nomorInduk = $lastNomorInduk ? $lastNomorInduk + 1 : 1;
-
             $packageBook = $existingPackageBook;
         }
 
@@ -118,6 +147,7 @@ class PackageBookController extends Controller
                 'id_package_books' => $packageBook->id,
                 'nomor_induk' => $nomorInduk + $i,
                 'status_peminjaman' => 'available',
+                'tgl_masuk' => $validated['tgl_masuk'],
             ]);
         }
 
@@ -278,6 +308,11 @@ class PackageBookController extends Controller
     public function exportFile()
     {
         return Excel::download(new ExportDamagedPackageBook, 'Buku Paket Rusak.xlsx');
+    }
+
+    public function exportFileAllBooks()
+    {
+        return Excel::download(new ExportAllPackageBook, 'Buku Paket.xlsx');
     }
 
 
