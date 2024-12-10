@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SubClass;
+use App\Models\SubClasificationTh;
 use Illuminate\Http\Request;
 
-class SubClassController extends Controller
+class SubClasificationThController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $class = SubClass::all();
-        return view('klasifikasi.subkelas', compact('class'));
+        $class = SubClasificationTh::all();
+        return view('klasifikasi.clasificationth', compact('class'));
     }
 
     /**
@@ -21,7 +21,7 @@ class SubClassController extends Controller
      */
     public function create()
     {
-        return view('klasifikasi.addform.addsubkelas');
+        return view('klasifikasi.addform.addclasificationth');
     }
 
     /**
@@ -34,12 +34,12 @@ class SubClassController extends Controller
             'noinduk' => 'required|string',
         ]);
 
-        SubClass::create([
-            'sub_kelas' => $request->subkelas,
-            'nomor_induk_subkelas' => $request->noinduk,
+        SubClasificationTh::create([
+            'klasifikasi4' => $request->subkelas,
+            'nomor_induk_klasifikasi4' => $request->noinduk,
         ]);
 
-        return redirect()->route('class.index')->with('success', 'Sub Klasifikasi II berhasil ditambahkan!');
+        return redirect()->route('klasifikasiTh.index')->with('success', 'Sub Klasifikasi IV berhasil ditambahkan!');
     }
 
     /**
@@ -47,7 +47,7 @@ class SubClassController extends Controller
      */
     public function show($id)
     {
-        $id = SubClass::findOrFail($id);
+        $id = SubClasificationTh::findOrFail($id);
         return response()->json($id);
     }
 
@@ -56,8 +56,8 @@ class SubClassController extends Controller
      */
     public function edit($id)
     {
-        $class = SubClass::findOrFail($id);
-        return view('klasifikasi.updateform.editsubkelas', compact('class'));
+        $class = SubClasificationTh::findOrFail($id);
+        return view('klasifikasi.updateform.editclasificationth', compact('class'));
     }
 
     /**
@@ -65,7 +65,7 @@ class SubClassController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $class = SubClass::findOrFail($id);
+        $class = SubClasificationTh::findOrFail($id);
 
         $request->validate([
             'subkelas' => 'required|string|max:255',
@@ -73,13 +73,11 @@ class SubClassController extends Controller
         ]);
 
         $class->update([
-            'sub_kelas' => $request->subkelas,
-            'nomor_induk_subkelas' => $request->noinduk,
+            'klasifikasi4' => $request->subkelas,
+            'nomor_induk_klasifikasi4' => $request->noinduk,
         ]);
 
-        return redirect()->route('class.index')->with('success', 'Data sub klasifikasi II berhasil di update!');
-
-
+        return redirect()->route('klasifikasiTh.index')->with('success', 'Data sub klasifikasi IV berhasil di update!');
     }
 
     /**
@@ -87,9 +85,9 @@ class SubClassController extends Controller
      */
     public function destroy($id)
     {
-        $class = SubClass::findOrFail($id);
+        $class = SubClasificationTh::findOrFail($id);
         $class->delete();
 
-        return redirect()->route('class.index')->with('success', 'Data sub klasifikasi II berhasil dihapus!');
+        return redirect()->route('klasifikasiTh.index')->with('success', 'Data sub klasifikasi IV berhasil dihapus!');
     }
 }

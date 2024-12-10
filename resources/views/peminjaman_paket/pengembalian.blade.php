@@ -81,7 +81,7 @@
                             <div class="row ">
 
                                 <div class="form-group mb-2 col-5">
-                                    <input type="text" class="form-control mb-2 readonly" name="books-old" value="{{ $detail->bukuPaket->packageBook->judul }} | {{ $detail->bukuPaket->packageBook->jenis->nomor_induk_jenis }}{{ $detail->bukuPaket->packageBook->mapel->nomor_induk_mapel }}{{ $detail->bukuPaket->packageBook->submapel->nomor_induk_submapel }}{{ $detail->bukuPaket->packageBook->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->bukuPaket->nomor_induk, 4, '0', STR_PAD_LEFT) }}" readonly>
+                                    <input type="text" class="form-control mb-2 readonly" name="books-old" value="{{ $detail->bukuPaket->packageBook->judul }} | {{ $detail->bukuPaket->packageBook->jenis->nomor_induk_jenis }}{{ $detail->bukuPaket->packageBook->mapel->nomor_induk_mapel }}{{ optional($detail->bukuPaket->packageBook->submapel)->nomor_induk_submapel }}{{ optional($detail->bukuPaket->packageBook->subkelas)->nomor_induk_subkelas }}{{ optional($detail->bukuPaket->packageBook->subklasifikasi)->nomor_induk_klasifikasi }}{{ optional($detail->bukuPaket->packageBook->subklasifikasith)->nomor_induk_klasifikasi4 }}.{{ str_pad($detail->bukuPaket->nomor_induk, 4, '0', STR_PAD_LEFT) }}" readonly>
                                 </div>
 
                                 <div class="form-group mb-2 col-4" >

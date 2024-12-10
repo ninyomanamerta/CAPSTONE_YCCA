@@ -3,10 +3,10 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Sub Klasifikasi II</h1>
+      <h1>Sub Klasifikasi IV</h1>
 
       <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-      <a href="{{ route('class.create') }}" class="btn btn-primary">Tambah Sub Klasifikasi II</a>
+      <a href="{{ route('klasifikasiTh.create') }}" class="btn btn-primary">Tambah Sub Klasifikasi IV</a>
       </div>
       </div>
         @if(Session::has('success'))
@@ -23,13 +23,13 @@
           <div class="card recent-sales overflow-auto">
 
             <div class="card-body">
-              <h1 class="card-title px-2" style="font-size: 16px">Daftar Sub Klasifikasi II</h1>
+              <h1 class="card-title px-2" style="font-size: 16px">Daftar Sub Klasifikasi IV</h1>
 
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Sub Klasifikasi II</th>
+                    <th scope="col">Sub Klasifikasi IV</th>
                     <th scope="col">Nomor Induk</th>
                     <th scope="col">Tgl Ditambahkan</th>
                     <th scope="col" style="display: flex; justify-content: flex-end;">Aksi</th>
@@ -40,15 +40,15 @@
                 @foreach ($class as $index => $class)
                   <tr>
                     <th scope="row" class="col-1">{{ $index + 1 }}</th>
-                    <td class="col-1">{{ $class->sub_kelas }}</td>
-                    <td class="col-1">{{ $class->nomor_induk_subkelas }}</td>
+                    <td class="col-1">{{ $class->klasifikasi4 }}</td>
+                    <td class="col-1">{{ $class->nomor_induk_klasifikasi4 }}</td>
                     <td class="col-1">{{ \Carbon\Carbon::parse($class->created_at)->format('F d, Y') }}</td>
                     <td class="col-0" style="display: flex; justify-content: flex-end;">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#classModal" data-id="{{ $class->id }}" class="view-class"><span class="badge bg-success">View</span></a>
 
-                        <a href="{{ route('class.edit', $class->id) }}"><span class="badge bg-warning">Update</span></a>
+                        <a href="{{ route('klasifikasiTh.edit', $class->id) }}"><span class="badge bg-warning">Update</span></a>
 
-                        <form action="{{ route('class.destroy', $class->id) }}" method="POST" style="display: inline;">
+                        <form action="{{ route('klasifikasiTh.destroy', $class->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="badge bg-danger" style="border: none;" onclick="return confirm('Semua data terkait subkelas akan terhapus. Apakah Anda yakin ingin menghapus data ini?');">Delete</button>
@@ -85,7 +85,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p><strong>Sub Klasifikasi II:</strong> <span id="modal-class"></span></p>
+                        <p><strong>Sub Klasifikasi IV:</strong> <span id="modal-class"></span></p>
                         <p><strong>No Induk:</strong> <span id="modal-noinduk"></span></p>
                         <p><strong>Tanggal Dibuat:</strong> <span id="modal-tanggal"></span></p>
                         <p><strong>Tanggal Update:</strong> <span id="modal-tanggal-update"></span></p>
@@ -111,12 +111,12 @@
                 var classId = $(this).data('id');
 
                 $.ajax({
-                    url: '/klasifikasi/subkelas/' + classId,
+                    url: '/klasifikasi/subIV/' + classId,
                     method: 'GET',
                     success: function(data) {
                         console.log(data);
-                        $('#modal-class').text(data.sub_kelas);
-                        $('#modal-noinduk').text(data.nomor_induk_subkelas);
+                        $('#modal-class').text(data.klasifikasi4);
+                        $('#modal-noinduk').text(data.nomor_induk_klasifikasi4);
 
                         // Format tanggal
                         const createdDate = new Date(data.created_at);

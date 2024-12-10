@@ -66,10 +66,10 @@
             </div>
 
             <div class="row mb-3">
-                <label for="klasifikasi_submapel" class="col-sm-2 col-form-label">Klasifikasi Sub Mapel</label>
+                <label for="klasifikasi_submapel" class="col-sm-2 col-form-label">Klasifikasi Sub I</label>
                 <div class="col-sm-10">
                     <select class="form-control" id="klasifikasi_submapel" name="klasifikasi_submapel">
-                        <option value="">Pilih Sub Mapel</option>
+                        <option value="">Pilih Sub I</option>
                         @foreach($subCourses as $subCourse)
                             <option value="{{ $subCourse->id }}" {{ old('klasifikasi_submapel', $packageBook->id_submapel) == $subCourse->id ? 'selected' : '' }}>{{ $subCourse->sub_mapel }}</option>
                         @endforeach
@@ -78,16 +78,41 @@
             </div>
 
             <div class="row mb-3">
-                <label for="klasifikasi_subkelas" class="col-sm-2 col-form-label">Klasifikasi Sub Kelas</label>
+                <label for="klasifikasi_subkelas" class="col-sm-2 col-form-label">Klasifikasi Sub II</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="klasifikasi_subkelas" name="klasifikasi_subkelas" required>
-                        <option value="">Pilih Sub Kelas</option>
+                    <select class="form-control" id="klasifikasi_subkelas" name="klasifikasi_subkelas">
+                        <option value="">Pilih Sub II</option>
                         @foreach($subClasses as $subClass)
                             <option value="{{ $subClass->id }}" {{ old('klasifikasi_subkelas', $packageBook->id_subkelas) == $subClass->id ? 'selected' : '' }}>{{ $subClass->sub_kelas }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
+
+            <div class="row mb-3">
+                <label for="klasifikasi_subclasification" class="col-sm-2 col-form-label">Klasifikasi Sub III</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="klasifikasi_subclasification" name="klasifikasi_subclasification">
+                        <option value="">Pilih Sub III</option>
+                        @foreach($subClasification as $subClasification)
+                            <option value="{{ $subClasification->id }}" {{ old('klasifikasi_subclasification', $packageBook->id_subklasifikasi) == $subClasification->id ? 'selected' : '' }}>{{ $subClasification->klasifikasi }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="klasifikasi_subclasificationth" class="col-sm-2 col-form-label">Klasifikasi Sub IV</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="klasifikasi_subclasificationth" name="klasifikasi_subclasificationth">
+                        <option value="">Pilih Sub IV</option>
+                        @foreach($subClasificationTh as $subClasificationTh)
+                            <option value="{{ $subClasificationTh->id }}" {{ old('klasifikasi_subclasificationth', $packageBook->id_subklasifikasith) == $subClasificationTh->id ? 'selected' : '' }}>{{ $subClasificationTh->klasifikasi4 }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
 
             <div class="row mb-3">
                 <label for="tgl_masuk" class="col-sm-2 col-form-label">Tanggal Masuk</label>
@@ -117,12 +142,12 @@
                 </div>
             </div>
 
-            <div class="row mb-3">
+            {{-- <div class="row mb-3">
                 <label for="jumlah" class="col-sm-2 col-form-label">Jumlah</label>
                 <div class="col-sm-10">
                     <input type="number" class="form-control" id="jumlah" name="jumlah" required value="{{ old('jumlah', $packageBook->eksemplar) }}" readonly style="background-color: #adb5bd;">
                 </div>
-            </div>
+            </div> --}}
 
             <div class="text-center">
               <button type="submit" class="btn btn-primary">Simpan</button>

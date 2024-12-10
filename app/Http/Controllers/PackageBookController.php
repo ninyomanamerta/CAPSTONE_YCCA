@@ -8,8 +8,12 @@ use App\Models\BookType;
 use App\Models\Course;
 use App\Models\SubCourse;
 use App\Models\SubClass;
+use App\Models\SubClasification;
+use App\Models\SubClasificationTh;
+use App\Exports\ExportDamagedPackageBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Excel;
 
 class PackageBookController extends Controller
 {
@@ -39,8 +43,10 @@ class PackageBookController extends Controller
         $courses = Course::all();
         $subCourses = SubCourse::all();
         $subClasses = SubClass::all();
+        $subClasification = SubClasification::all();
+        $subClasificationTh = SubClasificationTh::all();
 
-        return view('paket.create', compact('types', 'courses', 'subCourses', 'subClasses'));
+        return view('paket.create', compact('types', 'courses', 'subCourses', 'subClasses', 'subClasification', 'subClasificationTh'));
     }
 
     /**
@@ -53,30 +59,59 @@ class PackageBookController extends Controller
             'klasifikasi_jenis' => 'required|exists:type_books,id',
             'klasifikasi_mapel' => 'required|exists:courses,id',
             'klasifikasi_submapel' => 'nullable|exists:sub_courses,id',
-            'klasifikasi_subkelas' => 'required|exists:sub_class,id',
+            'klasifikasi_subkelas' => 'nullable|exists:sub_class,id',
+            'klasifikasi_subclasification' => 'nullable|exists:sub_clasification,id',
+            'klasifikasi_subclasificationth' => 'nullable|exists:sub_clasification4,id',
             'tgl_masuk' => 'required|date',
             'tahun_terbit' => 'required|numeric',
             'penerbit' => 'required|string|max:255',
-            'sumber' => 'required|string|max:255',
+            'sumber' => 'nullable|string|max:255',
             'jumlah' => 'required|numeric|min:1',
         ]);
 
-        $lastNomorInduk = DetailPackageBook::max('nomor_induk');
+        $existingPackageBook = PackageBook::where('judul', $validated['judul'])
+        ->where('id_jenis', $validated['klasifikasi_jenis'])
+        ->where('id_mapel', $validated['klasifikasi_mapel'])
+        ->first();
 
-        $nomorInduk = $lastNomorInduk ? $lastNomorInduk + 1 : 1;
+        if (!$existingPackageBook) {
+            $packageBookData = [
+                'tgl_masuk' => $validated['tgl_masuk'],
+                'judul' => $validated['judul'],
+                'tahun_terbit' => $validated['tahun_terbit'],
+                'penerbit' => $validated['penerbit'],
+                'eksemplar' => $validated['jumlah'],
+                'sumber' => $validated['sumber'],
+                'id_jenis' => $validated['klasifikasi_jenis'],
+                'id_mapel' => $validated['klasifikasi_mapel'],
+            ];
 
-        $packageBook = PackageBook::create([
-            'tgl_masuk' => $validated['tgl_masuk'],
-            'judul' => $validated['judul'],
-            'tahun_terbit' => $validated['tahun_terbit'],
-            'penerbit' => $validated['penerbit'],
-            'eksemplar' => $validated['jumlah'],
-            'sumber' => $validated['sumber'],
-            'id_jenis' => $validated['klasifikasi_jenis'],
-            'id_mapel' => $validated['klasifikasi_mapel'],
-            'id_submapel' => $validated['klasifikasi_submapel'],
-            'id_subkelas' => $validated['klasifikasi_subkelas'],
-        ]);
+            if (!empty($validated['klasifikasi_submapel'])) {
+                $packageBookData['id_submapel'] = $validated['klasifikasi_submapel'];
+            }
+
+            if (!empty($validated['klasifikasi_subkelas'])) {
+                $packageBookData['id_subkelas'] = $validated['klasifikasi_subkelas'];
+            }
+
+            if (!empty($validated['klasifikasi_subclasification'])) {
+                $packageBookData['id_subklasifikasi'] = $validated['klasifikasi_subclasification'];
+            }
+
+            if (!empty($validated['klasifikasi_subclasificationth'])) {
+                $packageBookData['id_subklasifikasith'] = $validated['klasifikasi_subclasificationth'];
+            }
+
+            $packageBook = PackageBook::create($packageBookData);
+            $nomorInduk = 1;
+        } else {
+            $lastNomorInduk = DetailPackageBook::where('id_package_books', $existingPackageBook->id)
+                ->max('nomor_induk');
+
+            $nomorInduk = $lastNomorInduk ? $lastNomorInduk + 1 : 1;
+
+            $packageBook = $existingPackageBook;
+        }
 
         for ($i = 0; $i < $validated['jumlah']; $i++) {
             DetailPackageBook::create([
@@ -107,9 +142,11 @@ class PackageBookController extends Controller
         $courses = Course::all();
         $subCourses = SubCourse::all();
         $subClasses = SubClass::all();
+        $subClasification = SubClasification::all();
+        $subClasificationTh = SubClasificationTh::all();
 
 
-        return view('paket.edit', compact('types', 'courses', 'subCourses', 'subClasses', 'packageBook'));
+        return view('paket.edit', compact('types', 'courses', 'subCourses', 'subClasses', 'packageBook', 'subClasification', 'subClasificationTh'));
     }
 
     /**
@@ -125,25 +162,41 @@ class PackageBookController extends Controller
             'klasifikasi_mapel' => 'required|exists:courses,id',
             'klasifikasi_submapel' => 'nullable|exists:sub_courses,id',
             'klasifikasi_subkelas' => 'required|exists:sub_class,id',
+            'klasifikasi_subclasification' => 'nullable|exists:sub_clasification,id',
+            'klasifikasi_subclasificationth' => 'nullable|exists:sub_clasification4,id',
             'tgl_masuk' => 'required|date',
             'tahun_terbit' => 'required|numeric',
             'penerbit' => 'required|string|max:255',
             'sumber' => 'required|string|max:255',
-            'jumlah' => 'required|numeric|min:1',
         ]);
 
-        $packageBook->update([
+        $packageBookData = [
             'judul' => $validatedData['judul'],
             'id_jenis' => $validatedData['klasifikasi_jenis'],
             'id_mapel' => $validatedData['klasifikasi_mapel'],
-            'id_submapel' => $validatedData['klasifikasi_submapel'],
-            'id_subkelas' => $validatedData['klasifikasi_subkelas'],
             'tgl_masuk' => $validatedData['tgl_masuk'],
             'tahun_terbit' => $validatedData['tahun_terbit'],
             'penerbit' => $validatedData['penerbit'],
             'sumber' => $validatedData['sumber'],
-            'eksemplar' => $validatedData['jumlah'],
-        ]);
+        ];
+
+        if (!empty($validatedData['klasifikasi_submapel'])) {
+            $packageBookData['id_submapel'] = $validatedData['klasifikasi_submapel'];
+        }
+
+        if (!empty($validatedData['klasifikasi_subkelas'])) {
+            $packageBookData['id_subkelas'] = $validatedData['klasifikasi_subkelas'];
+        }
+
+        if (!empty($validatedData['klasifikasi_subclasification'])) {
+            $packageBookData['id_subklasifikasi'] = $validatedData['klasifikasi_subclasification'];
+        }
+
+        if (!empty($validatedData['klasifikasi_subclasificationth'])) {
+            $packageBookData['id_subklasifikasith'] = $validatedData['klasifikasi_subclasificationth'];
+        }
+
+        $packageBook->update($packageBookData);
 
         return redirect()->route('paket.index')->with('success', 'Buku Paket berhasil diperbarui!');
     }
@@ -221,6 +274,12 @@ class PackageBookController extends Controller
 
         return view('paket.showAll', compact('packageBook'));
     }
+
+    public function exportFile()
+    {
+        return Excel::download(new ExportDamagedPackageBook, 'Buku Paket Rusak.xlsx');
+    }
+
 
 
 }

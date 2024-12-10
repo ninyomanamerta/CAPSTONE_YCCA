@@ -16,9 +16,9 @@
     </nav>
 
 
-      <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
+      {{-- <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
       <a href="" class="btn btn-primary">Tambah Buku Paket</a>
-      </div>
+      </div> --}}
 
       @if(Session::has('success'))
         <div class="alert alert-success" role="alert">
@@ -26,6 +26,32 @@
         </div>
       @endif
     </div>
+
+     <!-- Default Card -->
+     <section class="section dashboard">
+        <div class="card mt-8 mb-3 col-12 px-3">
+            <div class="card-body">
+                <h5 class="card-title2">{{ $packageBook->judul }} </h5>
+                <div class="row">
+                  <!-- Kolom untuk ikon -->
+                  <div class="col-1 d-flex align-items-start mt-1">
+                    <i class="bi bi-journal-bookmark" style="font-size: 60px; color: #798eb3;"></i>
+                  </div>
+                  <!-- Kolom untuk teks -->
+                  <div class="col-4 mt-3 mb-2">
+                    <h5 class="sub-title">Jenis : {{ $packageBook->jenis->jenis_buku }}</h5>
+                    <h5 class="sub-title">Mapel : {{ $packageBook->mapel->mapel }}</h5>
+                    <h5 class="sub-title">Sub I : {{ $packageBook->submapel ? $packageBook->submapel->sub_mapel : '-' }}</h5>
+                </div>
+                <div class="col-6 mt-3">
+                    <h5 class="sub-title">Sub II : {{ $packageBook->subkelas ? $packageBook->subkelas->sub_kelas : '-' }}</h5>
+                    <h5 class="sub-title">Sub III : {{ $packageBook->subklasifikasi ? $packageBook->subklasifikasi->klasifikasi : '-' }}</h5>
+                    <h5 class="sub-title">Sub IV : {{ $packageBook->subklasifikasith ? $packageBook->subklasifikasith->klasifikasi4 : '-' }}</h5>
+                </div>
+                </div>
+            </div>
+        </div><!-- End Default Card -->
+    </section>
 
     <section class="section dashboard">
       <div class="row">
@@ -40,8 +66,6 @@
                     <th>No</th>
                     <th>Judul</th>
                     <th>Mapel</th>
-                    <th>Sub Mapel</th>
-                    <th>Kelas</th>
                     <th>Nomor Induk</th>
                     <th style="display: flex; justify-content: flex-end;">Status</th>
                     <th>Aksi</th>
@@ -53,10 +77,8 @@
                       <td>{{ $index + 1 }}</td>
                       <td>{{ $packageBook->judul }}</td>
                       <td>{{ $packageBook->mapel->mapel }}</td>
-                      <td>{{ $packageBook->submapel->sub_mapel }}</td>
-                      <td>Kelas {{ $packageBook->subkelas->sub_kelas }}</td>
                       <td>
-                        {{ $packageBook->jenis->nomor_induk_jenis }}{{ $packageBook->mapel->nomor_induk_mapel }}{{ $packageBook->submapel->nomor_induk_submapel }}{{ $packageBook->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
+                        {{ $packageBook->jenis->nomor_induk_jenis }}{{ $packageBook->mapel->nomor_induk_mapel }}{{ optional($packageBook->submapel)->nomor_induk_submapel }}{{ optional($packageBook->subkelas)->nomor_induk_subkelas }}{{ optional($packageBook->subklasifikasi)->nomor_induk_klasifikasi }}{{ optional($packageBook->subklasifikasith)->nomor_induk_klasifikasi4 }}.{{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
                       </td>
                       <td>
                         @if($detail->status_peminjaman === 'available')

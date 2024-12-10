@@ -57,7 +57,8 @@
                         <label for="books-old" class="mb-2">Buku Paket Yang Telah Dipinjam</label>
                         <ul class="list-group">
                             @foreach($peminjamanPaket->detailPeminjamanBukuPaket as $detail)
-                                <input type="text" class="form-control mb-2 readonly" name="books-old" value="{{ $detail->bukuPaket->packageBook->judul }} | {{ $detail->bukuPaket->packageBook->jenis->nomor_induk_jenis }}{{ $detail->bukuPaket->packageBook->mapel->nomor_induk_mapel }}{{ $detail->bukuPaket->packageBook->submapel->nomor_induk_submapel }}{{ $detail->bukuPaket->packageBook->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->bukuPaket->nomor_induk, 4, '0', STR_PAD_LEFT) }}" readonly>
+                                <input type="text" class="form-control mb-2 readonly" name="books-old" value="{{ $detail->bukuPaket->packageBook->judul }} | {{ $detail->bukuPaket->packageBook->jenis->nomor_induk_jenis }}{{ $detail->bukuPaket->packageBook->mapel->nomor_induk_mapel }}{{ optional($detail->bukuPaket->packageBook->submapel)->nomor_induk_submapel }}{{ optional($detail->bukuPaket->packageBook->subkelas)->nomor_induk_subkelas }}{{ optional($detail->bukuPaket->packageBook->subklasifikasi)->nomor_induk_klasifikasi }}{{ optional($detail->bukuPaket->packageBook->subklasifikasith)->nomor_induk_klasifikasi4 }}.{{ str_pad($detail->bukuPaket->nomor_induk, 4, '0', STR_PAD_LEFT) }}" readonly>
+
                             @endforeach
                         </ul>
                     </div>
@@ -74,7 +75,7 @@
                                     @foreach($book->detailPackageBooks as $detail)
                                         @if($detail->status_peminjaman === 'available')
                                             <option value="{{ $detail->id }}">
-                                                {{ $book->judul }} | {{ $book->jenis->nomor_induk_jenis }}{{ $book->mapel->nomor_induk_mapel }}{{ $book->submapel->nomor_induk_submapel }}{{ $book->subkelas->nomor_induk_subkelas }}.{{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
+                                                {{ $book->judul }} | {{ $book->jenis->nomor_induk_jenis }}{{ $book->mapel->nomor_induk_mapel }}{{ optional($book->submapel)->nomor_induk_submapel }}{{ optional($book->subkelas)->nomor_induk_subkelas }}{{ optional($book->subklasifikasi)->nomor_induk_klasifikasi}}{{ optional($book->subklasifikasith)->nomor_induk_klasifikasi4 }}.{{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
                                             </option>
                                         @endif
                                     @endforeach

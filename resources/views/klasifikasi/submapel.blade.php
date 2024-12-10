@@ -3,10 +3,10 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Klasifikasi Sub Mapel</h1>
+      <h1>Sub Klasifikasi I</h1>
 
       <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-      <a href="{{ route('subCourse.create') }}" class="btn btn-primary">Tambah Sub Mapel</a>
+      <a href="{{ route('subCourse.create') }}" class="btn btn-primary">Tambah Sub Klasifikasi I</a>
       </div>
       </div>
         @if(Session::has('success'))
@@ -23,13 +23,13 @@
           <div class="card recent-sales overflow-auto">
 
             <div class="card-body">
-              <h1 class="card-title px-2" style="font-size: 16px">Daftar Sub Mapel</h1>
+              <h1 class="card-title px-2" style="font-size: 16px">Daftar Sub Klasifikai I</h1>
 
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Sub Mapel</th>
+                    <th scope="col">Sub Klasifikai I</th>
                     <th scope="col">Nomor Induk</th>
                     <th scope="col">Tgl Ditambahkan</th>
                     <th scope="col" style="display: flex; justify-content: flex-end;">Aksi</th>
@@ -85,7 +85,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p><strong>Sub Mapel:</strong> <span id="modal-subCourse"></span></p>
+                        <p><strong>Sub Klasifikasi I:</strong> <span id="modal-subCourse"></span></p>
                         <p><strong>No Induk:</strong> <span id="modal-noinduk"></span></p>
                         <p><strong>Tanggal Dibuat:</strong> <span id="modal-tanggal"></span></p>
                         <p><strong>Tanggal Update:</strong> <span id="modal-tanggal-update"></span></p>
