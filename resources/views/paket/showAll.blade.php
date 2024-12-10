@@ -25,7 +25,8 @@
     </div>
 
     <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-        <a href="{{ route('paket.damagedExport') }}" class="btn btn-danger">Export Buku Rusak</a>
+        <a href="{{ route('paket.allExport') }}" class="btn btn-success">Export Semua Buku</a>
+        <span class="ml-2"><a href="{{ route('paket.damagedExport') }}" class="btn btn-danger">Export Buku Rusak</a></span>
     </div>
 
 
@@ -56,7 +57,7 @@
                                         @foreach($package->detailPackageBooks as $index => $detail)
                                         <tr>
                                             <td>{{ $globalIndex++ }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($package->tgl_masuk)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($detail->tgl_masuk)->format('d M Y') }}</td>
                                             <td>{{ $package->judul }}</td>
                                             <td>{{ $package->mapel->mapel }}</td>
                                             <td>{{ $package->submapel->sub_mapel }}</td>

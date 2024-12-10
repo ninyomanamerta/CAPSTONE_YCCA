@@ -13,7 +13,8 @@ class detailenrichmentbook extends Model
     protected $fillable = [
         'id_pengayaan',
         'status_peminjaman',
-        'no_induk'
+        'no_induk',
+        'tgl_masuk'
     ];
 
     /**

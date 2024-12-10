@@ -6,8 +6,16 @@ use App\Models\EnrichmentBook;
 use Illuminate\Http\Request;
 use App\Models\BookCase;
 use App\Models\detailenrichmentbook;
+use App\Models\BookType;
+use App\Models\Course;
+use App\Models\SubCourse;
+use App\Models\SubClass;
+use App\Models\SubClasification;
+use App\Models\SubClasificationTh;
 use Illuminate\Support\Facades\DB;
 use App\Imports\EnrichmentImport;
+use App\Exports\ExportDamagedEnrichmentBook;
+use App\Exports\ExportAllEnrichmentBook;
 use Excel;
 
 class EnrichmentbookController extends Controller
@@ -26,8 +34,14 @@ class EnrichmentbookController extends Controller
      */
     public function create()
     {
-        $bookcases = Bookcase::all(); // Mengambil semua data rak
-        return view('pengayaan.create', compact('bookcases'));
+        $bookcases = Bookcase::all();
+        $types = BookType::all();
+        $courses = Course::all();
+        $subCourses = SubCourse::all();
+        $subClasses = SubClass::all();
+        $subClasification = SubClasification::all();
+        $subClasificationTh = SubClasificationTh::all();
+        return view('pengayaan.create', compact('bookcases', 'types', 'courses', 'subCourses', 'subClasses', 'subClasification', 'subClasificationTh'));
     }
 
     /**
@@ -45,30 +59,96 @@ class EnrichmentbookController extends Controller
             'eksemplar' => 'required|numeric',
             'penerbit' => 'required|string',
             'id_rak' => 'required|exists:bookcases,id',
+            'klasifikasi_jenis' => 'required|exists:type_books,id',
+            'klasifikasi_mapel' => 'required|exists:courses,id',
+            'klasifikasi_submapel' => 'nullable|exists:sub_courses,id',
+            'klasifikasi_subkelas' => 'nullable|exists:sub_class,id',
+            'klasifikasi_subclasification' => 'nullable|exists:sub_clasification,id',
+            'klasifikasi_subclasificationth' => 'nullable|exists:sub_clasification4,id',
         ]);
 
-        $lastNomorInduk = detailenrichmentbook::max('no_induk');
+        $query = EnrichmentBook::query();
 
-        $nomorInduk = $lastNomorInduk ? $lastNomorInduk + 1 : 1;
+        $query->where('judul', $validated['judul'])
+            ->where('id_jenis', $validated['klasifikasi_jenis'])
+            ->where('id_mapel', $validated['klasifikasi_mapel']);
 
-        $enrichmentBooks = EnrichmentBook::create([
-            'tgl_masuk' => $validated['tgl_masuk'],
-            'kategori' => $validated['kategori'],
-            'judul' => $validated['judul'],
-            'tahun' => $validated['tahun'],
-            'pengarang' => $validated['pengarang'],
-            'eksemplar' => $validated['eksemplar'],
-            'penerbit' => $validated['penerbit'],
-            'id_rak' => $validated['id_rak']
-        ]);
+        if (!empty($validated['klasifikasi_submapel'])) {
+            $query->where('id_submapel', $validated['klasifikasi_submapel']);
+        } else {
+            $query->whereNull('id_submapel');
+        }
+
+        if (!empty($validated['klasifikasi_subkelas'])) {
+            $query->where('id_subkelas', $validated['klasifikasi_subkelas']);
+        } else {
+            $query->whereNull('id_subkelas');
+        }
+
+        if (!empty($validated['klasifikasi_subclasification'])) {
+            $query->where('id_subklasifikasi', $validated['klasifikasi_subclasification']);
+        } else {
+            $query->whereNull('id_subklasifikasi');
+        }
+
+        if (!empty($validated['klasifikasi_subclasificationth'])) {
+            $query->where('id_subklasifikasith', $validated['klasifikasi_subclasificationth']);
+        } else {
+            $query->whereNull('id_subklasifikasith');
+        }
+
+        $existingBook = $query->first();
+
+        if (!$existingBook) {
+            $BookData = [
+                'tgl_masuk' => $validated['tgl_masuk'],
+                'kategori' => $validated['kategori'],
+                'judul' => $validated['judul'],
+                'tahun' => $validated['tahun'],
+                'penerbit' => $validated['penerbit'],
+                'pengarang' => $validated['pengarang'],
+                'eksemplar' => $validated['eksemplar'],
+                'id_rak' => $validated['id_rak'],
+                'id_jenis' => $validated['klasifikasi_jenis'],
+                'id_mapel' => $validated['klasifikasi_mapel'],
+            ];
+
+            if (!empty($validated['klasifikasi_submapel'])) {
+                $BookData['id_submapel'] = $validated['klasifikasi_submapel'];
+            }
+
+            if (!empty($validated['klasifikasi_subkelas'])) {
+                $BookData['id_subkelas'] = $validated['klasifikasi_subkelas'];
+            }
+
+            if (!empty($validated['klasifikasi_subclasification'])) {
+                $BookData['id_subklasifikasi'] = $validated['klasifikasi_subclasification'];
+            }
+
+            if (!empty($validated['klasifikasi_subclasificationth'])) {
+                $BookData['id_subklasifikasith'] = $validated['klasifikasi_subclasificationth'];
+            }
+
+            $Book = EnrichmentBook::create($BookData);
+            $nomorInduk = 1;
+
+        } else {
+            $lastNomorInduk = detailenrichmentbook::where('id_pengayaan', $existingBook->id)
+                ->max('no_induk');
+
+            $nomorInduk = $lastNomorInduk ? $lastNomorInduk + 1 : 1;
+            $Book = $existingBook;
+        }
 
         for ($i = 0; $i < $validated['eksemplar']; $i++) {
             detailenrichmentbook::create([
-                'id_pengayaan' => $enrichmentBooks->id,
+                'id_pengayaan' => $Book->id,
                 'status_peminjaman' => 'available',
                 'no_induk' => $nomorInduk + $i,
+                'tgl_masuk' => $validated['tgl_masuk'],
             ]);
         }
+
         return redirect()->route('enrichmentBooks.index')
             ->with('success', 'Buku Pengayaan Telah Tersimpan.');
     }
@@ -101,14 +181,18 @@ class EnrichmentbookController extends Controller
      */
     public function edit($id)
     {
-        // Mengambil data buku berdasarkan ID
-        $enrichmentBooks = EnrichmentBook::findOrFail($id);
+        $enrichmentBooks = EnrichmentBook::with('detailEnrichmentBooks')->findOrFail($id);
 
-        // Mengambil semua rak untuk dropdown
         $bookcases = Bookcase::all();
+        $types = BookType::all();
+        $courses = Course::all();
+        $subCourses = SubCourse::all();
+        $subClasses = SubClass::all();
+        $subClasification = SubClasification::all();
+        $subClasificationTh = SubClasificationTh::all();
 
-        // Mengirim data ke view
-        return view('pengayaan.edit', compact('enrichmentBooks', 'bookcases'));
+
+        return view('pengayaan.edit', compact('enrichmentBooks', 'bookcases', 'types', 'courses', 'subCourses', 'subClasses', 'subClasification', 'subClasificationTh'));
     }
     /**
      * Update the specified resource in storage.
@@ -116,27 +200,52 @@ class EnrichmentbookController extends Controller
     public function update(Request $request, $id)
     {
         $enrichmentBooks = EnrichmentBook::findOrFail($id);
-        $request->validate([
+        $validatedData = $request->validate([
             'tgl_masuk' => 'required|date',
             'kategori' => 'required|string|max:255',
             'judul' => 'required|string|max:255',
             'tahun' => 'required|numeric',
             'pengarang' => 'required|string|max:255',
-            'eksemplar' => 'required|numeric',
             'penerbit' => 'required|string',
             'id_rak' => 'required|exists:bookcases,id',
+            'klasifikasi_jenis' => 'required|exists:type_books,id',
+            'klasifikasi_mapel' => 'required|exists:courses,id',
+            'klasifikasi_submapel' => 'nullable|exists:sub_courses,id',
+            'klasifikasi_subkelas' => 'required|exists:sub_class,id',
+            'klasifikasi_subclasification' => 'nullable|exists:sub_clasification,id',
+            'klasifikasi_subclasificationth' => 'nullable|exists:sub_clasification4,id',
         ]);
 
-        $enrichmentBooks->update([
-            'tgl_masuk' => $request->tgl_masuk,
-            'kategori' => $request->kategori,
-            'judul' => $request->judul,
-            'tahun' => $request->tahun,
-            'pengarang' => $request->pengarang,
-            'eksemplar' => $request->eksemplar,
-            'penerbit' => $request->penerbit,
-            'id_rak' => $request->id_rak
-        ]);
+        $BookData = [
+            'judul' => $validatedData['judul'],
+            'id_jenis' => $validatedData['klasifikasi_jenis'],
+            'id_mapel' => $validatedData['klasifikasi_mapel'],
+            'tgl_masuk' => $validatedData['tgl_masuk'],
+            'tahun' => $validatedData['tahun'],
+            'penerbit' => $validatedData['penerbit'],
+            'id_rak' => $validatedData['id_rak'],
+            'kategori' => $validatedData['kategori'],
+            'pengarang' => $validatedData['pengarang'],
+        ];
+
+
+        if (!empty($validatedData['klasifikasi_submapel'])) {
+            $BookData['id_submapel'] = $validatedData['klasifikasi_submapel'];
+        }
+
+        if (!empty($validatedData['klasifikasi_subkelas'])) {
+            $BookData['id_subkelas'] = $validatedData['klasifikasi_subkelas'];
+        }
+
+        if (!empty($validatedData['klasifikasi_subclasification'])) {
+            $BookData['id_subklasifikasi'] = $validatedData['klasifikasi_subclasification'];
+        }
+
+        if (!empty($validatedData['klasifikasi_subclasificationth'])) {
+            $BookData['id_subklasifikasith'] = $validatedData['klasifikasi_subclasificationth'];
+        }
+
+        $enrichmentBooks->update($BookData);
 
         return redirect()->route('enrichmentBooks.index')
             ->with('success', 'Buku Pengayaan Telah diperbaiki');
@@ -247,6 +356,16 @@ class EnrichmentbookController extends Controller
 
         return redirect()->route('enrichmentBooks.index')->with('success', 'Data buku pengayaan berhasil ditambahkan!');
 
+    }
+
+    public function exportFile()
+    {
+        return Excel::download(new ExportDamagedEnrichmentBook, 'Buku Pengayaan Rusak.xlsx');
+    }
+
+    public function exportFileAllBooks()
+    {
+        return Excel::download(new ExportAllEnrichmentBook, 'Buku Pengayaan.xlsx');
     }
 
 

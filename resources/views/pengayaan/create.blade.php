@@ -42,44 +42,116 @@
                     </div>
 
                     <div class="row mb-3">
+                        <label for="judul" class="col-sm-2 col-form-label">Judul</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="judul" name="judul" required value="{{ old('judul') }}" placeholder="Masukan judul buku">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
                         <label for="pengarang" class="col-sm-2 col-form-label">Kategori</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="kategori" name="kategori" required value="{{ old('kategori') }}">
+                            <input type="text" class="form-control" id="kategori" name="kategori" required value="{{ old('kategori') }}" placeholder="Masukan kategori buku">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="klasifikasi_jenis" class="col-sm-2 col-form-label">Klasifikasi Jenis</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="klasifikasi_jenis" name="klasifikasi_jenis" required>
+                                <option value="">Pilih Jenis</option>
+                                @foreach($types as $type)
+                                    <option value="{{ $type->id }}">{{ $type->jenis_buku }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="klasifikasi_mapel" class="col-sm-2 col-form-label">Klasifikasi Mapel</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="klasifikasi_mapel" name="klasifikasi_mapel" required>
+                                <option value="">Pilih Mata Pelajaran</option>
+                                @foreach($courses as $course)
+                                    <option value="{{ $course->id }}">{{ $course->mapel }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="klasifikasi_submapel" class="col-sm-2 col-form-label">Klasifikasi Sub I</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="klasifikasi_submapel" name="klasifikasi_submapel">
+                                <option value="">Pilih Sub I (Opsional)</option>
+                                @foreach($subCourses as $subCourse)
+                                    <option value="{{ $subCourse->id }}">{{ $subCourse->sub_mapel }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="klasifikasi_subkelas" class="col-sm-2 col-form-label">Klasifikasi Sub II</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="klasifikasi_subkelas" name="klasifikasi_subkelas">
+                                <option value="">Pilih Sub II (Opsional)</option>
+                                @foreach($subClasses as $subClass)
+                                    <option value="{{ $subClass->id }}">{{ $subClass->sub_kelas }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="klasifikasi_subclasification" class="col-sm-2 col-form-label">Klasifikasi Sub III</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="klasifikasi_subclasification" name="klasifikasi_subclasification">
+                                <option value="">Pilih Sub III (Opsional)</option>
+                                @foreach($subClasification as $subClasification)
+                                    <option value="{{ $subClasification->id }}">{{ $subClasification->klasifikasi }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="klasifikasi_subclasificationth" class="col-sm-2 col-form-label">Klasifikasi Sub IV</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="klasifikasi_subclasificationth" name="klasifikasi_subclasificationth">
+                                <option value="">Pilih Sub IV (Opsional)</option>
+                                @foreach($subClasificationTh as $subClasificationTh)
+                                    <option value="{{ $subClasificationTh->id }}">{{ $subClasificationTh->klasifikasi4 }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="pengarang" class="col-sm-2 col-form-label">Pengarang</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="pengarang" name="pengarang" required value="{{ old('pengarang') }}">
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <label for="judul" class="col-sm-2 col-form-label">Judul</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="judul" name="judul" required value="{{ old('judul') }}">
+                            <input type="text" class="form-control" id="pengarang" name="pengarang" required value="{{ old('pengarang') }}" placeholder="Masukan pengarang buku">
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="penerbit" class="col-sm-2 col-form-label">Penerbit</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="penerbit" name="penerbit" required value="{{ old('penerbit') }}">
+                            <input type="text" class="form-control" id="penerbit" name="penerbit" required value="{{ old('penerbit') }}" placeholder="Masukan penerbit buku">
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="tahun_terbit" class="col-sm-2 col-form-label">Tahun Terbit</label>
                         <div class="col-sm-10">
-                            <input type="integer" class="form-control" id="tahun" name="tahun" required value="{{ old('tahun') }}">
+                            <input type="integer" class="form-control" id="tahun" name="tahun" required value="{{ old('tahun') }}" placeholder="Masukan tahun terbit buku">
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="jumlah" class="col-sm-2 col-form-label">Eksemplar</label>
                         <div class="col-sm-10">
-                            <input type="integer" class="form-control" id="eksemplar" name="eksemplar" required value="{{ old('eksemplar') }}">
+                            <input type="integer" class="form-control" id="eksemplar" name="eksemplar" required value="{{ old('eksemplar') }}" placeholder="Masukan jumlah buku">
                         </div>
                     </div>
 

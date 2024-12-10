@@ -27,7 +27,7 @@
         @endif
     </div>
 
-    <!-- Default Card -->
+     <!-- Default Card -->
     <section class="section dashboard">
         <div class="card mt-8 mb-3 col-12 px-3">
             <div class="card-body">
@@ -39,12 +39,18 @@
                   </div>
                   <!-- Kolom untuk teks -->
                   <div class="col-4 mt-3 mb-2">
+                    <h5 class="sub-title">Jenis : {{ $enrichmentBooks->jenis->jenis_buku }}</h5>
+                    <h5 class="sub-title">Mapel : {{ $enrichmentBooks->mapel->mapel }}</h5>
+                    <h5 class="sub-title">Sub I : {{ $enrichmentBooks->submapel ? $enrichmentBooks->submapel->sub_mapel : '-' }}</h5>
+                    <h5 class="sub-title">Sub II : {{ $enrichmentBooks->subkelas ? $enrichmentBooks->subkelas->sub_kelas : '-' }}</h5>
+                    <h5 class="sub-title">Sub III : {{ $enrichmentBooks->subklasifikasi ? $enrichmentBooks->subklasifikasi->klasifikasi : '-' }}</h5>
+                    <h5 class="sub-title">Sub IV : {{ $enrichmentBooks->subklasifikasith ? $enrichmentBooks->subklasifikasith->klasifikasi4 : '-' }}</h5>
+                  </div>
+                  <div class="col-6 mt-3">
                     <h5 class="sub-title">Tahun Terbit : {{ $enrichmentBooks->tahun }}</h5>
                     <h5 class="sub-title">Pengarang : {{ $enrichmentBooks->pengarang }}</h5>
                     <h5 class="sub-title">Penerbit : {{ $enrichmentBooks->penerbit }}</h5>
-                  </div>
-                  <div class="col-6 mt-3">
-                    <h5 class="sub-title">Tanggal Masuk : {{ \Carbon\Carbon::parse($enrichmentBooks->tgl_masuk)->format('d M Y') }}</h5>
+                    {{-- <h5 class="sub-title">Tanggal Pertama Masuk : {{ \Carbon\Carbon::parse($enrichmentBooks->tgl_masuk)->format('d M Y') }}</h5> --}}
                     <h5 class="sub-title">Eksemplar : {{ $enrichmentBooksCount->detail_enrichment_books_count }} <span>| Dipinjam : {{ $jumlahDipinjam }}</span></h5>
                     <h5 class="sub-title">Rak : {{ $enrichmentBooks->bookcase->lokasi }} <span>| {{ $enrichmentBooks->bookcase->keterangan }}</span></h5>
                   </div>
@@ -66,6 +72,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Tgl Masuk</th>
                                     <th>Judul</th>
                                     <th>Nomor Induk</th>
                                     <th>Rak</th>
@@ -77,8 +84,13 @@
                                 @foreach($enrichmentBooks->detailEnrichmentBooks as $index => $detail)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($detail->tgl_masuk)->format('d M Y') }}</td>
                                         <td>{{ \Illuminate\Support\Str::limit($enrichmentBooks->judul, 50, '...') }}</td>
-                                        <td>{{ str_pad($detail->no_induk, 4, '0', STR_PAD_LEFT) }}</td>
+                                        <td>
+                                            {{-- {{ str_pad($detail->no_induk, 4, '0', STR_PAD_LEFT) }} --}}
+                                            {{ $enrichmentBooks->jenis->nomor_induk_jenis }}{{ $enrichmentBooks->mapel->nomor_induk_mapel }}{{ optional($enrichmentBooks->submapel)->nomor_induk_submapel }}{{ optional($enrichmentBooks->subkelas)->nomor_induk_subkelas }}{{ optional($enrichmentBooks->subklasifikasi)->nomor_induk_klasifikasi }}{{ optional($enrichmentBooks->subklasifikasith)->nomor_induk_klasifikasi4 }}.{{ str_pad($detail->no_induk, 4, '0', STR_PAD_LEFT) }}
+
+                                        </td>
                                         <td>{{ $enrichmentBooks->bookcase->lokasi }}</td>
                                         <td>
                                             @if($detail->status_peminjaman === 'available')

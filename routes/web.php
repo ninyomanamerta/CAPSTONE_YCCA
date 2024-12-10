@@ -128,6 +128,8 @@ Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->n
     Route::get('/paket/showAll', [PackageBookController::class, 'showAll'])->name('paket.showAll');
 
     Route::get('/paket/bukuRusak/exportFile', [PackageBookController::class, 'exportFile'])->name('paket.damagedExport');
+    Route::get('/paket/bukuRusak/exportFileAllBooks', [PackageBookController::class, 'exportFileAllBooks'])->name('paket.allExport');
+
 
 
 
@@ -156,6 +158,7 @@ Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->n
     Route::patch('/pengayaan/damagedBooks/update/status', [EnrichmentbookController::class, 'updateStatus'])->name('enrichmentBooks.updateStatus');
 
 
+
     Route::get('/pengayaan/add', [EnrichmentbookController::class, 'create'])->name('enrichmentBooks.create');
     Route::post('/pengayaan/store', [EnrichmentbookController::class, 'store'])->name('enrichmentBooks.store');
     Route::get('/pengayaan/{id}', [EnrichmentbookController::class, 'show']);
@@ -168,6 +171,10 @@ Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->n
 
     Route::get('/pengayaan/import/file', [EnrichmentbookController::class, 'import'])->name('enrichmentBooks.import');
     Route::post('/pengayaan/import/file/store', [EnrichmentbookController::class, 'proses'])->name('enrichmentBooks.proses');
+
+    Route::get('/pengayaan/damagedBooks/exportFile', [EnrichmentbookController::class, 'exportFile'])->name('enrichmentBooks.damagedExport');
+    Route::get('/pengayaan/damagedBooks/exportFileAllBooks', [EnrichmentbookController::class, 'exportFileAllBooks'])->name('enrichmentBooks.allExport');
+
 
 
 

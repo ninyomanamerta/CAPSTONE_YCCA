@@ -64,8 +64,9 @@
                 <thead>
                   <tr>
                     <th>No</th>
+                    <th>Tgl Masuk</th>
                     <th>Judul</th>
-                    <th>Mapel</th>
+                    {{-- <th>Mapel</th> --}}
                     <th>Nomor Induk</th>
                     <th style="display: flex; justify-content: flex-end;">Status</th>
                     <th>Aksi</th>
@@ -75,8 +76,9 @@
                     @foreach($packageBook->detailPackageBooks as $index => $detail)
                     <tr>
                       <td>{{ $index + 1 }}</td>
+                      <td>{{ \Carbon\Carbon::parse($detail->tgl_masuk)->format('d M Y') }}</td>
                       <td>{{ $packageBook->judul }}</td>
-                      <td>{{ $packageBook->mapel->mapel }}</td>
+                      {{-- <td>{{ $packageBook->mapel->mapel }}</td> --}}
                       <td>
                         {{ $packageBook->jenis->nomor_induk_jenis }}{{ $packageBook->mapel->nomor_induk_mapel }}{{ optional($packageBook->submapel)->nomor_induk_submapel }}{{ optional($packageBook->subkelas)->nomor_induk_subkelas }}{{ optional($packageBook->subklasifikasi)->nomor_induk_klasifikasi }}{{ optional($packageBook->subklasifikasith)->nomor_induk_klasifikasi4 }}.{{ str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT) }}
                       </td>

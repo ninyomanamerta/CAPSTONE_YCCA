@@ -9,7 +9,7 @@ use App\Models\PackageBook;
 use App\Models\DetailPackageBook;
 use Carbon\Carbon;
 
-class ExportDamagedPackageBook implements FromCollection, WithHeadings, WithMapping
+class ExportAllPackageBook implements FromCollection, WithHeadings, WithMapping
 {
     private $rowNumber = 0;
 
@@ -19,9 +19,6 @@ class ExportDamagedPackageBook implements FromCollection, WithHeadings, WithMapp
     public function collection()
     {
         return PackageBook::with(['jenis', 'mapel', 'submapel', 'subkelas', 'detailPackageBooks', 'subklasifikasi', 'subklasifikasith'])
-            ->whereHas('detailPackageBooks', function ($query) {
-                $query->where('status_peminjaman', 'damaged');
-            })
             ->get();
     }
 
@@ -30,7 +27,7 @@ class ExportDamagedPackageBook implements FromCollection, WithHeadings, WithMapp
         $rows = [];
 
         foreach ($packageBook->detailPackageBooks as $detail) {
-            if ($detail->status_peminjaman === 'damaged') {
+
                 $formattedNomorInduk = str_pad($detail->nomor_induk, 4, '0', STR_PAD_LEFT);
                 $combinedKey =
                     " " .
@@ -45,6 +42,10 @@ class ExportDamagedPackageBook implements FromCollection, WithHeadings, WithMapp
 
                 $formattedDate = Carbon::parse($detail->tgl_masuk)->format('d-m-Y');
 
+                $status = $detail->status_peminjaman === 'damaged'
+                ? 'Buku Rusak'
+                : 'Kondisi Baik';
+
                 $jenis = $packageBook->jenis->jenis_buku;
 
                 $this->rowNumber++;
@@ -58,9 +59,9 @@ class ExportDamagedPackageBook implements FromCollection, WithHeadings, WithMapp
                     $packageBook->penerbit,
                     $packageBook->sumber,
                     $combinedKey,
-                    'Buku Rusak',
+                    $status,
                 ];
-            }
+
         }
 
         return $rows;
