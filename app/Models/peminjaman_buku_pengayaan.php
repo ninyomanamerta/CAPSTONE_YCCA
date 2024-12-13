@@ -14,7 +14,7 @@ class peminjaman_buku_pengayaan extends Model
     
     // Define fillable attributes if needed
     protected $fillable = [
-        'id_siswa', 'id_judul_buku', 'id_detail_buku', 'peminjam', 'tgl_pinjam', 'tgl_pengembalian','status'
+        'id_siswa', 'id_judul_buku', 'id_detail_buku', 'peminjam', 'tgl_pinjam', 'tgl_pengembalian','status', 'keterangan'
     ];
 
     /**

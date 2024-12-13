@@ -82,6 +82,16 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 Apakah Anda yakin buku telah dikembalikan oleh siswa <strong>{{ $peminjaman->student->nama_siswa }}</strong>?
+                                                                <div class="form-group mt-3">
+                                                                    <label for="verifikasi_buku_{{ $peminjaman->id }}">Keterangan</label>
+                                                                    <p></p>
+                                                                    @csrf
+                                                                    @method('PUT') 
+                                                                    <select class="form-control" id="verifikasi_buku_{{ $peminjaman->id }}" name="verifikasi_buku" required>
+                                                                        <option value="" {{ $peminjaman->keterangan == '' ? 'selected' : '' }}>Opsional</option>
+                                                                        <option value="Ganti baru" {{ $peminjaman->keterangan == 'Ganti Baru' ? 'selected' : '' }}>Ganti Baru</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -89,7 +99,8 @@
                                                                     @csrf
                                                                     @method('PATCH')
                                                                     <input type="hidden" name="status" value="dikembalikan">
-                                                                    <button type="submit" class="btn btn-primary">Ya, Kembalikan</button>
+                                                                    <input type="hidden" name="verifikasi_buku" id="verifikasi_buku_input_{{ $peminjaman->id }}" value="">
+                                                                    <button type="submit" class="btn btn-primary" onclick="setVerifikasiBuku('{{ $peminjaman->id }}')">Ya, Kembalikan</button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -169,5 +180,11 @@
         </div>
     </section>
 </main>
+<script>
+    function setVerifikasiBuku(peminjamanId) {
+        var selectedOption = document.getElementById('verifikasi_buku_' + peminjamanId).value;
+        document.getElementById('verifikasi_buku_input_' + peminjamanId).value = selectedOption;
+    }
+</script>
 
 @endsection

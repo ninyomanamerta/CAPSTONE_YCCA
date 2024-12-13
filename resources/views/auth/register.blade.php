@@ -72,7 +72,6 @@
                                         name="nip"
                                         value="{{ old('nip') }}"
                                         placeholder="Masukan NIP Anda..."
-                                        required
                                     />
                                     @error('nip')
                                     <div class="invalid-feedback mt-2">

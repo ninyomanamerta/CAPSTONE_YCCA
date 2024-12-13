@@ -57,6 +57,7 @@ class PeminjamanBukuPengayaanController extends Controller
             'peminjam' => 'required|string|max:255',
             'tgl_pinjam' => 'required|date',
             'tgl_pengembalian' => 'required|date',
+            'keterangan' => 'nullable|string|max:500',
         ]);
 
         // Store peminjaman data
@@ -68,6 +69,7 @@ class PeminjamanBukuPengayaanController extends Controller
             'tgl_pinjam' => $request->tgl_pinjam,
             'tgl_pengembalian' => $request->tgl_pengembalian,
             'status' => $request->status,
+            'keterangan' => $request->keterangan,
         ]);
         // Update status buku menjadi 'dipinjam'
         $book = detailenrichmentbook::find($request->id_detail_buku); // Temukan buku berdasarkan id
@@ -108,6 +110,7 @@ class PeminjamanBukuPengayaanController extends Controller
 
         // Update the status of the peminjaman
         $peminjaman->status = $request->input('status');
+        $peminjaman->keterangan = $request->input('verifikasi_buku');
 
         // Jika status peminjaman berubah menjadi 'dikembalikan', perbarui status buku
         if ($peminjaman->status === 'dikembalikan') {

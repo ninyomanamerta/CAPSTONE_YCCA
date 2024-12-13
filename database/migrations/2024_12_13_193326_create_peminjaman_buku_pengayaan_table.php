@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->dateTime('tgl_pengembalian');
             $table->string('peminjam');
             $table->string('status');
+            $table->string('keterangan');
             $table->timestamps();
 
             $table->foreign('id_detail_buku')->references('id')->on('detail_enrichment_book');

@@ -52,7 +52,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'nip' => ['required', 'numeric', 'unique:users'], // Pastikan validasi sesuai
+            'nip' => ['nullable', 'numeric', 'unique:users'], // Pastikan validasi sesuai
             'jabatan' => ['required', 'string', 'max:255'],
         ]);
     }
@@ -69,7 +69,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'nip' => $data['nip'],
+            'nip' => $data['nip'] ?? null,
             'jabatan' => $data['jabatan'],
         ]);
     }
