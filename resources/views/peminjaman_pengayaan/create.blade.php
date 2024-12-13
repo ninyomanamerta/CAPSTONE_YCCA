@@ -36,7 +36,7 @@
                     <div class="row mb-3">
                         <label for="id_siswa" class="col-sm-2 col-form-label">Nama Siswa</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="id_siswa" name="id_siswa" required>
+                            <select class="form-control select2" id="id_siswa" name="id_siswa" required>
                                 <option value="">Pilih Siswa</option>
                                 @foreach($students as $student)
                                     <option value="{{ $student->id }}" {{ old('id_siswa') == $student->id ? 'selected' : '' }}>
@@ -51,7 +51,7 @@
                     <div class="row mb-3">
                         <label for="id_judul_buku" class="col-sm-2 col-form-label">Judul Buku yang Dipinjam</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="id_judul_buku" name="id_judul_buku" required>
+                            <select class="form-control select2Books" id="id_judul_buku" name="id_judul_buku" required>
                                 <option value="">Pilih Buku</option>
                                 @foreach ($judulbuku as $judul)
                                     <option value="{{ $judul->id }}" {{ old('id_judul_buku') == $judul->id ? 'selected' : '' }}>
@@ -66,7 +66,7 @@
                     <div class="row mb-3">
                         <label for="id_detail_buku" class="col-sm-2 col-form-label">Nomor Buku yang Tersedia</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="id_detail_buku" name="id_detail_buku" required>
+                            <select class="form-control select2Id" id="id_detail_buku" name="id_detail_buku" required>
                                 <option value="">Pilih Nomor Buku</option>
                                 <!-- Options akan dimuat secara dinamis -->
                             </select>
@@ -77,7 +77,7 @@
                     <div class="row mb-3">
                         <label for="peminjam" class="col-sm-2 col-form-label">Nama yang Memberikan Pinjaman</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="peminjam" name="peminjam" required value="{{ old('peminjam') }}">
+                            <input type="text" class="form-control" id="peminjam" name="peminjam" required value="{{ old('peminjam') }}" placeholder="Nama petugas yang memberikan pinjaman buku">
                         </div>
                     </div>
 
@@ -112,8 +112,45 @@
     </div>
 </main>
 
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+    $(document).ready(function() {
+        $('.select2').select2({
+            theme: 'bootstrap5',
+            placeholder: "Pilih atau cari nama siswa",
+            allowClear: true,
+            language: {
+                inputTooShort: function() {
+                    return "Cari nama siswa";
+                }
+            }
+        });
+
+        $('.select2Books').select2({
+            theme: 'bootstrap5',
+            placeholder: "Pilih atau cari buku pengayaan",
+            allowClear: true,
+            language: {
+                inputTooShort: function() {
+                    return "Cari buku pengayaan";
+                }
+            }
+        });
+
+        $('.select2Id').select2({
+            theme: 'bootstrap5',
+            placeholder: "Pilih atau cari nomor induk pengayaan",
+            allowClear: true,
+            language: {
+                inputTooShort: function() {
+                    return "Cari nomor induk pengayaan";
+                }
+            }
+        });
+    });
+
     $(document).ready(function() {
         $('#id_judul_buku').on('change', function() {
             var judulId = $(this).val();

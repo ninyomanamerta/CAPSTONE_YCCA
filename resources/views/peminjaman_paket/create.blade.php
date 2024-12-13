@@ -109,7 +109,7 @@
     $(document).ready(function() {
         $('.select2').select2({
             theme: 'bootstrap5',
-            placeholder: "Pilih nama siswa",
+            placeholder: "Pilih atau cari nama siswa",
             allowClear: true,
             language: {
                 inputTooShort: function() {
@@ -120,7 +120,7 @@
 
         $('.select2Books').select2({
             theme: 'bootstrap5',
-            placeholder: "Pilih buku paket",
+            placeholder: "Pilih atau cari buku paket",
             allowClear: true,
             language: {
                 inputTooShort: function() {

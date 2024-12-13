@@ -6,7 +6,7 @@
         <h1>Peminjaman Buku Pengayaan</h1>
 
         <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
-            <a href="{{ route('peminjamanbukupengayaan.create') }}" class="btn btn-primary">Tambah Buku Pinjam</a>
+            <a href="{{ route('peminjamanbukupengayaan.create') }}" class="btn btn-primary">Tambah Peminjaman Buku</a>
         </div>
 
         @if(Session::has('success'))
@@ -48,7 +48,7 @@
                                           {{-- Fetch status from the related detail_buku --}}
                                           <td>
                                             @if($peminjaman->status === 'dikembalikan')
-                                            <span class="badge bg-warning">Buku telah Dikembalikan</span>
+                                            <span class="badge bg-warning">Dikembalikan</span>
                                         @elseif($peminjaman->status === 'dipinjam')
                                             <span class="badge bg-primary">Di Pinjam</span>
                                         @elseif($peminjaman->status === 'telat')
