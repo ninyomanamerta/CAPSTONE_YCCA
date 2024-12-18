@@ -50,7 +50,7 @@
                                             @if($peminjaman->status === 'dikembalikan')
                                             <span class="badge bg-warning">Dikembalikan</span>
                                         @elseif($peminjaman->status === 'dipinjam')
-                                            <span class="badge bg-primary">Di Pinjam</span>
+                                            <span class="badge bg-primary">Dipinjam</span>
                                         @elseif($peminjaman->status === 'telat')
                                             <span class="badge bg-danger">Telat Pengembalian</span>
                                         @endif
@@ -62,9 +62,16 @@
                                           </a>
 
                                             {{-- Verifikasi Pengembalian --}}
+                                            @if($peminjaman->status === 'dikembalikan')
+                                            <button type="button" class="badge bg-secondary"  style="border:none" data-bs-toggle="modal" data-bs-target="#verifikasiModal{{ $peminjaman->id }}" disabled>
+                                                Verifikasi
+                                            </button>
+                                            @else
                                             <button type="button" class="badge bg-warning"  style="border:none" data-bs-toggle="modal" data-bs-target="#verifikasiModal{{ $peminjaman->id }}">
                                                 Verifikasi
                                             </button>
+                                            @endif
+
 
                                             {{-- Delete --}}
                                             <button type="button" class="badge bg-danger" style="border:none" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $peminjaman->id }}">
@@ -86,7 +93,7 @@
                                                                     <label for="verifikasi_buku_{{ $peminjaman->id }}">Keterangan</label>
                                                                     <p></p>
                                                                     @csrf
-                                                                    @method('PUT') 
+                                                                    @method('PUT')
                                                                     <select class="form-control" id="verifikasi_buku_{{ $peminjaman->id }}" name="verifikasi_buku" required>
                                                                         <option value="" {{ $peminjaman->keterangan == '' ? 'selected' : '' }}>Opsional</option>
                                                                         <option value="Ganti baru" {{ $peminjaman->keterangan == 'Ganti Baru' ? 'selected' : '' }}>Ganti Baru</option>
@@ -127,13 +134,15 @@
                                                                 <p><strong>Status:</strong>
 
                                                                     @if($peminjaman->status === 'dikembalikan')
-                                                                        <span class="badge bg-warning">Buku telah Dikembalikan</span>
+                                                                        <span class="badge bg-warning">Dikembalikan</span>
                                                                     @elseif($peminjaman->status === 'dipinjam')
-                                                                        <span class="badge bg-primary">Di Pinjam</span>
+                                                                        <span class="badge bg-primary">Dipinjam</span>
                                                                     @elseif($peminjaman->status === 'telat')
                                                                         <span class="badge bg-danger">Telat Pengembalian</span>
                                                                     @endif
                                                                 </p>
+
+                                                                <p><strong>Keterangan:</strong> {{ $peminjaman->keterangan ?? '-' }}</p>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
