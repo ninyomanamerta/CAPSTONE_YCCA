@@ -126,8 +126,8 @@
                                                             <div class="modal-body">
                                                                 <p><strong>Nama Siswa:</strong> {{ $peminjaman->student->nama_siswa }}</p>
                                                                 <p><strong>Buku yang Dipinjam:</strong> {{ $peminjaman->book->judul }}</p>
-                                                                <p><strong>Dikasih oleh:</strong> {{ $peminjaman->peminjam }}</p>
-                                                                <p><strong>Nomor Induk Buku:</strong> {{ $peminjaman->id_judul_buku }}.{{ str_pad($peminjaman->detailenrichmentbook->no_induk , 4, '0', STR_PAD_LEFT) }}</p>
+                                                                <p><strong>Diberikan oleh:</strong> {{ $peminjaman->peminjam }}</p>
+                                                                <p><strong>Nomor Induk:</strong> {{ $peminjaman->jenis->nomor_induk_jenis }}{{ $peminjaman->mapel->nomor_induk_mapel }}{{ optional($peminjaman->submapel)->nomor_induk_submapel }}{{ optional($peminjaman->subkelas)->nomor_induk_subkelas }}{{ optional($peminjaman->subklasifikasi)->nomor_induk_klasifikasi }}{{ optional($peminjaman->subklasifikasith)->nomor_induk_klasifikasi4 }}.{{ str_pad($peminjaman->detailEnrichmentBook->no_induk ?? 0, 4, '0', STR_PAD_LEFT) }}</p>
                                                                 <p><strong>Tanggal Peminjaman:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pinjam)->format('F d, Y') }}</p>
 
                                                                 <p><strong>Batas Pengembalian:</strong> {{ \Carbon\Carbon::parse($peminjaman->tgl_pengembalian)->format('F d, Y') }}</p>
