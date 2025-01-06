@@ -24,7 +24,19 @@ class PeminjamanBukuPengayaanController extends Controller
             ->update(['status' => 'telat']);
 
         // Ambil data peminjaman
-        $peminjaman_pengayaan = peminjaman_buku_pengayaan::with('student', 'book')->get();
+        $peminjaman_pengayaan = peminjaman_buku_pengayaan::with([
+            'student',
+            'book',
+            'detailEnrichmentBook',
+            'enrichmentBook',
+            'jenis',
+            'mapel',
+            'submapel',
+            'subkelas',
+            'subklasifikasi',
+            'subklasifikasith'
+        ])->get();
+
 
         return view('peminjaman_pengayaan.index', compact('peminjaman_pengayaan'));
     }
@@ -142,24 +154,24 @@ class PeminjamanBukuPengayaanController extends Controller
     {
         // Temukan peminjaman berdasarkan id
         $peminjaman_buku_pengayaan = peminjaman_buku_pengayaan::findOrFail($id);
-        
+
         // Temukan buku detail yang terhubung dengan peminjaman
         $book = detailenrichmentbook::find($peminjaman_buku_pengayaan->id_detail_buku);
-    
+
         // Jika buku ditemukan, ubah statusnya menjadi 'available'
         if ($book) {
             $book->status_peminjaman = 'available'; // Ubah status menjadi available
             $book->save(); // Simpan perubahan
         }
-    
+
         // Hapus data peminjaman
         $peminjaman_buku_pengayaan->delete();
-    
+
         // Redirect kembali dengan pesan sukses
         return redirect()->route('peminjamanbukupengayaan.index')
                          ->with('success', 'Peminjaman berhasil dihapus dan status buku diperbarui menjadi available!');
     }
-    
+
 
     public function getBooksByJudul($judulId)
     {
@@ -173,8 +185,8 @@ class PeminjamanBukuPengayaanController extends Controller
                     'no_induk' => $book->no_induk // Menampilkan no_induk untuk kebutuhan tampilan
                 ];
             }));
-            
-    
+
+
     }
 
     // App\Models\peminjaman_buku_pengayaan.php
