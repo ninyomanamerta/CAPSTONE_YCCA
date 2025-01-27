@@ -195,7 +195,9 @@ Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->n
 
 // Export
     Route::get('/test', [ExportController::class, 'test'])->name('test');
-    Route::get('/export-siswa', [ExportController::class, 'exportStudent'])->name('exportStudent');
+    Route::get('/export-siswa', [ExportController::class, 'exportStudent'])->name('exportStudents');
+    Route::get('/export-peminjaman', [ExportController::class, 'exportPeminjamanPaket'])->name('exportPeminjamanPaket');
+
 
 
 
