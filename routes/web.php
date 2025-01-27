@@ -15,6 +15,7 @@ use App\Http\Controllers\PeminjamanBukuPengayaanController;
 use App\Http\Controllers\UserProfile;
 use App\Http\Controllers\SubClasificationController;
 use App\Http\Controllers\SubClasificationThController;
+use App\Http\Controllers\ExportController;
 
 
 Route::get('/', function () {
@@ -43,6 +44,7 @@ Route::put('/siswa/{id}', [StudentController::class, 'update'])->name('student.u
 Route::delete('/siswa/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
 Route::get('/siswa/add/import/file', [StudentController::class, 'import'])->name('student.import');
 Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->name('student.proses');
+
 
 
 // BookCase
@@ -150,6 +152,7 @@ Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->n
 
 
 
+
 // Pengayaan
     Route::get('/pengayaan', [EnrichmentbookController::class, 'index'])->name('enrichmentBooks.index');
     Route::get('/pengayaan/damagedBooks', [EnrichmentbookController::class, 'damagedBooks'])->name('enrichmentBooks.damagedBooks');
@@ -190,6 +193,9 @@ Route::post('/siswa/import/file/store', [StudentController::class, 'proses'])->n
     Route::delete('/peminjamanbukupengayaan/{id}', [PeminjamanBukuPengayaanController::class, 'destroy'])->name('peminjamanbukupengayaan.destroy');
 
 
+// Export
+    Route::get('/test', [ExportController::class, 'test'])->name('test');
+    Route::get('/export-siswa', [ExportController::class, 'exportStudent'])->name('exportStudent');
 
 
 

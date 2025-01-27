@@ -7,7 +7,8 @@
 
         <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
             <a href="{{ route('student.create') }}" class="btn btn-primary">Tambah Siswa</a>
-            <span class="ml-2"><a href="{{ route('student.import') }}" class="btn btn-success"><i class="bi bi-file-earmark-plus-fill"></i></a></span>
+            <span class="ml-2"><a href="{{ route('student.import') }}" class="btn btn-success">Import Siswa</a></span>
+            <span class="ml-2"><a href="{{ route('exportStudent') }}" class="btn btn-warning">Export Siswa</a></span>
         </div>
 
         @if(Session::has('success'))

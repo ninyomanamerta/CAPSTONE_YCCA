@@ -7,7 +7,7 @@
 
         <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
             <a href="{{ route('enrichmentBooks.create') }}" class="btn btn-primary mr-2">Tambah Buku Pengayaan</a>
-            <span><a href="{{ route('enrichmentBooks.import') }}" class="btn btn-success">Import Buku</a></span>
+            {{-- <span><a href="{{ route('enrichmentBooks.import') }}" class="btn btn-success">Import Buku</a></span> --}}
             <span class="ml-2"><a href="{{ route('enrichmentBooks.damagedBooks') }}" class="btn btn-danger" >Tandai Buku Rusak</a></span>
             <span class="ml-2"><a href="{{ route('enrichmentBooks.showAll') }}" class="btn btn-warning float-end" style="color: white">Semua Buku</a></span>
 
