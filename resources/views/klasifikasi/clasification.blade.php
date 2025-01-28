@@ -29,6 +29,7 @@
                 <thead>
                   <tr>
                     <th scope="col">No</th>
+                    <th scope="col">ID Sub III</th>
                     <th scope="col">Sub Klasifikasi III</th>
                     <th scope="col">Nomor Induk</th>
                     <th scope="col">Tgl Ditambahkan</th>
@@ -40,6 +41,7 @@
                 @foreach ($class as $index => $class)
                   <tr>
                     <th scope="row" class="col-1">{{ $index + 1 }}</th>
+                    <td class="col-1">{{ $class->id }}</td>
                     <td class="col-1">{{ $class->klasifikasi }}</td>
                     <td class="col-1">{{ $class->nomor_induk_klasifikasi }}</td>
                     <td class="col-1">{{ \Carbon\Carbon::parse($class->created_at)->format('F d, Y') }}</td>
@@ -85,6 +87,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <p><strong>ID Sub III:</strong> <span id="modal-id"></span></p>
                         <p><strong>Sub Klasifikasi III:</strong> <span id="modal-class"></span></p>
                         <p><strong>No Induk:</strong> <span id="modal-noinduk"></span></p>
                         <p><strong>Tanggal Dibuat:</strong> <span id="modal-tanggal"></span></p>
@@ -103,6 +106,7 @@
             $(document).ready(function() {
             $('.view-class').on('click', function() {
 
+                $('#modal-id').text('Loading...');
                 $('#modal-class').text('Loading...');
                 $('#modal-noinduk').text('Loading...');
                 $('#modal-tanggal').text('Loading...');
@@ -115,6 +119,7 @@
                     method: 'GET',
                     success: function(data) {
                         console.log(data);
+                        $('#modal-id').text(data.id);
                         $('#modal-class').text(data.klasifikasi);
                         $('#modal-noinduk').text(data.nomor_induk_klasifikasi);
 

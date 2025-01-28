@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use App\Models\EnrichmentBook;
 use App\Models\detailenrichmentbook;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Illuminate\Support\Facades\DB;
 
 class EnrichmentImport implements ToCollection, Tomodel
 {
@@ -23,11 +24,12 @@ class EnrichmentImport implements ToCollection, Tomodel
 
     public function __construct()
     {
-        $this->lastNomorInduk = detailenrichmentbook::max('no_induk') ?: 0;
+        $this->lastNomorInduk = 0;
     }
 
     public function model(array $row)
     {
+        //dd($row);
         $this->count++;
 
         if ($this->count === 1) {
@@ -37,22 +39,32 @@ class EnrichmentImport implements ToCollection, Tomodel
         $tanggalMasuk = Date::excelToDateTimeObject($row[1])->format('Y-m-d');
 
 
-        $enrichmentBook = EnrichmentBook::create([
+
+        $enrichmentBookId = DB::table('enrichment_book')->insertGetId([
             'tgl_masuk' => $tanggalMasuk,
             'kategori' => $row[2],
-            'judul' => $row[3],
-            'pengarang' => $row[4],
-            'penerbit' => $row[5],
-            'tahun' => $row[6],
+            'judul' => $row[3], // pastikan ini bukan null atau kosong
+            'tahun' => $row[4],
+            'pengarang' => $row[5],
+            'penerbit' => $row[6],
             'eksemplar' => $row[7],
             'id_rak' => $row[8],
+            'id_jenis' => $row[9],
+            'id_mapel' => $row[10],
+            'id_submapel' => $row[11] ?? null,
+            'id_subkelas' => $row[12] ?? null,
+            'id_subklasifikasi' => $row[13] ?? null,
+            'id_subklasifikasith' => $row[14] ?? null,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
+
 
         for ($i = 0; $i < $row[7]; $i++) {
             $this->lastNomorInduk++;
 
             DetailEnrichmentBook::create([
-                'id_pengayaan' => $enrichmentBook->id,
+                'id_pengayaan' => $enrichmentBookId,
                 'status_peminjaman' => 'available',
                 'no_induk' => $this->lastNomorInduk,
             ]);

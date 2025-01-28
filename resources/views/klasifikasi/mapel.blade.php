@@ -29,6 +29,7 @@
                 <thead>
                   <tr>
                     <th scope="col">No</th>
+                    <th scope="col">ID Mapel</th>
                     <th scope="col">Mapel Buku</th>
                     <th scope="col">Nomor Induk</th>
                     <th scope="col">Tgl Ditambahkan</th>
@@ -40,6 +41,7 @@
                 @foreach ($course as $index => $course)
                   <tr>
                     <th scope="row" class="col-1">{{ $index + 1 }}</th>
+                    <td class="col-1">{{ $course->id }}</td>
                     <td class="col-1">{{ $course->mapel }}</td>
                     <td class="col-1">{{ $course->nomor_induk_mapel }}</td>
                     <td class="col-1">{{ \Carbon\Carbon::parse($course->created_at)->format('F d, Y') }}</td>
@@ -84,6 +86,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <p><strong>ID Mapel:</strong> <span id="modal-id"></span></p>
                         <p><strong>Mapel:</strong> <span id="modal-course"></span></p>
                         <p><strong>No Induk:</strong> <span id="modal-noinduk"></span></p>
                         <p><strong>Tanggal Dibuat:</strong> <span id="modal-tanggal"></span></p>
@@ -101,6 +104,7 @@
 <script>
     $(document).ready(function() {
         $('.view-course').on('click', function() {
+            $('#modal-id').text('Loading...');
             $('#modal-course').text('Loading...');
             $('#modal-noinduk').text('Loading...');
             $('#modal-tanggal').text('Loading...');
@@ -113,6 +117,7 @@
                 method: 'GET',
                 success: function(data) {
                     console.log(data);
+                    $('#modal-id').text(data.id);
                     $('#modal-course').text(data.mapel);
                     $('#modal-noinduk').text(data.nomor_induk_mapel);
 

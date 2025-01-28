@@ -36,6 +36,7 @@
                 <thead>
                   <tr>
                     <th scope="col">No</th>
+                    <th scope="col">ID Jenis</th>
                     <th scope="col">Jenis Buku</th>
                     <th scope="col">Nomor Induk</th>
                     <th scope="col">Tgl Ditambahkan</th>
@@ -47,6 +48,7 @@
                   @foreach($jenis as $key => $item)
                     <tr>
                       <th scope="row" class="col-1">{{ $key + 1 }}</th>
+                      <td class="col-2">{{ $item->id }}</td>
                       <td class="col-2">{{ $item->jenis_buku }}</td>
                       <td class="col-1">{{ $item->nomor_induk_jenis }}</td>
                       <td class="col-1">{{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y') }}</td>
@@ -72,7 +74,7 @@
 
 
       </div>
-         <!-- Modal -->
+
 <!-- Modal -->
 <div class="modal fade" id="jenisModal" tabindex="-1" aria-labelledby="jenisModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -82,6 +84,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+            <p><strong>ID Jenis:</strong> {{ $item->id }}</span></p>
             <p><strong>Jenis Buku:</strong> {{ $item->jenis_buku }}</span></p>
             <p><strong>Nomor Induk:</strong> {{ $item->nomor_induk_jenis }}</span></p>
             <p><strong>Tanggal Ditambahkan:</strong> {{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y') }}</span></p>

@@ -29,6 +29,7 @@
                 <thead>
                   <tr>
                     <th scope="col">No</th>
+                    <th scope="col">ID Sub I</th>
                     <th scope="col">Sub Klasifikai I</th>
                     <th scope="col">Nomor Induk</th>
                     <th scope="col">Tgl Ditambahkan</th>
@@ -40,6 +41,7 @@
                 @foreach ($subCourse as $index => $subCourse)
                   <tr>
                     <th scope="row" class="col-1">{{ $index + 1 }}</th>
+                    <td class="col-1">{{ $subCourse->id }}</td>
                     <td class="col-1">{{ $subCourse->sub_mapel }}</td>
                     <td class="col-1">{{ $subCourse->nomor_induk_submapel ?? 'NULL' }}</td>
                     <td class="col-1">{{ \Carbon\Carbon::parse($subCourse->created_at)->format('F d, Y') }}</td>
@@ -85,6 +87,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <p><strong>ID Sub I:</strong> <span id="modal-id"></span></p>
                         <p><strong>Sub Klasifikasi I:</strong> <span id="modal-subCourse"></span></p>
                         <p><strong>No Induk:</strong> <span id="modal-noinduk"></span></p>
                         <p><strong>Tanggal Dibuat:</strong> <span id="modal-tanggal"></span></p>
@@ -103,6 +106,7 @@
             $(document).ready(function() {
             $('.view-subCourse').on('click', function() {
 
+                $('#modal-id').text('Loading...');
                 $('#modal-subCourse').text('Loading...');
                 $('#modal-noinduk').text('Loading...');
                 $('#modal-tanggal').text('Loading...');
@@ -115,6 +119,7 @@
                     method: 'GET',
                     success: function(data) {
                         console.log(data);
+                        $('#modal-id').text(data.id);
                         $('#modal-subCourse').text(data.sub_mapel);
                         $('#modal-noinduk').text(data.nomor_induk_submapel);
 

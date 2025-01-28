@@ -24,6 +24,15 @@
         </div>
       @endif
 
+      <div class="alert alert-warning" role="alert">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span class="ml-4"> <a href="{{ url('https://drive.google.com/drive/folders/1eykB__AhvlYBJNby5XgBEqAeiqct_LDX?usp=sharing') }}"
+            target="_blank"
+            style="color: rgb(116, 72, 11); font-weight: bold; ">
+            Baca Panduan
+            </a> sebelum menambahkan! </span>
+      </div>
+
 
       <div class="card mt-2">
         <div class="card-body">
