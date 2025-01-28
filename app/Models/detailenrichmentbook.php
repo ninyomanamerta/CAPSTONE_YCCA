@@ -36,5 +36,10 @@ class detailenrichmentbook extends Model
         return $this->hasMany(peminjaman_buku_pengayaan::class, 'id_detail_buku');
     }
 
+    public function toEnrichmentBook()
+    {
+        return $this->belongsTo(enrichmentbook::class, 'id_pengayaan');
+    }
+
 
 }

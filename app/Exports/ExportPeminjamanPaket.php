@@ -20,14 +20,13 @@ class ExportPeminjamanPaket implements FromCollection, WithHeadings, WithMapping
     return PeminjamanBukuPaket::with(['detailPeminjamanBukuPaket.bukuPaket.packageBook', 'siswa'])
         ->get()
         ->sortBy(function($peminjaman) {
-            // Urutkan berdasarkan kelas (angka dan huruf)
             $kelas = $peminjaman->kelas;
             preg_match('/(\d+)([A-Za-z]+)/', $kelas, $matches);
             $angka = $matches[1] ?? 0;
             $huruf = $matches[2] ?? '';
 
-            // Urutkan dengan angka dulu, kemudian huruf
-            return [$angka, $huruf, $peminjaman->siswa->nis]; // urutkan berdasarkan NIS juga
+
+            return [$angka, $huruf, $peminjaman->siswa->nis];
         });
 }
 
@@ -45,6 +44,7 @@ class ExportPeminjamanPaket implements FromCollection, WithHeadings, WithMapping
             $formattedNomorInduk = str_pad($detail->bukuPaket->nomor_induk, 4, '0', STR_PAD_LEFT);
 
             $combinedKey =
+                " " .
                 strval(optional($packageBook->jenis)->nomor_induk_jenis) .
                 strval(optional($packageBook->mapel)->nomor_induk_mapel) .
                 strval(optional($packageBook->submapel)->nomor_induk_submapel) .
@@ -57,12 +57,12 @@ class ExportPeminjamanPaket implements FromCollection, WithHeadings, WithMapping
             // Tanggal peminjaman
             $tanggalPeminjaman = Carbon::parse($detail->tanggal_pinjam)->format('d-m-Y');
 
-            // Status Keterangan: borrowed, returned, ganti baru, atau -
             $status = $detail->status_peminjaman === 'borrowed' ? 'Dipinjam' :
                       ($detail->status_peminjaman === 'returned' ? 'Dikembalikan' :
                       ($detail->status_peminjaman === null ? '-' : 'Ganti Baru'));
 
-            // Tanggal Pengembalian hanya jika status returned, jika tidak set "-"
+            $keterangan = $detail->keterangan === 'Ganti baru' ? 'Ganti Baru' : '-';
+
             $tanggalPengembalian = $detail->status_peminjaman === 'returned'
                 ? Carbon::parse($detail->updated_at)->format('d-m-Y')
                 : '-';
@@ -73,7 +73,6 @@ class ExportPeminjamanPaket implements FromCollection, WithHeadings, WithMapping
 
             $this->rowNumber++;
 
-            // Menambahkan row untuk setiap detail peminjaman buku
             $rows[] = [
                 $this->rowNumber,
                 $tanggalPeminjaman,
@@ -84,6 +83,7 @@ class ExportPeminjamanPaket implements FromCollection, WithHeadings, WithMapping
                 $packageBook->judul,
                 $combinedKey,
                 $status,
+                $keterangan,
                 $tanggalPengembalian,
                 $pj_pengembalian,
             ];
@@ -106,6 +106,7 @@ class ExportPeminjamanPaket implements FromCollection, WithHeadings, WithMapping
             'Kelas',
             'Judul Buku',
             'Nomor Induk',
+            'Status',
             'Keterangan',
             'Tanggal Pengembalian',
             'Penanggung Jawab Pengembalian'
