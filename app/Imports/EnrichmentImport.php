@@ -22,10 +22,10 @@ class EnrichmentImport implements ToCollection, Tomodel
         //
     }
 
-    public function __construct()
-    {
-        $this->lastNomorInduk = 0;
-    }
+    // public function __construct()
+    // {
+    //     $this->lastNomorInduk = 0;
+    // }
 
     public function model(array $row)
     {
@@ -38,7 +38,7 @@ class EnrichmentImport implements ToCollection, Tomodel
 
         $tanggalMasuk = Date::excelToDateTimeObject($row[1])->format('Y-m-d');
 
-
+        $this->lastNomorInduk = 0;
 
         $enrichmentBookId = DB::table('enrichment_book')->insertGetId([
             'tgl_masuk' => $tanggalMasuk,
