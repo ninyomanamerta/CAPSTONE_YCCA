@@ -24,10 +24,33 @@
         </div>
       @endif
 
+      <div class="alert alert-warning" role="alert">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span class="ml-4"> Hanya untuk buku yang belum pernah ditambahkan.
+            <a href="{{ url('https://drive.google.com/drive/folders/1eykB__AhvlYBJNby5XgBEqAeiqct_LDX?usp=sharing') }}"
+            target="_blank"
+            style="color: rgb(116, 72, 11); font-weight: bold; ">
+            Baca Panduan
+            </a>
+            panduan sebelum menambahkan!
+            </div>
+
+        {{-- <div class="card-header">
+          Quote
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+          </blockquote>
+        </div>
+      </div> --}}
 
       <div class="card mt-2">
         <div class="card-body">
             <h4 class="card-title ml-4 mb-6">Formulir Tambah Buku Pengayaan</h4>
+
+
 
           <!-- Horizontal Form -->
           <form action="{{ route('enrichmentBooks.proses') }}" method="POST" enctype="multipart/form-data" class="px-3">

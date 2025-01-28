@@ -8,6 +8,8 @@
 
     <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
         <a href="{{ route('pinjamPaket.create') }}" class="btn btn-primary mb-3">Tambah Peminjaman Buku Paket</a>
+        <span class="ml-2"><a href="{{ route('exportPeminjamanPaket') }}" class="btn btn-warning">Export Data</a></span>
+
     </div>
 
 

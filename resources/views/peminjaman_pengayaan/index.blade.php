@@ -7,6 +7,7 @@
 
         <div style="margin-bottom: 10px; display: flex; justify-content: flex-end;">
             <a href="{{ route('peminjamanbukupengayaan.create') }}" class="btn btn-primary">Tambah Peminjaman Buku</a>
+            <span class="ml-2"><a href="{{ route('exportPeminjamanPengayaan') }}" class="btn btn-warning">Export Data</a></span>
         </div>
 
         @if(Session::has('success'))
