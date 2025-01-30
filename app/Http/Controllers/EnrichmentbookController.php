@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EnrichmentBook;
+use App\Models\enrichmentbook;
 use Illuminate\Http\Request;
 use App\Models\BookCase;
 use App\Models\detailenrichmentbook;

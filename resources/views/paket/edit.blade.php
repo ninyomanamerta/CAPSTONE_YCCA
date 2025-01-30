@@ -44,10 +44,10 @@
             <div class="row mb-3">
                 <label for="klasifikasi_jenis" class="col-sm-2 col-form-label">Klasifikasi Jenis</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="klasifikasi_jenis" name="klasifikasi_jenis" required>
+                    <select class="form-control select2Jenis" id="klasifikasi_jenis" name="klasifikasi_jenis" required>
                         <option value="">Pilih Jenis</option>
                         @foreach($types as $type)
-                            <option value="{{ $type->id }}" {{ old('klasifikasi_jenis', $packageBook->id_jenis) == $type->id ? 'selected' : '' }}>{{ $type->jenis_buku }}</option>
+                            <option value="{{ $type->id }}" {{ old('klasifikasi_jenis', $packageBook->id_jenis) == $type->id ? 'selected' : '' }}>{{ $type->jenis_buku }} - {{ $type->nomor_induk_jenis }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -56,10 +56,10 @@
             <div class="row mb-3">
                 <label for="klasifikasi_mapel" class="col-sm-2 col-form-label">Klasifikasi Mapel</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="klasifikasi_mapel" name="klasifikasi_mapel" required>
+                    <select class="form-control select2Mapel" id="klasifikasi_mapel" name="klasifikasi_mapel" required>
                         <option value="{{ $packageBook->mapel->mapel }}">Pilih Mata Pelajaran</option>
                         @foreach($courses as $course)
-                        <option value="{{ $course->id }}" {{ old('klasifikasi_mapel', $packageBook->id_mapel) == $course->id ? 'selected' : '' }}>{{ $course->mapel }}</option>
+                        <option value="{{ $course->id }}" {{ old('klasifikasi_mapel', $packageBook->id_mapel) == $course->id ? 'selected' : '' }}>{{ $course->mapel }} - {{ $type->nomor_induk_mapel }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -68,10 +68,10 @@
             <div class="row mb-3">
                 <label for="klasifikasi_submapel" class="col-sm-2 col-form-label">Klasifikasi Sub I</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="klasifikasi_submapel" name="klasifikasi_submapel">
+                    <select class="form-control select2SubI" id="klasifikasi_submapel" name="klasifikasi_submapel">
                         <option value="">Pilih Sub I</option>
                         @foreach($subCourses as $subCourse)
-                            <option value="{{ $subCourse->id }}" {{ old('klasifikasi_submapel', $packageBook->id_submapel) == $subCourse->id ? 'selected' : '' }}>{{ $subCourse->sub_mapel }}</option>
+                            <option value="{{ $subCourse->id }}" {{ old('klasifikasi_submapel', $packageBook->id_submapel) == $subCourse->id ? 'selected' : '' }}>{{ $subCourse->sub_mapel }} - {{ $subCourse->nomor_induk_submapel }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -80,7 +80,7 @@
             <div class="row mb-3">
                 <label for="klasifikasi_subkelas" class="col-sm-2 col-form-label">Klasifikasi Sub II</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="klasifikasi_subkelas" name="klasifikasi_subkelas">
+                    <select class="form-control select2SubII" id="klasifikasi_subkelas" name="klasifikasi_subkelas">
                         <option value="">Pilih Sub II</option>
                         @foreach($subClasses as $subClass)
                             <option value="{{ $subClass->id }}" {{ old('klasifikasi_subkelas', $packageBook->id_subkelas) == $subClass->id ? 'selected' : '' }}>{{ $subClass->sub_kelas }}</option>
@@ -92,7 +92,7 @@
             <div class="row mb-3">
                 <label for="klasifikasi_subclasification" class="col-sm-2 col-form-label">Klasifikasi Sub III</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="klasifikasi_subclasification" name="klasifikasi_subclasification">
+                    <select class="form-control select2SubIII" id="klasifikasi_subclasification" name="klasifikasi_subclasification">
                         <option value="">Pilih Sub III</option>
                         @foreach($subClasification as $subClasification)
                             <option value="{{ $subClasification->id }}" {{ old('klasifikasi_subclasification', $packageBook->id_subklasifikasi) == $subClasification->id ? 'selected' : '' }}>{{ $subClasification->klasifikasi }}</option>
@@ -104,7 +104,7 @@
             <div class="row mb-3">
                 <label for="klasifikasi_subclasificationth" class="col-sm-2 col-form-label">Klasifikasi Sub IV</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="klasifikasi_subclasificationth" name="klasifikasi_subclasificationth">
+                    <select class="form-control select2SubIV" id="klasifikasi_subclasificationth" name="klasifikasi_subclasificationth">
                         <option value="">Pilih Sub IV</option>
                         @foreach($subClasificationTh as $subClasificationTh)
                             <option value="{{ $subClasificationTh->id }}" {{ old('klasifikasi_subclasificationth', $packageBook->id_subklasifikasith) == $subClasificationTh->id ? 'selected' : '' }}>{{ $subClasificationTh->klasifikasi4 }}</option>
@@ -138,7 +138,7 @@
             <div class="row mb-3">
                 <label for="sumber" class="col-sm-2 col-form-label">Sumber</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="sumber" name="sumber" required value="{{ old('sumber', $packageBook->sumber) }}">
+                    <input type="text" class="form-control" id="sumber" name="sumber" value="{{ old('sumber', $packageBook->sumber) }}" placeholder="Sumber dana buku (opsional)">
                 </div>
             </div>
 
@@ -162,3 +162,78 @@
 </main>
 
 @endsection
+
+@push('scripts')
+<script>
+
+    $(document).ready(function() {
+        $('.select2Jenis').select2({
+            theme: 'bootstrap5',
+            placeholder: "Pilih atau cari klasifikasi jenis",
+            allowClear: true,
+            language: {
+                inputTooShort: function() {
+                    return "Pilih atau cari klasifikasi jenis";
+                }
+            }
+        });
+
+        $('.select2Mapel').select2({
+            theme: 'bootstrap5',
+            placeholder: "Pilih atau cari klasifikasi mapel",
+            allowClear: true,
+            language: {
+                inputTooShort: function() {
+                    return "Pilih atau cari klasifikasi mapel";
+                }
+            }
+        });
+
+        $('.select2SubI').select2({
+            theme: 'bootstrap5',
+            placeholder: "Pilih atau cari klasifikasi sub I (opsional)",
+            allowClear: true,
+            language: {
+                inputTooShort: function() {
+                    return "Pilih atau cari klasifikasi sub I (opsional)";
+                }
+            }
+        });
+
+        $('.select2SubII').select2({
+            theme: 'bootstrap5',
+            placeholder: "Pilih atau cari klasifikasi sub II (opsional)",
+            allowClear: true,
+            language: {
+                inputTooShort: function() {
+                    return "Pilih atau cari klasifikasi sub II (opsional)";
+                }
+            }
+        });
+
+        $('.select2SubIII').select2({
+            theme: 'bootstrap5',
+            placeholder: "Pilih atau cari klasifikasi sub III (opsional)",
+            allowClear: true,
+            language: {
+                inputTooShort: function() {
+                    return "Pilih atau cari klasifikasi sub III (opsional)";
+                }
+            }
+        });
+
+        $('.select2SubIV').select2({
+            theme: 'bootstrap5',
+            placeholder: "Pilih atau cari klasifikasi sub IV (opsional)",
+            allowClear: true,
+            language: {
+                inputTooShort: function() {
+                    return "Pilih atau cari klasifikasi sub IV (opsional)";
+                }
+            }
+        });
+    });
+
+</script>
+@endpush
+

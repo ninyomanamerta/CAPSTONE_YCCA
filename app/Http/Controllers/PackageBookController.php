@@ -191,13 +191,13 @@ class PackageBookController extends Controller
             'klasifikasi_jenis' => 'required|exists:type_books,id',
             'klasifikasi_mapel' => 'required|exists:courses,id',
             'klasifikasi_submapel' => 'nullable|exists:sub_courses,id',
-            'klasifikasi_subkelas' => 'required|exists:sub_class,id',
+            'klasifikasi_subkelas' => 'nullable|exists:sub_class,id',
             'klasifikasi_subclasification' => 'nullable|exists:sub_clasification,id',
             'klasifikasi_subclasificationth' => 'nullable|exists:sub_clasification4,id',
             'tgl_masuk' => 'required|date',
             'tahun_terbit' => 'required|numeric',
             'penerbit' => 'required|string|max:255',
-            'sumber' => 'required|string|max:255',
+            'sumber' => 'nullable|string|max:255',
         ]);
 
         $packageBookData = [
