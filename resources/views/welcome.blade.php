@@ -63,14 +63,14 @@
                             >
                                 Login
                             </button>
-                            <button
+                            {{-- <button
                                 class="btn btn-primary"
                                 id="submitButton"
                                 type="submit"
                                 onclick="window.location.href='{{ route('register') }}'"
                             >
                                 Register
-                            </button>
+                            </button> --}}
                         </div>
                     </div>
 

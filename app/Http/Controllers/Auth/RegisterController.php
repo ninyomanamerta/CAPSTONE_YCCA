@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/register';
 
     /**
      * Create a new controller instance.
@@ -37,7 +37,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth'); 
     }
 
     /**
@@ -72,5 +72,18 @@ class RegisterController extends Controller
             'nip' => $data['nip'] ?? null,
             'jabatan' => $data['jabatan'],
         ]);
+    }
+
+        /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return void
+     */
+    protected function registered($request, $user)
+    {
+        // Set session success
+        session()->flash('success', 'Akun Anda telah berhasil dibuat.');
     }
 }
